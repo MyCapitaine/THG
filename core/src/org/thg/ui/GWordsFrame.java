@@ -32,7 +32,7 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 	 * 对话暂停的间隔渲染次数
 	 */
 	private float 
-		interval_render_num_skipping = 5 * Config.dialogInterval,
+		interval_render_num_skipping = 2 * Config.dialogInterval,
 		interval_render_num_normal = 60 * Config.dialogInterval;
 	private float interval_render_count;
 	

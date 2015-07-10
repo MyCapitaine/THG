@@ -33,20 +33,19 @@ public class Config {
 	public static float vol_voice = VOL_VOICE_MAX;
 	static final float VOL_BGM_MIN = 0f, VOL_BGM_MAX = 1f;
 	public static float vol_bgm = VOL_BGM_MAX;
-	static final float SHOW_WORDS_SPEED_MIN = 20f, SHOW_WORDS_SPEED_MAX = 30f,
-			SHOW_WORDS_SPEED_STEP_SIZE = 0.05f;
+	static final float SHOW_WORDS_SPEED_MIN = 60f, SHOW_WORDS_SPEED_MAX = 70f,
+			SHOW_WORDS_SPEED_STEP_SIZE = 0.1f;
 	/**
 	 * 每秒显示的字数
 	 */
 	public static float showWordsSpeed = SHOW_WORDS_SPEED_MIN;
 	
-	static final float DIALOG_INTERVAL_MIN = 0.3f, DIALOG_INTERVAL_MAX = 0.7f,
+	static final float DIALOG_INTERVAL_MIN = 0.8f, DIALOG_INTERVAL_MAX = 1.0f,
 			DIALOG_INTERVAL_STEP_SIZE = 0.01f;
 	/**
 	 * 每段对话的默认间隔
 	 */
-	static float dialogInterval = DIALOG_INTERVAL_MAX;
-	static boolean baiduVoiceOn = true;
+	static float dialogInterval = DIALOG_INTERVAL_MIN;
 	static final String SETTING_MENU_BG_URL = "images/ui/settingmenu/background.png";
 	static final String SETTING_MENU_RETURN_BUTTON_URL = "images/ui/settingmenu/returnButton.png";
 	static final String SETTING_MENU_VOL_LABEL_URL = "images/ui/settingmenu/volLabel.png";	

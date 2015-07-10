@@ -10,4 +10,6 @@ public interface RunningCheckable {
 	 * @return false 任务已完成
 	 */
 	public boolean isRunning();
+	
+	
 }

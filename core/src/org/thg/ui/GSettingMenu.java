@@ -77,7 +77,7 @@ public class GSettingMenu implements Screen {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				THG.getGame().setScreen(new GMainMenu());
 				gSettingMenu.dispose();
-				saveProperties(); 
+				saveProperties();
 				return true;
 			}
 		});
@@ -110,32 +110,32 @@ public class GSettingMenu implements Screen {
 		stage.addActor(volSlider);
 		stage.addActor(volLabel);
 //============文速调节===============================================================
-		Image speedLabel;
-		final Slider speedSlider;
-		disBuffer1 = new Texture(Config.SETTING_MENU_SPEED_LABEL_URL);
-		disList.add(disBuffer1);
-		speedLabel = new Image((Texture)disBuffer1);
-		disBuffer1 = new Texture(Config.SETTING_MENU_SPEED_SLIDER_BG_URL);
-		disBuffer2 = new Texture(Config.SETTING_MENU_SPEED_SLIDER_KNOB_URL);
-		disList.add(disBuffer1);
-		disList.add(disBuffer2);
-		SliderStyle speedSliderStyle = new SliderStyle(
-				UiUtil.resize(new TextureRegion((Texture)disBuffer1)),
-				UiUtil.resize(new TextureRegion((Texture)disBuffer2)));
-		speedSlider = new Slider(Config.SHOW_WORDS_SPEED_MIN, Config.SHOW_WORDS_SPEED_MAX,
-				Config.SHOW_WORDS_SPEED_STEP_SIZE, false, speedSliderStyle);
-		speedSlider.setValue(Config.showWordsSpeed);
-		speedSlider.setSize(Config.SLIDER_WIDTH * Config.scaleX, Config.SLIDER_HEIGHT * Config.scaleY);
-		speedSlider.addListener(new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				Config.showWordsSpeed = speedSlider.getValue();
-			}
-		});
-		stage.addActor(speedSlider);
-		stage.addActor(speedLabel);
+//		Image speedLabel;
+//		final Slider speedSlider;
+//		disBuffer1 = new Texture(Config.SETTING_MENU_SPEED_LABEL_URL);
+//		disList.add(disBuffer1);
+//		speedLabel = new Image((Texture)disBuffer1);
+//		disBuffer1 = new Texture(Config.SETTING_MENU_SPEED_SLIDER_BG_URL);
+//		disBuffer2 = new Texture(Config.SETTING_MENU_SPEED_SLIDER_KNOB_URL);
+//		disList.add(disBuffer1);
+//		disList.add(disBuffer2);
+//		SliderStyle speedSliderStyle = new SliderStyle(
+//				UiUtil.resize(new TextureRegion((Texture)disBuffer1)),
+//				UiUtil.resize(new TextureRegion((Texture)disBuffer2)));
+//		speedSlider = new Slider(Config.SHOW_WORDS_SPEED_MIN, Config.SHOW_WORDS_SPEED_MAX,
+//				Config.SHOW_WORDS_SPEED_STEP_SIZE, false, speedSliderStyle);
+//		speedSlider.setValue(Config.showWordsSpeed);
+//		speedSlider.setSize(Config.SLIDER_WIDTH * Config.scaleX, Config.SLIDER_HEIGHT * Config.scaleY);
+//		speedSlider.addListener(new InputListener() {
+//			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//				return true;
+//			}
+//			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//				Config.showWordsSpeed = speedSlider.getValue();
+//			}
+//		});
+//		stage.addActor(speedSlider);
+//		stage.addActor(speedLabel);
 		
 //============文间调节===============================================================
 		Image intervalLabel;
@@ -180,10 +180,10 @@ public class GSettingMenu implements Screen {
 		UiUtil.resize(volLabel);
 		volSlider.setPosition(volLabel.getX() + volLabel.getWidth() + dx,
 				volLabel.getY() - dy2);
-		speedLabel.setPosition(x, y1 + dy);
-		UiUtil.resize(speedLabel);
-		speedSlider.setPosition(speedLabel.getX() + speedLabel.getWidth() + dx,
-				speedLabel.getY() - dy2);
+//		speedLabel.setPosition(x, y1 + dy);
+//		UiUtil.resize(speedLabel);
+//		speedSlider.setPosition(speedLabel.getX() + speedLabel.getWidth() + dx,
+//				speedLabel.getY() - dy2);
 		intervalLabel.setPosition(x, y1 + 2 * dy);
 		UiUtil.resize(intervalLabel);
 		intervalSlider.setPosition(intervalLabel.getX() + intervalLabel.getWidth() + dx,
@@ -230,10 +230,14 @@ public class GSettingMenu implements Screen {
 		}
 		try {
 			Config.vol_voice = Float.parseFloat(paraMap.get("vol_voice"));
+			if(Config.vol_voice < Config.VOL_VOICE_MIN || Config.vol_voice > Config.VOL_VOICE_MAX) Config.vol_voice = Config.VOL_VOICE_MIN;
 			Config.vol_bgm = Float.parseFloat(paraMap.get("vol_bgm"));
+			if(Config.vol_bgm < Config.VOL_BGM_MIN || Config.vol_bgm > Config.VOL_BGM_MAX) Config.vol_bgm = Config.VOL_BGM_MIN;
 			Config.showWordsSpeed = Float.parseFloat(paraMap.get("showWordsSpeed"));
+			if(Config.showWordsSpeed < Config.SHOW_WORDS_SPEED_MIN || Config.showWordsSpeed > Config.SHOW_WORDS_SPEED_MAX) Config.showWordsSpeed = Config.SHOW_WORDS_SPEED_MIN;
 			Config.dialogInterval = Float.parseFloat(paraMap.get("dialogInterval"));
-			Config.baiduVoiceOn = Boolean.parseBoolean(paraMap.get("baiduVoiceOn"));
+			if(Config.dialogInterval < Config.DIALOG_INTERVAL_MIN || Config.dialogInterval > Config.DIALOG_INTERVAL_MAX) Config.dialogInterval = Config.DIALOG_INTERVAL_MIN;
+			
 		}catch(Exception e) {}
 	}
 	/**
@@ -244,7 +248,6 @@ public class GSettingMenu implements Screen {
 		paraMap.put("vol_bgm", Float.toString(Config.vol_bgm));
 		paraMap.put("showWordsSpeed", Float.toString(Config.showWordsSpeed));
 		paraMap.put("dialogInterval", Float.toString(Config.dialogInterval));
-		paraMap.put("baiduVoiceOn", Boolean.toString(Config.baiduVoiceOn));
 		Writer fw = null;
 		try {
 			fw = Gdx.files.external(THG.EXTRNAL_HEAD + Config.PROPERTIES_URL).writer(false, THG.CHAR_SET);

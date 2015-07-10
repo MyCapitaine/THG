@@ -60,15 +60,13 @@ public class DefaultGameStage extends Stage implements GGameStage {
 		}
 	}
 
-	private Texture picBuffer;
 	@Override
 	public void setCharatorPic(int cpNum) {
 		if(cpNum == ResourceFactory.PRE_INT || cpNum == charactorPicNum) return;
 		charactorPicNum = cpNum;
-		if(picBuffer != null) picBuffer.dispose();
-		picBuffer = ResourceFactory.getCharactorPic(cpNum);
-		if(picBuffer == null) charactorPic.setDrawable(null);
-		else charactorPic.setDrawable(UiUtil.resize(new TextureRegion(picBuffer)));
+		Texture t = ResourceFactory.getCharactorPic(cpNum);
+		if(t == null) charactorPic.setDrawable(null);
+		else charactorPic.setDrawable(UiUtil.resize(new TextureRegion(t)));
 	}
 	@Override
 	public void setCharactorPicPosition(int position) {
@@ -146,7 +144,6 @@ public class DefaultGameStage extends Stage implements GGameStage {
 		super.dispose();
 		if(voice != null) voice.dispose();
 		if(bgBuffer != null) bgBuffer.dispose();
-		if(picBuffer != null) picBuffer.dispose();
 		if(wordsFrame != null) wordsFrame.dispose();
 		if(gameButtons != null) gameButtons.dispose();
 		if(nameBg != null) nameBg.dispose();
@@ -211,7 +208,7 @@ public class DefaultGameStage extends Stage implements GGameStage {
 		if(batch == null) return;
 		batch.begin();
 		
-		if(nameBg != null) batch.draw(nameBg, name_x, name_y, name_width, name_height);
+		if(nameBg != null && !name.equals("")) batch.draw(nameBg, name_x, name_y, name_width, name_height);
 		if(nameFont != null) nameFont.draw(batch, name,
 				name_x + name_padding, name_y + name_height - name_padding);
 		batch.end();

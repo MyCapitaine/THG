@@ -13,6 +13,7 @@ import org.thg.logic.story.driver.stage.DefaultTurnPageStage;
 import org.thg.ui.GMainMenu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
@@ -173,6 +174,7 @@ public class DefaultGameController implements GGameController {
 				gameOver();
 				return;
 			}
+			ResourceFactory.clearPool();
 			current_stage.dispose();
 			current_stage = (DefaultTurnPageStage) GStageFactory.createTurnPageStage(current_day);
 			show();
@@ -208,6 +210,7 @@ public class DefaultGameController implements GGameController {
 				gameOver();
 				return;
 			}
+			ResourceFactory.clearPool();
 			current_stage.dispose();
 			current_stage = (DefaultTurnPageStage) GStageFactory.createTurnPageStage(current_day);
 			show();
@@ -239,6 +242,7 @@ public class DefaultGameController implements GGameController {
 				gameOver();
 				return;
 			}
+			ResourceFactory.clearPool();
 			current_stage.dispose();
 			current_stage = (DefaultTurnPageStage) GStageFactory.createTurnPageStage(current_day);
 			show();
@@ -307,9 +311,8 @@ public class DefaultGameController implements GGameController {
 		@Override
 		public boolean touchDown(int screenX, int screenY, int pointer,
 				int button) {
-			control(true);
-			setSkip(false);
-			setAuto(false);
+			if(button != Buttons.LEFT) return false;
+			click();
 			return true;
 		}
 		@Override
@@ -321,9 +324,7 @@ public class DefaultGameController implements GGameController {
 				setAuto(getAutoFlag() ? false : true);
 				break;
 			case ' ': //space   —— click
-				control(true);
-				setSkip(false);
-				setAuto(false);
+				click();
 				break;
 			case 's' :
 			case 'S' : //s/S —— skip
@@ -333,6 +334,19 @@ public class DefaultGameController implements GGameController {
 			default :
 			}
 			return true;
+		}
+		
+		@Override
+		public boolean scrolled(int amount) {
+			if(amount != 1) return false;
+			click();
+			return true;
+		}
+		
+		private void click() {
+			control(true);
+			setSkip(false);
+			setAuto(false);
 		}
 		
 	}
