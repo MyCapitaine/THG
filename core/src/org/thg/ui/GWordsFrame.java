@@ -162,7 +162,7 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 		this.text = buffer.toString();
 		
 		show_words_count = 0f;
-		text_length = text.length();
+		text_length = this.text.length();
 		speed_show_words = Config.showWordsSpeed / 60f;
 		
 		interval_render_count = 0f;
