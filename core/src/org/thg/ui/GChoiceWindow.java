@@ -184,14 +184,15 @@ public class GChoiceWindow extends Group implements Disposable {
 			gameStage.getRoot().removeActor(choice);
 			Screen screen = THG.getGame().getScreen();
 			if(!(screen instanceof DefaultGameController)) return false;
-			((DefaultGameController)screen).setIsChoosing(false);
-			((DefaultGameController)screen).control(false);
 			ProgressData pd = ((DefaultGameController)screen).getCurrentProgressData();
 			if(pd == null) return false;
 			pd.putFlag(choiceSign, (choiceNum + 1));
 			for(int i = 1; i < extra.length; i ++) {
 				pd.putValue(extra[i], true);
 			}
+
+			((DefaultGameController)screen).setIsChoosing(false);
+			((DefaultGameController)screen).control(true);
 			return true;
 		}
 		
