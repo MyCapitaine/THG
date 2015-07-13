@@ -49,7 +49,7 @@ public class THG {
 		
 		return font;
 	}
-	public static final float FONT_SIZE = 25;
+	public static final float FONT_SIZE = 28;
 	
 	private static Pattern pattern = Pattern.compile("(.)(?=.*\\1)", Pattern.DOTALL);
 	

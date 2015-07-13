@@ -15,8 +15,8 @@ public class Config {
 	public static final int 
 		CHARACTOR_PIC_WIDTH = 630, CHARACTOR_PIC_HEIGHT = 840;
 	public static final String NAME_BG_URL = "images/defaults/gamestage/nameBg.png";
-	public static final float NAME_FONT_SIZE = 20f;
-	public static final int NAME_WIDTH = 150, NAME_HEIGHT = 30;
+	public static final float NAME_FONT_SIZE = 28f;
+	public static final int NAME_WIDTH = 350, NAME_HEIGHT = 50, NAME_PADDING = 10;
 	
 //========TurnPageStage============================================================================================
 	public static final String TURN_PAGE_STAGE_BG_URL = "images/defaults/turnpagestage/turnPageBg.png";

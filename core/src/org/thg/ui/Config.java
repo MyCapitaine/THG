@@ -33,7 +33,7 @@ public class Config {
 	public static float vol_voice = VOL_VOICE_MAX;
 	static final float VOL_BGM_MIN = 0f, VOL_BGM_MAX = 1f;
 	public static float vol_bgm = VOL_BGM_MAX;
-	static final float SHOW_WORDS_SPEED_MIN = 60f, SHOW_WORDS_SPEED_MAX = 70f,
+	static final float SHOW_WORDS_SPEED_MIN = 80f, SHOW_WORDS_SPEED_MAX = 90f,
 			SHOW_WORDS_SPEED_STEP_SIZE = 0.1f;
 	/**
 	 * 每秒显示的字数
@@ -62,7 +62,8 @@ public class Config {
 //====GWordsFrame==================================================================================
 	static final String WORDS_FRAME_URL = "images/defaults/gamestage/wordsFrameBg.png";
 	static final int
-		WORDS_FRAME_WIDTH = 760, WORDS_FRAME_HEIGHT = 200;
+		WORDS_FRAME_WIDTH = 800, WORDS_FRAME_HEIGHT = 200,
+		WORDS_FRAME_X = 0, WORDS_FRAME_Y = 15;
 	
 //====GWordsWindow==================================================================================
 	static final String WORDS_WINDOW_URL = "images/defaults/gamestage/wordsWindowBg.png";

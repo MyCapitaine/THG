@@ -190,8 +190,8 @@ public class DefaultGameStage extends Stage implements GGameStage {
 		name_width = Config.NAME_WIDTH * org.thg.ui.Config.scaleX;
 		name_height = Config.NAME_HEIGHT * org.thg.ui.Config.scaleY;
 		name_x = wordsFrame.getX();
-		name_y = wordsFrame.getY() + wordsFrame.getHeight() + name_height - Config.NAME_HEIGHT * org.thg.ui.Config.scaleY;
-		name_padding = (name_height - Config.NAME_FONT_SIZE * org.thg.ui.Config.scaleY) / 2;
+		name_y = wordsFrame.getY() + wordsFrame.getHeight() + name_height + (Config.NAME_PADDING - Config.NAME_HEIGHT) * org.thg.ui.Config.scaleY;
+		name_padding = (name_height - Config.NAME_FONT_SIZE * org.thg.ui.Config.scaleY) * 2 / 3;
 //====GGameButtons==============================================================================
 		gameButtons = new GGameButtons(this);
 		
@@ -210,7 +210,7 @@ public class DefaultGameStage extends Stage implements GGameStage {
 		
 		if(nameBg != null && !name.equals("")) batch.draw(nameBg, name_x, name_y, name_width, name_height);
 		if(nameFont != null) nameFont.draw(batch, name,
-				name_x + name_padding, name_y + name_height - name_padding);
+				org.thg.ui.GWordsFrame.FRAME_PADDING , name_y + name_height - name_padding);
 		batch.end();
 	}
 	
@@ -228,9 +228,9 @@ public class DefaultGameStage extends Stage implements GGameStage {
 	
 	private void setNameText(String name) {
 		if(name == null || name.equals(this.name)) return;
-		this.name = name;
+		this.name = name.equals("") ? name : "【" + name + "】";
 		if(nameFont != null) nameFont.dispose();
-		nameFont = THG.getFont(name, (int)Config.NAME_FONT_SIZE, Color.BLACK);
+		nameFont = THG.getFont(this.name, (int)Config.NAME_FONT_SIZE, Color.WHITE);
 	}
 	private float name_width, name_height, name_x, name_y, name_padding;
 }

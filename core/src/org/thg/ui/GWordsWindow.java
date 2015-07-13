@@ -81,11 +81,11 @@ public class GWordsWindow extends Actor implements RunningCheckable, Disposable 
 		Screen s = THG.getGame().getScreen();
 		if(!(s instanceof GGameController)) return;
 		if(((GGameController)s).getSkipFlag()) {
-			current_dialogs_length_count = current_dialog_length_limit;
+			current_dialogs_length_count = current_dialog_length_limit - 1;
 			if(interval_render_count < interval_render_num_skipping) interval_render_count ++;
 		}
 		else {
-			if(current_dialogs_length_count >= current_dialog_length_limit)
+			if(current_dialogs_length_count >= current_dialog_length_limit - 1)
 				interval_render_count ++;
 			else
 				current_dialogs_length_count += speed_show_words;
@@ -99,7 +99,7 @@ public class GWordsWindow extends Actor implements RunningCheckable, Disposable 
 	public boolean isRunning() {
 		Screen s = THG.getGame().getScreen();
 		if(!(s instanceof GGameController)) return false;
-		return current_dialogs_length_count < current_dialog_length_limit ||
+		return current_dialogs_length_count < current_dialog_length_limit - 1 ||
 				interval_render_count < 
 				(((GGameController)s).getSkipFlag() ? 
 						interval_render_num_skipping : interval_render_num_normal);
@@ -176,7 +176,6 @@ public class GWordsWindow extends Actor implements RunningCheckable, Disposable 
 					i = 2;
 				}
 			}
-			textBuffer.append('\n');
 			textBuffer.append('\n');
 			dialog_lengths[m] = textBuffer.length();
 			

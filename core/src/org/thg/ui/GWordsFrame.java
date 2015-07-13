@@ -56,8 +56,8 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 		bg = new Texture(Config.WORDS_FRAME_URL);
 		font_size = THG.FONT_SIZE;
 		setBounds(
-				(Config.SCREEN_WIDTH - Config.WORDS_FRAME_WIDTH) / 2 * Config.scaleX,
-				(Config.SCREEN_WIDTH - Config.WORDS_FRAME_WIDTH) / 2 * Config.scaleY,
+				Config.WORDS_FRAME_X * Config.scaleX,
+				Config.WORDS_FRAME_Y * Config.scaleY,
 				Config.WORDS_FRAME_WIDTH * Config.scaleX,
 				Config.WORDS_FRAME_HEIGHT * Config.scaleY);
 		
@@ -70,18 +70,18 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 		Screen s = THG.getGame().getScreen();
 		if(!(s instanceof GGameController)) return;
 		if(((GGameController)s).getSkipFlag()) {
-			show_words_count = text_length;
+			show_words_count = text_length - 1;
 			if(interval_render_count < interval_render_num_skipping) interval_render_count ++;
 		}
 		else {
-			if(show_words_count >= text_length)
+			if(show_words_count >= text_length - 1)
 				interval_render_count ++;
 			else 
 				show_words_count += speed_show_words;
 		}
 	}
 	
-	private static final float FRAME_PADDING = 20f;
+	public static final float FRAME_PADDING = 20f;
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
@@ -127,7 +127,7 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 	public boolean isRunning() {
 		Screen s = THG.getGame().getScreen();
 		if(!(s instanceof GGameController)) return false;
-		return show_words_count < text_length ||
+		return show_words_count < text_length - 1 ||
 				interval_render_count < 
 				(((GGameController)s).getSkipFlag() ? 
 						interval_render_num_skipping : interval_render_num_normal);
@@ -159,7 +159,7 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 			}
 			
 		}
-		this.text = buffer.toString();
+		this.text = "「" + buffer.toString() + "」";
 		
 		show_words_count = 0f;
 		text_length = this.text.length();
