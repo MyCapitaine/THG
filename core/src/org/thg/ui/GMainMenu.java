@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.thg.logic.THG;
 import org.thg.logic.story.driver.DefaultGameController;
+import org.thg.ui.gallery.GGalleryMenu;
 import org.thg.ui.sl.GLoadMenu;
 
 import com.badlogic.gdx.Gdx;
