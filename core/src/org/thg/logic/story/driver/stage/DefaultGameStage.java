@@ -33,7 +33,8 @@ public class DefaultGameStage extends Stage implements GGameStage {
 	private Image charactorPic;
 	private Image bg;
 	private GWordsFrame wordsFrame;
-	private Texture nameBg;
+	private Texture nameBgTexture;
+	private Image nameBg;
 	private BitmapFont nameFont;
 	private String name;
 	private GGameButtons gameButtons;
@@ -146,7 +147,7 @@ public class DefaultGameStage extends Stage implements GGameStage {
 		if(bgBuffer != null) bgBuffer.dispose();
 		if(wordsFrame != null) wordsFrame.dispose();
 		if(gameButtons != null) gameButtons.dispose();
-		if(nameBg != null) nameBg.dispose();
+		if(nameBgTexture != null) nameBgTexture.dispose();
 		if(nameFont != null) nameFont.dispose();
 	}
 	
@@ -186,12 +187,17 @@ public class DefaultGameStage extends Stage implements GGameStage {
 //====Name=================================================================================
 		name = null;
 		nameFont = null;
-		nameBg = new Texture(Config.NAME_BG_URL);
+		nameBgTexture = new Texture(Config.NAME_BG_URL);
 		name_width = Config.NAME_WIDTH * org.thg.ui.Config.scaleX;
 		name_height = Config.NAME_HEIGHT * org.thg.ui.Config.scaleY;
 		name_x = wordsFrame.getX();
 		name_y = wordsFrame.getY() + wordsFrame.getHeight() + name_height + (Config.NAME_PADDING - Config.NAME_HEIGHT) * org.thg.ui.Config.scaleY;
 		name_padding = (name_height - Config.NAME_FONT_SIZE * org.thg.ui.Config.scaleY) * 2 / 3;
+
+		nameBg = new Image(nameBgTexture);
+		nameBg.setBounds(name_x, name_y, name_width, name_height);
+		addActor(nameBg);
+		
 //====GGameButtons==============================================================================
 		gameButtons = new GGameButtons(this);
 		
@@ -199,6 +205,8 @@ public class DefaultGameStage extends Stage implements GGameStage {
 	
 	@Override
 	public void draw() {
+		if(name.equals("")) nameBg.setVisible(false);
+		else nameBg.setVisible(true);
 		super.draw();
 		drawName();
 	}
@@ -207,8 +215,6 @@ public class DefaultGameStage extends Stage implements GGameStage {
 		Batch batch = getBatch();
 		if(batch == null) return;
 		batch.begin();
-		
-		if(nameBg != null && !name.equals("")) batch.draw(nameBg, name_x, name_y, name_width, name_height);
 		if(nameFont != null) nameFont.draw(batch, name,
 				org.thg.ui.gamestage.GWordsFrame.FRAME_PADDING , name_y + name_height - name_padding);
 		batch.end();

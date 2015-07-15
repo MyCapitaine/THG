@@ -185,7 +185,7 @@ public class GWordsWindow extends Actor implements RunningCheckable, Disposable 
 		text = textBuffer.toString();
 		font = THG.getFont(text, (int)font_size, Color.WHITE);
 		
-		speed_show_words = Config.showWordsSpeed / 60f;
+		speed_show_words = Config.SHOW_WORDS_SPEED / 60f;
 	}
 	/**
 	 * <p><b>请传入之前用于初始化的同一对象的dialog</b></p>

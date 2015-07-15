@@ -13,7 +13,7 @@ public class Config {
 		CHARACTOR_PIC_POSITION_NEAR = 4,
 		CHARACTOR_PIC_POSITION_DEFAULT = CHARACTOR_PIC_POSITION_RIGHT;
 	public static final int 
-		CHARACTOR_PIC_WIDTH = 630, CHARACTOR_PIC_HEIGHT = 840;
+		CHARACTOR_PIC_WIDTH = 690, CHARACTOR_PIC_HEIGHT = 920;
 	public static final String NAME_BG_URL = "images/defaults/gamestage/nameBg.png";
 	public static final float NAME_FONT_SIZE = 28f;
 	public static final int NAME_WIDTH = 350, NAME_HEIGHT = 50, NAME_PADDING = 10;

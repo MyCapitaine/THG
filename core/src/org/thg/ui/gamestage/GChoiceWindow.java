@@ -226,7 +226,7 @@ class LabelButton extends ImageButton {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-		float padding = (getHeight() - Config.CHOICE_FONT_SIZE * lineNum * Config.scaleY) / 2;
+		float padding = (getHeight() - Config.CHOICE_FONT_SIZE * lineNum * Config.scaleY) * 2 / 3;
 		font.draw(batch, text,
 				getX() + Config.CHOICE_BUTTON_PADDING, getY() + getHeight() - padding);
 	}

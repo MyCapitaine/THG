@@ -72,6 +72,7 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 		if(!(s instanceof GGameController)) return;
 		if(((GGameController)s).getSkipFlag()) {
 			show_words_count = text_length - 1;
+			show_words_count = show_words_count < 0 ? 0 : show_words_count;
 			if(interval_render_count < interval_render_num_skipping) interval_render_count ++;
 		}
 		else {
@@ -163,7 +164,7 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 		
 		show_words_count = 0f;
 		text_length = this.text.length();
-		speed_show_words = Config.showWordsSpeed / 60f;
+		speed_show_words = Config.SHOW_WORDS_SPEED / 60f;
 		
 		interval_render_count = 0f;
 	}

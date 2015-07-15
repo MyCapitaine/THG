@@ -29,23 +29,23 @@ public class Config {
 
 //====GSettingMenu==================================================================================	
 	public static final String PROPERTIES_URL = "properties/settings.p";
+	
 	public static final float VOL_VOICE_MIN = 0f, VOL_VOICE_MAX = 1f, VOL_VOICE_STEP_SIZE = 0.01f;
 	public static float vol_voice = VOL_VOICE_MAX;
 	public static final float VOL_BGM_MIN = 0f, VOL_BGM_MAX = 1f;
 	public static float vol_bgm = VOL_BGM_MAX;
-	public static final float SHOW_WORDS_SPEED_MIN = 80f, SHOW_WORDS_SPEED_MAX = 90f,
-			SHOW_WORDS_SPEED_STEP_SIZE = 0.1f;
-	/**
-	 * 每秒显示的字数
-	 */
-	public static float showWordsSpeed = SHOW_WORDS_SPEED_MIN;
-	
+	/** 每秒显示的字数 */
+	public static final float SHOW_WORDS_SPEED = 80f;
 	public static final float DIALOG_INTERVAL_MIN = 0.8f, DIALOG_INTERVAL_MAX = 1.0f,
 			DIALOG_INTERVAL_STEP_SIZE = 0.01f;
-	/**
-	 * 每段对话的默认间隔
-	 */
+	/** 每段对话的默认间隔 */
 	public static float dialogInterval = DIALOG_INTERVAL_MIN;
+	/** 使用中的皮肤 */
+	public static GameSkin using_skin = GameSkin.DEFAULT;
+	public enum GameSkin {
+		DEFAULT, 博丽灵梦, 射命丸文, 东风谷早苗
+	}
+	
 	public static final String SETTING_MENU_BG_URL = "images/ui/settingmenu/background.png";
 	public static final String SETTING_MENU_RETURN_BUTTON_URL = "images/ui/settingmenu/returnButton.png";
 	public static final String SETTING_MENU_VOL_LABEL_URL = "images/ui/settingmenu/volLabel.png";	
