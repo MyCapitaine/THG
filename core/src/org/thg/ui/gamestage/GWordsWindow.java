@@ -1,4 +1,4 @@
-package org.thg.ui;
+package org.thg.ui.gamestage;
 
 import java.math.BigDecimal;
 
@@ -6,6 +6,7 @@ import org.thg.logic.THG;
 import org.thg.logic.story.api.GDialog;
 import org.thg.logic.story.api.GGameController;
 import org.thg.logic.story.api.RunningCheckable;
+import org.thg.ui.Config;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -55,10 +56,10 @@ public class GWordsWindow extends Actor implements RunningCheckable, Disposable 
 	 * 你不比为此设置宽高
 	 */
 	public GWordsWindow() {
-		font_size = 22f;
+		font_size = 28f;
 		bg = new Texture(Config.WORDS_WINDOW_URL);
-		setBounds((Config.SCREEN_WIDTH - Config.WORDS_WINDOW_WIDTH) / 2 * Config.scaleX,
-				(Config.SCREEN_HEIGHT - Config.WORDS_WINDOW_HEIGHT) / 2 * Config.scaleY,
+		setBounds(Config.WORDS_WINDOW_X * Config.scaleX,
+				Config.WORDS_WINDOW_Y * Config.scaleY,
 				Config.WORDS_WINDOW_WIDTH * Config.scaleX,
 				Config.WORDS_WINDOW_HEIGHT * Config.scaleY);
 	}
@@ -105,7 +106,7 @@ public class GWordsWindow extends Actor implements RunningCheckable, Disposable 
 						interval_render_num_skipping : interval_render_num_normal);
 	}
 	
-	private static final float WINDOW_PADDING = 20f;
+	private static final float WINDOW_PADDING = 35f;
 	
 	@Override
 	public void setHeight(float height) {
@@ -176,6 +177,7 @@ public class GWordsWindow extends Actor implements RunningCheckable, Disposable 
 					i = 2;
 				}
 			}
+			textBuffer.append('\n');
 			textBuffer.append('\n');
 			dialog_lengths[m] = textBuffer.length();
 			

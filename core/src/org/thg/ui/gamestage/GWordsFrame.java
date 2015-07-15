@@ -1,10 +1,11 @@
-package org.thg.ui;
+package org.thg.ui.gamestage;
 
 import java.math.BigDecimal;
 
 import org.thg.logic.THG;
 import org.thg.logic.story.api.GGameController;
 import org.thg.logic.story.api.RunningCheckable;
+import org.thg.ui.Config;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -27,7 +28,7 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 	 * 横纵最多容纳的字数，随长宽的设定而改变
 	 */
 	@SuppressWarnings("unused")
-	private int rowWordsNum, colWordsNum;
+	private float rowWordsNum, colWordsNum;
 	/**
 	 * 对话暂停的间隔渲染次数
 	 */
@@ -99,16 +100,14 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 	@Override
 	public void setHeight(float height) {
 		super.setHeight(height);
-		float f = (height - 2 * FRAME_PADDING * org.thg.ui.Config.scaleY) / 
+		colWordsNum = (height - 2 * FRAME_PADDING * org.thg.ui.Config.scaleY) / 
 				(font_size * org.thg.ui.Config.scaleY);
-		colWordsNum = new BigDecimal(f).setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
 	}
 	@Override
 	public void setWidth(float width) {
 		super.setWidth(width);
-		float f = ((width - 2 * FRAME_PADDING * org.thg.ui.Config.scaleX) /
+		rowWordsNum = ((width - 2 * FRAME_PADDING * org.thg.ui.Config.scaleX) /
 				(font_size * org.thg.ui.Config.scaleX));
-		rowWordsNum = new BigDecimal(f).setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
 	}
 	
 	@Override
@@ -136,9 +135,10 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 	public void setText(String text) {
 		if(font != null)font.dispose();
 		if(text == null) text = "";
+		else text = "「" + text + "」 ";
 		font = THG.getFont(text, (int)font_size, Color.WHITE);
 		char[] charlist = text.toCharArray();
-		int i = 0, row_count_max = 2 * rowWordsNum;
+		int i = 0, row_count_max = new BigDecimal(2 * rowWordsNum).setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
 		StringBuffer buffer = new StringBuffer(row_count_max);
 		for(char c : charlist) {
 			//字符占半格，汉字占整格（，换行则重新计数）
@@ -159,7 +159,7 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 			}
 			
 		}
-		this.text = "「" + buffer.toString() + "」";
+		this.text = buffer.toString();
 		
 		show_words_count = 0f;
 		text_length = this.text.length();

@@ -8,10 +8,10 @@ import org.thg.logic.story.api.GSceneChangeModel;
 import org.thg.logic.story.api.GShowWordsModel;
 import org.thg.logic.story.driver.Config;
 import org.thg.logic.story.driver.DefaultGameController;
-import org.thg.ui.GChoiceWindow;
-import org.thg.ui.GGameButtons;
-import org.thg.ui.GWordsFrame;
 import org.thg.ui.UiUtil;
+import org.thg.ui.gamestage.GChoiceWindow;
+import org.thg.ui.gamestage.GGameButtons;
+import org.thg.ui.gamestage.GWordsFrame;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -210,7 +210,7 @@ public class DefaultGameStage extends Stage implements GGameStage {
 		
 		if(nameBg != null && !name.equals("")) batch.draw(nameBg, name_x, name_y, name_width, name_height);
 		if(nameFont != null) nameFont.draw(batch, name,
-				org.thg.ui.GWordsFrame.FRAME_PADDING , name_y + name_height - name_padding);
+				org.thg.ui.gamestage.GWordsFrame.FRAME_PADDING , name_y + name_height - name_padding);
 		batch.end();
 	}
 	

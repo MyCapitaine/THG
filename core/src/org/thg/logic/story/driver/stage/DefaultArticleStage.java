@@ -5,9 +5,9 @@ import org.thg.logic.story.api.GArticleScene;
 import org.thg.logic.story.api.GArticleStage;
 import org.thg.logic.story.api.GDialog;
 import org.thg.logic.story.driver.DefaultGameController;
-import org.thg.ui.GGameButtons;
-import org.thg.ui.GWordsWindow;
 import org.thg.ui.UiUtil;
+import org.thg.ui.gamestage.GGameButtons;
+import org.thg.ui.gamestage.GWordsWindow;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
