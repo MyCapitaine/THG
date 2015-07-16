@@ -9,7 +9,6 @@ import org.thg.ui.UiUtil;
 import org.thg.ui.gamestage.GGameButtons;
 import org.thg.ui.gamestage.GWordsWindow;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -42,12 +41,9 @@ public class DefaultArticleStage extends Stage implements GArticleStage {
 		wordsWindow.setDialog(dialog);
 	}
 	
-	private Texture bgBuffer;
 	@Override
 	public void setBg(int bgNum) {
-		if(bgBuffer != null) bgBuffer.dispose();
-		bgBuffer = ResourceFactory.getBg(bgNum);
-		bg.setDrawable(UiUtil.resize(new TextureRegion(bgBuffer)));
+		bg.setDrawable(UiUtil.resize(new TextureRegion(ResourceFactory.getBg(bgNum))));
 	}
 	
 	@Override
@@ -74,7 +70,6 @@ public class DefaultArticleStage extends Stage implements GArticleStage {
 	@Override
 	public void dispose() {
 		super.dispose();
-		if(bgBuffer != null) bgBuffer.dispose();
 		if(wordsWindow != null) wordsWindow.dispose();
 		if(gameButtons != null) gameButtons.dispose();
 		

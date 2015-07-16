@@ -122,12 +122,9 @@ public class DefaultGameStage extends Stage implements GGameStage {
 		DefaultGameController.setBgm(bgmNum);
 	}
 	
-	private Texture bgBuffer;
 	@Override
 	public void setBg(int bgNum) {
-		if(bgBuffer != null) bgBuffer.dispose();
-		bgBuffer = ResourceFactory.getBg(bgNum);
-		bg.setDrawable(UiUtil.resize(new TextureRegion(bgBuffer)));
+		bg.setDrawable(UiUtil.resize(new TextureRegion(ResourceFactory.getBg(bgNum))));
 	}
 	@Override
 	public void setCharactorPicEffect(int eNum) {
@@ -144,7 +141,6 @@ public class DefaultGameStage extends Stage implements GGameStage {
 	public void dispose() {
 		super.dispose();
 		if(voice != null) voice.dispose();
-		if(bgBuffer != null) bgBuffer.dispose();
 		if(wordsFrame != null) wordsFrame.dispose();
 		if(gameButtons != null) gameButtons.dispose();
 		if(nameBgTexture != null) nameBgTexture.dispose();

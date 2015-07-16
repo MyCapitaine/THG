@@ -12,10 +12,14 @@ public class ResourceFactory {
 	 * 在进入次日时清空缓存
 	 */
 	public static void clearPool() {
-		Iterator<Entry<Integer, Texture>> iter = cpPool.entrySet().iterator();
-		while(iter.hasNext())
-			iter.next().getValue().dispose();
+		Iterator<Entry<Integer, Texture>> cpIter = cpPool.entrySet().iterator();
+		while(cpIter.hasNext())
+			cpIter.next().getValue().dispose();
 		cpPool.clear();
+		Iterator<Entry<Integer, Texture>> bgIter = bgPool.entrySet().iterator();
+		while(bgIter.hasNext())
+			bgIter.next().getValue().dispose();
+		bgPool.clear();
 		//TODO
 	}
 	
@@ -27,10 +31,14 @@ public class ResourceFactory {
 		return null;
 	}
 	
+	private static HashMap<Integer, Texture> bgPool = new HashMap<Integer, Texture>();
 	public static Texture getBg(int num) {
-		String s = Integer.toString(10000 + num);
+		if(num == 0) return null;
+		if(bgPool.get(num) != null) return bgPool.get(num);
 		try {
-			return new Texture("images/resources/bg/" + s + ".png");
+			Texture t = new Texture("images/resources/bg/" + Integer.toString(10000 + num) + ".png");
+			bgPool.put(num, t);
+			return t;
 		}catch(Exception e) {
 			System.err.println("ResourceFactory.getBg() error");
 			return null;
@@ -39,7 +47,6 @@ public class ResourceFactory {
 	
 	
 	private static HashMap<Integer, Texture> cpPool = new HashMap<Integer, Texture>();
-	
 	public static Texture getCharactorPic(int num) {
 		if(num == 0) return null;
 		if(cpPool.get(num) != null) return cpPool.get(num);
