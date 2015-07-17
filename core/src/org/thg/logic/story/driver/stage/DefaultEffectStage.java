@@ -8,7 +8,7 @@ import org.thg.logic.story.api.GEffectScene;
 import org.thg.logic.story.api.GEffectStage;
 import org.thg.logic.story.api.GGameController;
 import org.thg.logic.story.driver.DefaultGameController;
-import org.thg.logic.story.driver.stage.effectFunc.Effect_change;
+import org.thg.logic.story.driver.stage.effectFunc.Effect_change_func;
 import org.thg.ui.UiUtil;
 
 import com.badlogic.gdx.Screen;
@@ -78,7 +78,7 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 	private enum Effect {
 		切换_1(1){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
-				return stage.new Effect_change_1(params);
+				return stage.new Effect_change(params);
 			}
 		},
 		晃动(11){
@@ -140,14 +140,15 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 		@Override
 		public boolean isRunning() { return false; }
 	}
-	
+	/** 默认位深 */
+	private static final int DEFAULT_DEPTH = 4;
 	
 	private static final float TIME_LIMIT_COUNT = 60f;
 	private static final float 
 		EFFECT_CHANGE_SPEED_NORMAL = 1f,
 		EFFECT_CHANGE_SPEED_SKIP = 10f;			
 	/** 明显的场景切换，此为场景切换的第一种模式 */
-	private class Effect_change_1 extends EffectAction {
+	private class Effect_change extends EffectAction {
 		private final int model;
 		private final Image afterSceneBgImage;
 		private final Texture afterSceneBgTexture;
@@ -163,7 +164,7 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 		 * <p> 切换后的背景编号	 001, 002...
 		 * 
 		 */
-		public Effect_change_1(String... params) {
+		public Effect_change(String... params) {
 			model = Integer.parseInt(params[0]);
 			// 获取新背景，构造Image对象
 			afterSceneBgTexture = ResourceFactory.getBg(Integer.parseInt(params[1]));
@@ -175,7 +176,7 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 			//获取参数
 			width = afterSceneBgTexture.getWidth();
 			height = afterSceneBgTexture.getHeight();
-			depth = afterSceneBgTexture.getDepth();
+			depth = afterSceneBgTexture.getDepth() == 0 ? DEFAULT_DEPTH : afterSceneBgTexture.getDepth();
 			//获取pixmap对象和byte[]数组
 			TextureData td = afterSceneBgTexture.getTextureData();
 			td.prepare();
@@ -206,9 +207,26 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 			else renderCount += EFFECT_CHANGE_SPEED_NORMAL;
 			byte[] current;
 			switch(model) {
+//			case 2 :
+//				current = Effect_change.effect_change_2(afterBgData, width, height, depth,
+//						renderCount > TIME_LIMIT_COUNT ? TIME_LIMIT_COUNT : renderCount, TIME_LIMIT_COUNT);
+//				break;
+//			case 3 :
+//				current = Effect_change.effect_change_3(afterBgData, width, height, depth,
+//						renderCount > TIME_LIMIT_COUNT ? TIME_LIMIT_COUNT : renderCount, TIME_LIMIT_COUNT);
+//				break;
+//			case 4 :
+//				current = Effect_change.effect_change_4(afterBgData, width, height, depth,
+//						renderCount > TIME_LIMIT_COUNT ? TIME_LIMIT_COUNT : renderCount, TIME_LIMIT_COUNT);
+//				break;
+//			case 5 :
+//				current = Effect_change.effect_change_5(afterBgData, width, height, depth,
+//						renderCount > TIME_LIMIT_COUNT ? TIME_LIMIT_COUNT : renderCount, TIME_LIMIT_COUNT);
+//				break;
+//				TODO
 			case 1 :
 			default :
-				current = Effect_change.effect_change_1(afterBgData, width, height, depth,
+				current = Effect_change_func.effect_change_1(afterBgData, width, height, depth,
 						renderCount > TIME_LIMIT_COUNT ? TIME_LIMIT_COUNT : renderCount, TIME_LIMIT_COUNT);
 			}
 			
@@ -226,8 +244,8 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 	private class Effect_shake extends EffectAction {
 		/**
 		 * @param params 参数说明
-		 * <p>
-		 * 
+		 * <p> 振幅大小 	1, 0
+		 * <p> 时间长短	1, 0
 		 */
 		public Effect_shake(String... params) {
 		}
@@ -243,12 +261,26 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 	
 	/** 模糊，也可以解模糊 */
 	private class Effect_misty extends EffectAction {
+//		byte[] bl;
+//		ByteBuffer bb;
+//		Pixmap pixmap;
 		/**
 		 * @param params 参数说明
 		 * <p>
 		 * 
 		 */
 		public Effect_misty(String... params) {
+			
+//			pixmap = ScreenUtils.getFrameBufferPixmap(0, 0, 800, 600);
+//			bb = pixmap.getPixels();
+//			bl = new byte[bb.capacity()];
+//			bb.get(bl);
+//			bb.clear();
+//			bb.put(org.thg.logic.story.driver.stage.effectFunc.Effect_misty.effect_misty(bl, 800, 600, 4, 0, 0));
+//			bb.clear();
+//			Texture t = new Texture(pixmap);
+//			bg.setDrawable(new TextureRegionDrawable(new TextureRegion(t)));
+			
 		}
 		@Override
 		public boolean act(float delta) {
@@ -256,9 +288,12 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 			if(!isRunning) return true;
 			
 			
+			
 			return false;
 		}
 	}
+	
+	
 	
 	/** 睁眼，并带上眨眼 */
 	private class Effect_open_eyes extends EffectAction {
