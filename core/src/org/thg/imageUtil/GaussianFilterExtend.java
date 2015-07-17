@@ -1,0 +1,96 @@
+package org.thg.imageUtil;
+
+import java.awt.image.Kernel;
+
+import com.jhlabs.image.ConvolveFilter;
+import com.jhlabs.image.GaussianFilter;
+import com.jhlabs.image.PixelUtils;
+
+/**
+ * 高斯模糊的扩展
+ * 
+ * <p>{@link GaussianFilter}
+ */
+public class GaussianFilterExtend {
+	
+	/**<p>一个高斯模糊在数组级上转换的重载版本 
+	 * <p>适应byte[]类型
+	 * <p>见:
+	 * <p>{@link GaussianFilter#convolveAndTranspose(Kernel, int[], int[], int, int, boolean, boolean, boolean, int)}*/
+	public static void convolveAndTranspose(Kernel kernel, byte[] inBytes, byte[] outBytes, int width, int height, boolean alpha, boolean premultiply, boolean unpremultiply, int edgeAction) {
+		float[] matrix = kernel.getKernelData( null );
+		int cols = kernel.getWidth();
+		int cols2 = cols/2;
+
+		for (int y = 0; y < height; y++) {
+			int index = y;
+			int ioffset = y*width;
+			for (int x = 0; x < width; x++) {
+				float r = 0, g = 0, b = 0, a = 0;
+				int moffset = cols2;
+				for (int col = -cols2; col <= cols2; col++) {
+					float f = matrix[moffset+col];
+
+					if (f != 0) {
+						int ix = x+col;
+						if ( ix < 0 ) {
+							if ( edgeAction == ConvolveFilter.CLAMP_EDGES )
+								ix = 0;
+							else if ( edgeAction == ConvolveFilter.WRAP_EDGES )
+								ix = (x+width) % width;
+						} else if ( ix >= width) {
+							if ( edgeAction == ConvolveFilter.CLAMP_EDGES )
+								ix = width-1;
+							else if ( edgeAction == ConvolveFilter.WRAP_EDGES )
+								ix = (x+width) % width;
+						}
+//						int rgb = inPixels[ioffset+ix];
+//						int pa = (rgb >> 24) & 0xff;
+//						int pr = (rgb >> 16) & 0xff;
+//						int pg = (rgb >> 8) & 0xff;
+//						int pb = rgb & 0xff;
+//						TODO
+						int h = (ioffset + ix) * 4;
+						int pa = inBytes[h + 3];
+						int pr = inBytes[h + 2];
+						int pg = inBytes[h + 1];
+						int pb = inBytes[h];
+						
+						
+						
+						if ( premultiply ) {
+							float a255 = pa * (1.0f / 255.0f);
+							pr *= a255;
+							pg *= a255;
+							pb *= a255;
+						}
+						a += f * pa;
+						r += f * pr;
+						g += f * pg;
+						b += f * pb;
+					}
+				}
+				if ( unpremultiply && a != 0 && a != 255 ) {
+					float f = 255.0f / a;
+					r *= f;
+					g *= f;
+					b *= f;
+				}
+				int ia = alpha ? PixelUtils.clamp((int)(a+0.5)) : 0xff;
+				int ir = PixelUtils.clamp((int)(r+0.5));
+				int ig = PixelUtils.clamp((int)(g+0.5));
+				int ib = PixelUtils.clamp((int)(b+0.5));
+//				outPixels[index] = (ia << 24) | (ir << 16) | (ig << 8) | ib;
+//				TODO
+				outBytes[4 * index + 3] = (byte)ia;
+				outBytes[4 * index + 2] = (byte)ir;
+				outBytes[4 * index + 1] = (byte)ig;
+				outBytes[4 * index] = (byte)ib;
+				
+				
+				
+                index += height;
+			}
+		}
+	}
+}
