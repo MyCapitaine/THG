@@ -1,11 +1,11 @@
-package com.mygdx.game;
+package org.thg.enter;
 
 import org.thg.logic.THG;
 import org.thg.ui.GLoadingMenu;
 
 import com.badlogic.gdx.Game;
 
-public class DemoGame extends Game {
+public class TouHouGal extends Game {
 	
 	@Override
 	public void create () {

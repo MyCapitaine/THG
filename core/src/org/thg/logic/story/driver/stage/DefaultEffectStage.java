@@ -9,6 +9,7 @@ import org.thg.logic.story.api.GEffectStage;
 import org.thg.logic.story.api.GGameController;
 import org.thg.logic.story.driver.DefaultGameController;
 import org.thg.logic.story.driver.stage.effectFunc.Effect_change_func;
+import org.thg.logic.story.driver.stage.effectFunc.Effect_shake_func;
 import org.thg.ui.UiUtil;
 
 import com.badlogic.gdx.Screen;
@@ -143,7 +144,8 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 	/** 默认位深 */
 	private static final int DEFAULT_DEPTH = 4;
 	
-	private static final float TIME_LIMIT_COUNT = 60f;
+	
+	private static final float EFFECT_CHANGE_TIME_LIMIT_COUNT = 60f;
 	private static final float 
 		EFFECT_CHANGE_SPEED_NORMAL = 1f,
 		EFFECT_CHANGE_SPEED_SKIP = 10f;			
@@ -193,7 +195,7 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 		}
 		@Override
 		public boolean act(float delta) {
-			if(renderCount >= TIME_LIMIT_COUNT) {
+			if(renderCount >= EFFECT_CHANGE_TIME_LIMIT_COUNT) {
 				isRunning = false;
 				bg.setDrawable(new TextureRegionDrawable(new TextureRegion(afterSceneBgTexture)));
 				afterSceneBgImage.remove();
@@ -227,7 +229,7 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 			case 1 :
 			default :
 				current = Effect_change_func.effect_change_1(afterBgData, width, height, depth,
-						renderCount > TIME_LIMIT_COUNT ? TIME_LIMIT_COUNT : renderCount, TIME_LIMIT_COUNT);
+						renderCount > EFFECT_CHANGE_TIME_LIMIT_COUNT ? EFFECT_CHANGE_TIME_LIMIT_COUNT : renderCount, EFFECT_CHANGE_TIME_LIMIT_COUNT);
 			}
 			
 			pixmapByteBuffer.put(current);
@@ -240,19 +242,31 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 		}
 	}
 
-	/** 晃动，地震来了的感觉 */
+	
+	private static final float 
+		EFFECT_SHAKE_SPEED_NORMAL = 1f,
+		EFFECT_SHAKE_SPEED_SKIP = 8f;	
+	private static final float EFFECT_SHAKE_TIME_LIMIT_COUNT = 20f;
+	/** 晃动  */
 	private class Effect_shake extends EffectAction {
-		/**
-		 * @param params 参数说明
-		 * <p> 振幅大小 	1, 0
-		 * <p> 时间长短	1, 0
-		 */
+		private float renderCount = 0;
 		public Effect_shake(String... params) {
+			Effect_shake_func.setSeed(System.currentTimeMillis());
 		}
 		@Override
 		public boolean act(float delta) {
-			// TODO Auto-generated method stub
-			if(!isRunning) return true;
+			if(renderCount >= EFFECT_SHAKE_TIME_LIMIT_COUNT) {
+				bg.setPosition(0, 0);
+				isRunning = false;
+				return true;
+			}
+			Screen s = THG.getGame().getScreen();
+			if(s instanceof GGameController && ((GGameController)s).getSkipFlag())
+				renderCount += EFFECT_SHAKE_SPEED_SKIP;
+			else renderCount += EFFECT_SHAKE_SPEED_NORMAL;
+			
+			
+			//TODO
 			
 			
 			return false;
