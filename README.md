@@ -1,2 +1,2 @@
 # THG
-基于libgdx的galgame引擎
+libgdx引擎的自学路
