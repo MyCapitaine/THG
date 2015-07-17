@@ -3,6 +3,7 @@ package org.thg.ui;
 import java.util.ArrayList;
 
 import org.thg.logic.THG;
+import org.thg.logic.factorys.ResourceFactory;
 import org.thg.logic.story.driver.DefaultGameController;
 import org.thg.ui.gallery.GGalleryMenu;
 import org.thg.ui.sl.GLoadMenu;
@@ -131,6 +132,7 @@ public class GMainMenu implements Screen, Disposable {
 		exitButton.getStyle().imageOver = UiUtil.resize(tr[0][2]);
 		exitButton.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				ResourceFactory.clearPool();
 				Gdx.app.exit();
 				return true;
 			}
