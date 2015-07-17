@@ -47,13 +47,14 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 	@Override
 	public void setScene(GEffectScene effectScene) {
 		try {
-			effect = Effect.values()[effectScene.getEffectNum()].
+			effect = Effect.getEffect(effectScene.getEffectNum()).
 					createEffect(this, effectScene.getParams());
 		}
 		catch(Exception e) {
 			effect = this.new Effect_unsupport();
 			System.out.println("effect error or unsupport");
 		}
+		addAction(effect);
 		
 	}
 	
@@ -75,52 +76,62 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 	}
 	/** 显而易见 */
 	private enum Effect {
-		切换_1{
+		切换_1(1){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return stage.new Effect_change_1(params);
 			}
 		},
-		晃动{
+		晃动(11){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return stage.new Effect_shake(params);
 			}
 		},
-		模糊{
+		模糊(21){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return stage.new Effect_misty(params);
 			}
 		}, 
-		睁眼{
+		睁眼(31){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return stage.new Effect_open_eyes(params);
 			}
 		}, 
-		醉{
+		醉(41){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return stage.new Effect_drunk(params);
 			}
 		}, 
-		闪瞎{
+		闪瞎(51){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return stage.new Effect_blind(params);
 			}
 		}, 
-		雪花{
+		雪花(61){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return stage.new Effect_snowflake(params);
 			}
 		}, 
-		聚焦{
+		聚焦(71){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return stage.new Effect_focus(params);
 			}
 		}, 
-		放大{
+		放大(81){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return stage.new Effect_amplify(params);
 			}
 		};
-		public abstract EffectAction createEffect(DefaultEffectStage stage, String... params);
+		private Effect(int index) { this.index = index; }
+		int index;
+		abstract EffectAction createEffect(DefaultEffectStage stage, String... params);
+		static Effect getEffect(int index) {
+			Effect[] es = Effect.values();
+			for(Effect e : es)
+				if(e.index == index)
+					return e;
+			return null;
+		}
+		
 	}
 	/** 不支持的效果 */
 	private class Effect_unsupport extends EffectAction {
@@ -137,6 +148,7 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 		EFFECT_CHANGE_SPEED_SKIP = 10f;			
 	/** 明显的场景切换，此为场景切换的第一种模式 */
 	private class Effect_change_1 extends EffectAction {
+		private final int model;
 		private final Image afterSceneBgImage;
 		private final Texture afterSceneBgTexture;
 		private final byte[] afterBgData;
@@ -147,12 +159,16 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 		private float renderCount;
 		/**
 		 * @param params 参数说明
+		 * <p> 切换模式		 001, 002...
 		 * <p> 切换后的背景编号	 001, 002...
 		 * 
 		 */
 		public Effect_change_1(String... params) {
+			model = Integer.parseInt(params[0]);
 			// 获取新背景，构造Image对象
-			afterSceneBgTexture = ResourceFactory.getBg(Integer.parseInt(params[0]));
+			afterSceneBgTexture = ResourceFactory.getBg(Integer.parseInt(params[1]));
+			
+			
 			afterSceneBgImage = new Image();
 			afterSceneBgImage.setSize(bg.getWidth(), bg.getHeight());
 			defaultEffectStage.addActor(afterSceneBgImage);
@@ -177,7 +193,8 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 		@Override
 		public boolean act(float delta) {
 			if(renderCount >= TIME_LIMIT_COUNT) {
-				isRunning = true;
+				isRunning = false;
+				bg.setDrawable(new TextureRegionDrawable(new TextureRegion(afterSceneBgTexture)));
 				afterSceneBgImage.remove();
 				if(changableTexture != null) changableTexture.dispose();
 				changablePixmap.dispose();
@@ -187,9 +204,14 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 			if(s instanceof GGameController && ((GGameController)s).getSkipFlag())
 				renderCount += EFFECT_CHANGE_SPEED_SKIP;
 			else renderCount += EFFECT_CHANGE_SPEED_NORMAL;
+			byte[] current;
+			switch(model) {
+			case 1 :
+			default :
+				current = Effect_change.effect_change_1(afterBgData, width, height, depth,
+						renderCount > TIME_LIMIT_COUNT ? TIME_LIMIT_COUNT : renderCount, TIME_LIMIT_COUNT);
+			}
 			
-			byte[] current = Effect_change.effect_change_1(afterBgData, width, height, depth,
-					renderCount > TIME_LIMIT_COUNT ? TIME_LIMIT_COUNT : renderCount, TIME_LIMIT_COUNT);
 			pixmapByteBuffer.put(current);
 			pixmapByteBuffer.clear();
 			if(changableTexture != null) changableTexture.dispose();

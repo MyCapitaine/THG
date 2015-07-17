@@ -111,6 +111,12 @@ public class GDayFactory {
 				scene = new DefaultEffectScene();
 				try { ((GEffectScene)scene).setEffectNum(Integer.parseInt(sceneDatasMap.get(EFFECT_NUM))); }
 				catch(Exception e) { if(DEBUG) System.err.println("scene effectNum error");}
+				
+				Object o = sceneDatasMap.get(EFFECT_PARAMS);
+				if(o == null || o.toString().equals("")) ((GEffectScene)scene).setParams();
+				else ((GEffectScene)scene).setParams(o.toString().split(EFFECT_PARAMS_SPLIT_SIGN));
+				
+				
 				break;
 			case '4' :
 				scene = new DefaultDeadScene();
@@ -230,5 +236,8 @@ public class GDayFactory {
 		WORDS = "wd",
 		CHOICE = "cho",
 		NAME = "nam",
-		EFFECT_NUM = "efn";
+		EFFECT_NUM = "efn",
+		EFFECT_PARAMS = "pas";
+	private static final String
+		EFFECT_PARAMS_SPLIT_SIGN = "(_+)";
 }

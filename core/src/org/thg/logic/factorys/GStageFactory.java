@@ -10,6 +10,7 @@ import org.thg.logic.story.api.GGameStage;
 import org.thg.logic.story.api.GScene;
 import org.thg.logic.story.api.GTurnPageStage;
 import org.thg.logic.story.driver.stage.DefaultArticleStage;
+import org.thg.logic.story.driver.stage.DefaultEffectStage;
 import org.thg.logic.story.driver.stage.DefaultGameStage;
 import org.thg.logic.story.driver.stage.DefaultTurnPageStage;
 
@@ -28,8 +29,11 @@ public class GStageFactory {
 		return new DefaultTurnPageStage(d.getDayStr());
 	}
 	public static GEffectStage createEffectStage(GEffectScene eScene) {
-		//TODO
-		return null;
+		GEffectStage es = new DefaultEffectStage();
+		es.setScene(eScene);
+		es.setBg(eScene.getBackground());
+		es.setBgm(eScene.getBgMusic());
+		return es;
 	}
 	
 	public static GArticleStage createArticleStage(GArticleScene aScene) {
