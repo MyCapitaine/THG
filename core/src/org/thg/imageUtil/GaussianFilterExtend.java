@@ -20,8 +20,8 @@ public class GaussianFilterExtend extends GaussianFilter {
 		byte[] newData = new byte[bytes.length];
 		Kernel kernel = makeKernel(radius);
 		if(radius > 0) {
-			convolveAndTranspose(kernel, bytes, buffer, width, height, true, true, false, CLAMP_EDGES);
-			convolveAndTranspose(kernel, buffer, newData, height, width, true, false, true, CLAMP_EDGES);
+			convolveAndTranspose(kernel, bytes, buffer, width, height, false, false, false, CLAMP_EDGES);
+			convolveAndTranspose(kernel, buffer, newData, height, width, false, false, false, CLAMP_EDGES);
 		}
 		
 		return newData;
@@ -32,7 +32,7 @@ public class GaussianFilterExtend extends GaussianFilter {
 	
 	
 	/**<p>一个高斯模糊在数组级上转换的重载版本 
-	 * <p>适应byte[]类型
+	 * <p>适应byte[]类型,RGBA
 	 * <p>见:
 	 * <p>{@link GaussianFilter#convolveAndTranspose(Kernel, int[], int[], int, int, boolean, boolean, boolean, int)}*/
 	public static void convolveAndTranspose(Kernel kernel, byte[] inBytes, byte[] outBytes, int width, int height, boolean alpha, boolean premultiply, boolean unpremultiply, int edgeAction) {
@@ -67,12 +67,11 @@ public class GaussianFilterExtend extends GaussianFilter {
 //						int pr = (rgb >> 16) & 0xff;
 //						int pg = (rgb >> 8) & 0xff;
 //						int pb = rgb & 0xff;
-//						TODO
 						int h = (ioffset + ix) * 4;
-						int pa = inBytes[h + 3];
-						int pr = inBytes[h + 2];
-						int pg = inBytes[h + 1];
-						int pb = inBytes[h];
+						int pa = inBytes[h + 3] & 0xff;
+						int pr = inBytes[h] & 0xff;
+						int pg = inBytes[h + 1] & 0xff;
+						int pb = inBytes[h + 2] & 0xff;
 //						
 //						
 						
@@ -99,11 +98,10 @@ public class GaussianFilterExtend extends GaussianFilter {
 				int ig = PixelUtils.clamp((int)(g+0.5));
 				int ib = PixelUtils.clamp((int)(b+0.5));
 //				outPixels[index] = (ia << 24) | (ir << 16) | (ig << 8) | ib;
-//				TODO
 				outBytes[4 * index + 3] = (byte)ia;
-				outBytes[4 * index + 2] = (byte)ir;
+				outBytes[4 * index] = (byte)ir;
 				outBytes[4 * index + 1] = (byte)ig;
-				outBytes[4 * index] = (byte)ib;
+				outBytes[4 * index + 2] = (byte)ib;
 //
 //				
 				

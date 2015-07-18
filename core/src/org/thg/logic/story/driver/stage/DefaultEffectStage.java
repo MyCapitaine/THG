@@ -62,47 +62,47 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 
 	/** 显而易见 */
 	private enum Effect {
-		切换_1(1){
+		切换(01){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return new Effect_change(stage, params);
 			}
 		},
-		晃动_1(11){
+		晃动(11){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return new Effect_shake(stage, params);
 			}
 		},
-		模糊_1(21){
+		模糊(21){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return new Effect_misty(stage, params);
 			}
 		}, 
-		睁眼_1(31){
+		睁眼(31){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return new Effect_open_eyes(stage, params);
 			}
 		}, 
-		醉_1(41){
+		醉了(41){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return new Effect_drunk(stage, params);
 			}
 		}, 
-		闪瞎_1(51){
+		闪瞎(51){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return new Effect_blind(stage, params);
 			}
 		}, 
-		雪花_1(61){
+		雪花(61){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return new Effect_snowflake(stage, params);
 			}
 		}, 
-		聚焦_1(71){
+		聚焦(71){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return new Effect_focus(stage, params);
 			}
 		}, 
-		放大_1(81){
+		放大(81){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return new Effect_amplify(stage, params);
 			}

@@ -2,10 +2,12 @@ package org.thg.logic.factorys;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map.Entry;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Disposable;
 
 public class ResourceFactory {
 	/**
@@ -20,7 +22,18 @@ public class ResourceFactory {
 		while(bgIter.hasNext())
 			bgIter.next().getValue().dispose();
 		bgPool.clear();
+		
+		Iterator<Disposable> iter = trashList.iterator();
+		while(iter.hasNext()) {
+			iter.next().dispose();
+		}
+		trashList.clear();
 		//TODO
+	}
+	
+	private static LinkedList<Disposable> trashList = new LinkedList<Disposable>();
+	public static void putTrash(Disposable trash) {
+		trashList.add(trash);
 	}
 	
 	

@@ -30,9 +30,11 @@ public class GStageFactory {
 	}
 	public static GEffectStage createEffectStage(GEffectScene eScene) {
 		GEffectStage es = new DefaultEffectStage();
-		es.setScene(eScene);
 		es.setBg(eScene.getBackground());
 		es.setBgm(eScene.getBgMusic());
+		
+		//setbg应该先被调用
+		es.setScene(eScene);
 		return es;
 	}
 	

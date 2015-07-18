@@ -16,16 +16,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-/** 明显的场景切换，此为场景切换的第一种模式 */
+/** 明显的场景切换效果 */
 public class Effect_change extends EffectAction {
-	
 	private static final float EFFECT_CHANGE_TIME_LIMIT_COUNT = 48f;
 	private static final float 
 		EFFECT_CHANGE_SPEED_NORMAL = 1f,
 		EFFECT_CHANGE_SPEED_SKIP = 8f;		
 	private DefaultEffectStage defaultEffectStage;
 	
+	/** 切换模式编号 */
 	private final int model;
+	
 	private final Image afterSceneBgImage;
 	private final Texture afterSceneBgTexture;
 	private final byte[] afterBgData;
@@ -63,7 +64,7 @@ public class Effect_change extends EffectAction {
 		afterBgData = new byte[pixmapByteBuffer.capacity()];
 		pixmapByteBuffer.get(afterBgData);
 		pixmapByteBuffer.clear();
-		//一个texture缓存对象
+		//一个texture对象
 		changableTexture = null;
 		//计数器
 		renderCount = 0f;
