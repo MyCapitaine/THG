@@ -1,33 +1,33 @@
 package org.thg.logic.story.driver.stage.effectFunc;
 
+import org.thg.imageUtil.GaussianFilterExtend;
+import org.thg.ui.Config;
+
 public class Effect_misty_func {
 	
-	
-	
-	public static byte[] effect_misty(final byte[] sceneData, final int width, final int height,
+	private static float MAX_RADIUS = 30f * Config.scaleX;
+	/**
+	 * 非回复的模糊
+	 */
+	public static byte[] effect_misty_withoutback(final byte[] sceneData, final int width, final int height,
 			final int depth, final float timeCount, final float limitTimeCount) {
-		byte[] newData = new byte[sceneData.length];
-		for(int i = 1; i < width - 1; i ++) {
-			for(int j = 1; j < height - 1; j ++) {
-				int p = (j * width + i) * depth;
-				for(int m = 0; m < depth; m ++) {
-					int n = p + m;
-					newData[n] = (byte)((sceneData[n + 1] + sceneData[n - 1] + sceneData[n + width] + sceneData[n - width]
-							+ sceneData[n + width + 1] + sceneData[n + width - 1] + sceneData[n - width + 1] + sceneData[n - width - 1]) / 8);
-				}
-				
-				
-				
-				
-			}
-		}
-//		for(int i = 0; i < width)
-		
-		
+		float radius = timeCount / limitTimeCount * MAX_RADIUS;
+		byte[] newData = GaussianFilterExtend.filter(sceneData, radius, width, height);
 		return newData;
 	}
-	
-	
+	/**
+	 * 回复的模糊
+	 */
+	public static byte[] effect_misty_withback(final byte[] sceneData, final int width, final int height,
+			final int depth, final float timeCount, final float limitTimeCount) {
+		float rate = timeCount / limitTimeCount;
+		float radius;
+		if(rate > 0.5) radius = (1 - rate) * MAX_RADIUS;
+		else radius = rate * MAX_RADIUS;
+		//线性变化
+		byte[] newData = GaussianFilterExtend.filter(sceneData, radius, width, height);
+		return newData;
+	}
 	
 	
 	

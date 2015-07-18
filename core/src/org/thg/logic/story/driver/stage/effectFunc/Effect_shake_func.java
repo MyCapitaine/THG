@@ -17,19 +17,23 @@ public class Effect_shake_func {
 	
 	public static void effect_misty(final Actor actor, final float timeCount, final float limitTimeCount,
 			final float x, final float y) {
+		//振幅
+		float amp = AMPLITUDE * (float)Math.sqrt(actor.getWidth() * actor.getWidth() + actor.getHeight() * actor.getHeight());
 		
 		float interval = limitTimeCount / FREQUENCE; //每次间隔时间计数
 		int current = (int)(timeCount / interval); //已经震过的次数
-		float rate = (timeCount - current * interval) / interval; //现在正在进行的震动的进行比例
+		double rate = (timeCount - current * interval) / interval; //现在正在进行的震动的时间进行比例
+		double phyRate = Math.cos(Math.PI * rate); //现在进行震动的物理进行比例
+		
 		Random r = new Random(SEED);
 		for(int i = 0; i < current; i ++)
 			r.nextDouble();
 		double angle = r.nextDouble() * Math.PI * 2; //本次震动的角度
 		
-//		float dx_max = (float)Math.cos(angle) * AMPLITUDE,
-//			dy_max = (float)Math.sin(angle) * AMPLITUDE ;
+		float dx_max = (float)Math.cos(angle) * amp,
+			dy_max = (float)Math.sin(angle) * amp ;
 		
-		
+		actor.setPosition((float)(dx_max * phyRate), (float)(dy_max * phyRate));
 		
 		
 		

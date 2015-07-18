@@ -2,7 +2,6 @@ package org.thg.imageUtil;
 
 import java.awt.image.Kernel;
 
-import com.jhlabs.image.ConvolveFilter;
 import com.jhlabs.image.GaussianFilter;
 import com.jhlabs.image.PixelUtils;
 
@@ -11,7 +10,26 @@ import com.jhlabs.image.PixelUtils;
  * 
  * <p>{@link GaussianFilter}
  */
-public class GaussianFilterExtend {
+public class GaussianFilterExtend extends GaussianFilter {
+	/**
+	 * 
+	 * <p>{@link GaussianFilter#filter(java.awt.image.BufferedImage, java.awt.image.BufferedImage)}
+	 */
+	public static byte[] filter(byte[] bytes, float radius, int width, int height) {
+		byte[] buffer = new byte[bytes.length];
+		byte[] newData = new byte[bytes.length];
+		Kernel kernel = makeKernel(radius);
+		if(radius > 0) {
+			convolveAndTranspose(kernel, bytes, buffer, width, height, true, true, false, CLAMP_EDGES);
+			convolveAndTranspose(kernel, buffer, newData, height, width, true, false, true, CLAMP_EDGES);
+		}
+		
+		return newData;
+	}
+	
+	
+	
+	
 	
 	/**<p>一个高斯模糊在数组级上转换的重载版本 
 	 * <p>适应byte[]类型
@@ -34,14 +52,14 @@ public class GaussianFilterExtend {
 					if (f != 0) {
 						int ix = x+col;
 						if ( ix < 0 ) {
-							if ( edgeAction == ConvolveFilter.CLAMP_EDGES )
+							if ( edgeAction == CLAMP_EDGES )
 								ix = 0;
-							else if ( edgeAction == ConvolveFilter.WRAP_EDGES )
+							else if ( edgeAction == WRAP_EDGES )
 								ix = (x+width) % width;
 						} else if ( ix >= width) {
-							if ( edgeAction == ConvolveFilter.CLAMP_EDGES )
+							if ( edgeAction == CLAMP_EDGES )
 								ix = width-1;
-							else if ( edgeAction == ConvolveFilter.WRAP_EDGES )
+							else if ( edgeAction == WRAP_EDGES )
 								ix = (x+width) % width;
 						}
 //						int rgb = inPixels[ioffset+ix];
@@ -55,8 +73,8 @@ public class GaussianFilterExtend {
 						int pr = inBytes[h + 2];
 						int pg = inBytes[h + 1];
 						int pb = inBytes[h];
-						
-						
+//						
+//						
 						
 						if ( premultiply ) {
 							float a255 = pa * (1.0f / 255.0f);
@@ -86,8 +104,8 @@ public class GaussianFilterExtend {
 				outBytes[4 * index + 2] = (byte)ir;
 				outBytes[4 * index + 1] = (byte)ig;
 				outBytes[4 * index] = (byte)ib;
-				
-				
+//
+//				
 				
                 index += height;
 			}
