@@ -29,7 +29,7 @@ public class Effect_misty extends EffectAction {
 	
 	private float renderCount;
 	private static final float LIMIT_RENDER_COUNT = 60F;
-	private static final float EFFECT_MISTY_SPEED_NORMAL = 5F,
+	private static final float EFFECT_MISTY_SPEED_NORMAL = 2F,
 			EFFECT_MISTY_SPEED_SKIP = 60f;
 	/** true表明由模糊变清晰 */
 	private final boolean back;

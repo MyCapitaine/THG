@@ -6,9 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Effect_shake_func {
 	/** 在时限内摇晃的次数 */
-	private static final float FREQUENCE = 5f;
+	private static final float FREQUENCE = 8f;
 	/** 摇晃的幅度与自长的比例 */
-	private static final float AMPLITUDE = 0.1f;
+	private static final float AMPLITUDE = 0.017f;
 	/** 随机数生成种，用以控制角度 */
 	private static long SEED = 11111111L;
 	public static void setSeed(long seed) {
