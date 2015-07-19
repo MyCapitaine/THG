@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.Disposable;
 /**
  * 文字显示框
  * @author MyCapitaine
+ * 
+ * TODO 无字时渐隐，有字时渐现
  *
  */
 public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
