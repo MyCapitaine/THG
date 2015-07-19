@@ -2,6 +2,10 @@ package org.thg.logic.story.driver.stage.effect;
 
 import java.nio.ByteBuffer;
 
+import org.thg.logic.THG;
+import org.thg.logic.story.api.GGameController;
+
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
@@ -19,6 +23,7 @@ public abstract class EffectAction extends Action {
 	protected int width, height, depth;
 	
 	protected float renderCount;
+	protected float EFFECT_SPEED_NORMAL, EFFECT_SPEED_SKIP, LIMIT_RENDER_COUNT;
 	
 	protected void iniBytesAndSoOn(Texture texture) {
 		width = texture.getWidth();
@@ -35,10 +40,25 @@ public abstract class EffectAction extends Action {
 		
 		changableTexture = null;
 		
+	}
+	
+	protected void resetCount(float speed_normal, float speed_skip, float limit_render_count) {
+		EFFECT_SPEED_NORMAL = speed_normal;
+		EFFECT_SPEED_SKIP = speed_skip;
+		LIMIT_RENDER_COUNT = limit_render_count;
 		renderCount = 0f;
 	}
 	
 	
+	protected GGameController count() {
+		Screen s = THG.getGame().getScreen();
+		if(s instanceof GGameController && ((GGameController)s).getSkipFlag())
+			renderCount += EFFECT_SPEED_SKIP;
+		else renderCount += EFFECT_SPEED_NORMAL;
+		if(renderCount > LIMIT_RENDER_COUNT) renderCount = LIMIT_RENDER_COUNT;
+		
+		return (GGameController)s;
+	}
 	
 	
 	//act return true时将此标识置于否

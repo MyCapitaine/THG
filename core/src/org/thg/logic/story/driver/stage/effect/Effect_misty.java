@@ -2,13 +2,10 @@ package org.thg.logic.story.driver.stage.effect;
 
 import java.nio.ByteBuffer;
 
-import org.thg.logic.THG;
 import org.thg.logic.factorys.ResourceFactory;
-import org.thg.logic.story.api.GGameController;
 import org.thg.logic.story.driver.stage.DefaultEffectStage;
 import org.thg.logic.story.driver.stage.effectFunc.Effect_misty_func;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,18 +25,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class Effect_misty extends EffectAction {
 	private DefaultEffectStage defaultEffectStage;
 
-	private final Pixmap changablePixmap;
-	private final ByteBuffer pixmapByte;
-	private byte[] byteData;
-	private Texture changableTexture;
 	private final Image mistyImage;
-	private final int width, height;
 	
-	private float renderCount;
 	private static final int REDUCE = 3;
-	private static final float LIMIT_RENDER_COUNT = 60F;
-	private static final float EFFECT_MISTY_SPEED_NORMAL = 1.5F,
-			EFFECT_MISTY_SPEED_SKIP = 40f;
 	/** true表明由模糊变清晰 */
 	private final boolean back;
 	/**
@@ -85,7 +73,7 @@ public class Effect_misty extends EffectAction {
 		
 		changableTexture = null;
 		
-		renderCount = 0;
+		resetCount(1.5f, 40f, 60f);
 		
 	}
 	@Override
@@ -103,11 +91,9 @@ public class Effect_misty extends EffectAction {
 			changablePixmap.dispose();
 			return true;
 		}
-		Screen s = THG.getGame().getScreen();
-		if(s instanceof GGameController && ((GGameController)s).getSkipFlag())
-			renderCount += EFFECT_MISTY_SPEED_SKIP;
-		else renderCount += EFFECT_MISTY_SPEED_NORMAL;
-		if(renderCount > LIMIT_RENDER_COUNT) renderCount = LIMIT_RENDER_COUNT;
+		
+		count();
+		
 		byte[] newData = Effect_misty_func.effect_misty(byteData, width, height,
 				back ? LIMIT_RENDER_COUNT - renderCount : renderCount, LIMIT_RENDER_COUNT);
 		pixmapByte.put(newData);
