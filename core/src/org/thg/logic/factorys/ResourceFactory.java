@@ -21,24 +21,18 @@ public class ResourceFactory {
 		while(bgIter.hasNext())
 			bgIter.next().getValue().dispose();
 		bgPool.clear();
-		
-		Iterator<Texture> iter = bufferTextureList.iterator();
-		while(iter.hasNext()) {
-			iter.next().dispose();
-		}
-		bufferTextureList.clear();
 		//TODO
 	}
 	
-	private static LinkedList<Texture> bufferTextureList = new LinkedList<Texture>();
+	private static Texture bgBufferTexture = null;
 	/** <p>将texture对象压入缓存顶，之后无需关系其销毁 <p><b>背景专用 */
 	public static void putBgBufferTexture(Texture bufferTexture) {
-		bufferTextureList.add(bufferTexture);
+		if(bgBufferTexture != null) bgBufferTexture.dispose();
+		bgBufferTexture = bufferTexture;
 	}
 	/** <p>从缓存取用顶上的texture对象，但是不能取出 <p><b>背景专用 */
 	public static Texture getBgBufferTexture() {
-		if(bufferTextureList.isEmpty()) return null;
-		else return bufferTextureList.getLast();
+		return bgBufferTexture;
 	}
 	
 	
