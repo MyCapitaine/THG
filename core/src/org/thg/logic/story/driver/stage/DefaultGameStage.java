@@ -8,7 +8,6 @@ import org.thg.logic.story.api.GSceneChangeModel;
 import org.thg.logic.story.api.GShowWordsModel;
 import org.thg.logic.story.driver.Config;
 import org.thg.logic.story.driver.DefaultGameController;
-import org.thg.ui.UiUtil;
 import org.thg.ui.gamestage.GChoiceWindow;
 import org.thg.ui.gamestage.GGameButtons;
 import org.thg.ui.gamestage.GWordsFrame;
@@ -22,6 +21,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class DefaultGameStage extends Stage implements GGameStage {
 	private Music voice;
@@ -67,7 +67,7 @@ public class DefaultGameStage extends Stage implements GGameStage {
 		charactorPicNum = cpNum;
 		Texture t = ResourceFactory.getCharactorPic(cpNum);
 		if(t == null) charactorPic.setDrawable(null);
-		else charactorPic.setDrawable(UiUtil.resize(new TextureRegion(t)));
+		else charactorPic.setDrawable(new TextureRegionDrawable(new TextureRegion(t)));
 	}
 	@Override
 	public void setCharactorPicPosition(int position) {
@@ -124,7 +124,7 @@ public class DefaultGameStage extends Stage implements GGameStage {
 	
 	@Override
 	public void setBg(int bgNum) {
-		bg.setDrawable(UiUtil.resize(new TextureRegion(ResourceFactory.getBg(bgNum))));
+		bg.setDrawable(new TextureRegionDrawable(new TextureRegion(ResourceFactory.getBg(bgNum))));
 	}
 	@Override
 	public void setCharactorPicEffect(int eNum) {
@@ -176,6 +176,9 @@ public class DefaultGameStage extends Stage implements GGameStage {
 		addActor(bg);
 //====CharactorPic=================================================================================
 		charactorPic = new Image();
+		charactorPic.setSize(
+					Config.CHARACTOR_PIC_WIDTH * org.thg.ui.Config.scaleX,
+					Config.CHARACTOR_PIC_HEIGHT * org.thg.ui.Config.scaleY);
 		addActor(charactorPic);	
 //====WordsFrame=================================================================================
 		wordsFrame = new GWordsFrame();

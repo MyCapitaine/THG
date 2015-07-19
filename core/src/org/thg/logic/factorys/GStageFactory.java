@@ -17,7 +17,7 @@ import org.thg.logic.story.driver.stage.DefaultTurnPageStage;
 public class GStageFactory {
 	
 	public static GGameStage createGameStage(GScene scene, GDialog dialog) {
-		GGameStage dgs = new DefaultGameStage();
+		DefaultGameStage dgs = new DefaultGameStage();
 		dgs.setBg(scene.getBackground());
 		dgs.setBgm(scene.getBgMusic());
 		dgs.setDialog(dialog);
@@ -29,11 +29,7 @@ public class GStageFactory {
 		return new DefaultTurnPageStage(d.getDayStr());
 	}
 	public static GEffectStage createEffectStage(GEffectScene eScene) {
-		GEffectStage es = new DefaultEffectStage();
-		es.setBg(eScene.getBackground());
-		es.setBgm(eScene.getBgMusic());
-		
-		//setbg应该先被调用
+		DefaultEffectStage es = new DefaultEffectStage();
 		es.setScene(eScene);
 		return es;
 	}

@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Disposable;
 
 public class ResourceFactory {
 	/**
@@ -23,17 +22,23 @@ public class ResourceFactory {
 			bgIter.next().getValue().dispose();
 		bgPool.clear();
 		
-		Iterator<Disposable> iter = trashList.iterator();
+		Iterator<Texture> iter = bufferTextureList.iterator();
 		while(iter.hasNext()) {
 			iter.next().dispose();
 		}
-		trashList.clear();
+		bufferTextureList.clear();
 		//TODO
 	}
 	
-	private static LinkedList<Disposable> trashList = new LinkedList<Disposable>();
-	public static void putTrash(Disposable trash) {
-		trashList.add(trash);
+	private static LinkedList<Texture> bufferTextureList = new LinkedList<Texture>();
+	/** <p>将texture对象压入缓存顶，之后无需关系其销毁 <p><b>背景专用 */
+	public static void putBgBufferTexture(Texture bufferTexture) {
+		bufferTextureList.add(bufferTexture);
+	}
+	/** <p>从缓存取用顶上的texture对象，但是不能取出 <p><b>背景专用 */
+	public static Texture getBgBufferTexture() {
+		if(bufferTextureList.isEmpty()) return null;
+		else return bufferTextureList.getLast();
 	}
 	
 	
@@ -45,16 +50,18 @@ public class ResourceFactory {
 	}
 	
 	private static HashMap<Integer, Texture> bgPool = new HashMap<Integer, Texture>();
+	/**
+	 * <p>向仓库获取背景资源
+	 * <p>若不是普通的资源，则自动向缓存索取
+	 */
 	public static Texture getBg(int num) {
-		if(num == 0) return null;
 		if(bgPool.get(num) != null) return bgPool.get(num);
 		try {
 			Texture t = new Texture("images/resources/bg/" + Integer.toString(10000 + num) + ".png");
 			bgPool.put(num, t);
 			return t;
 		}catch(Exception e) {
-			System.err.println("ResourceFactory.getBg() error");
-			return null;
+			return getBgBufferTexture();
 		}
 	}
 	

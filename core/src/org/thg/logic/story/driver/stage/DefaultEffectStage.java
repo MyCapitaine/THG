@@ -5,12 +5,11 @@ import org.thg.logic.story.api.GEffectScene;
 import org.thg.logic.story.api.GEffectStage;
 import org.thg.logic.story.driver.DefaultGameController;
 import org.thg.logic.story.driver.stage.effect.*;
-import org.thg.ui.UiUtil;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 /**
  * 一个效果场景的实现
  * @author MyCapitaine
@@ -36,6 +35,12 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 
 	@Override
 	public void setScene(GEffectScene effectScene) {
+//		bgm
+		DefaultGameController.setBgm(effectScene.getBgMusic());
+//		bg
+		bgTexture = ResourceFactory.getBg(effectScene.getBackground());
+		bg.setDrawable(new TextureRegionDrawable(new TextureRegion(bgTexture)));
+//		effect实体
 		try {
 			effect = Effect.getEffect(effectScene.getEffectNum()).
 					createEffect(this, effectScene.getParams());
@@ -47,21 +52,24 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 		addAction(effect);
 		
 	}
-	
+	@Deprecated
 	@Override
 	public void setBg(int bgNum) {
-		bgTexture = ResourceFactory.getBg(bgNum);
-		bg.setDrawable(UiUtil.resize(new TextureRegion(bgTexture)));
 	}
+	@Deprecated
 	@Override
 	public void setBgm(int bgmNum) {
-		DefaultGameController.setBgm(bgmNum);
 	}
 	
 	
 
 	/** 显而易见 */
 	private enum Effect {
+		空格(00) {
+			EffectAction createEffect(DefaultEffectStage stage, String... params) {
+				return new Effect_blank(stage, params);
+			}
+		},
 		切换(01){
 			public EffectAction createEffect(DefaultEffectStage stage, String... params) {
 				return new Effect_change(stage, params);

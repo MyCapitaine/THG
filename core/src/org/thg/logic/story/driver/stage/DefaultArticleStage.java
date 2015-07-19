@@ -5,13 +5,13 @@ import org.thg.logic.story.api.GArticleScene;
 import org.thg.logic.story.api.GArticleStage;
 import org.thg.logic.story.api.GDialog;
 import org.thg.logic.story.driver.DefaultGameController;
-import org.thg.ui.UiUtil;
 import org.thg.ui.gamestage.GGameButtons;
 import org.thg.ui.gamestage.GWordsWindow;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class DefaultArticleStage extends Stage implements GArticleStage {
 	
@@ -43,7 +43,7 @@ public class DefaultArticleStage extends Stage implements GArticleStage {
 	
 	@Override
 	public void setBg(int bgNum) {
-		bg.setDrawable(UiUtil.resize(new TextureRegion(ResourceFactory.getBg(bgNum))));
+		bg.setDrawable(new TextureRegionDrawable(new TextureRegion(ResourceFactory.getBg(bgNum))));
 	}
 	
 	@Override
