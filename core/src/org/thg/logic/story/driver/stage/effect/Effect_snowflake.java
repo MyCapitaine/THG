@@ -1,7 +1,5 @@
 package org.thg.logic.story.driver.stage.effect;
 
-import java.nio.ByteBuffer;
-
 import org.thg.logic.THG;
 import org.thg.logic.factorys.ResourceFactory;
 import org.thg.logic.story.api.GGameController;
@@ -9,9 +7,7 @@ import org.thg.logic.story.driver.stage.DefaultEffectStage;
 import org.thg.logic.story.driver.stage.effectFunc.Effect_snowflake_func;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -19,15 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 /** 雪花，意识间歇ing */
 public class Effect_snowflake extends EffectAction {
 	private DefaultEffectStage defaultEffectStage;
-	
-	private final Pixmap changablePixmap;
-	private final ByteBuffer pixmapByte;
-	private byte[] byteData;
-	private Texture changableTexture;
+
 	private final Image flakeImage;
-	private final int width, height;
-	
-	private float renderCount;
 	
 	private static final float LIMIT_RENDER_COUNT = 8f;
 	private static final float EFFECT_SPEED_NORMAL = 1f,
@@ -41,21 +30,7 @@ public class Effect_snowflake extends EffectAction {
 		flakeImage.setSize(defaultEffectStage.bg.getWidth(), defaultEffectStage.bg.getHeight());
 		defaultEffectStage.addActor(flakeImage);
 		
-		width = defaultEffectStage.bgTexture.getWidth();
-		height = defaultEffectStage.bgTexture.getHeight();
-		
-		TextureData td = defaultEffectStage.bgTexture.getTextureData();
-		td.prepare();
-		changablePixmap = td.consumePixmap();
-		pixmapByte = changablePixmap.getPixels();
-		byteData = new byte[pixmapByte.capacity()];
-		pixmapByte.get(byteData);
-		pixmapByte.clear();
-		
-		changableTexture = null;
-		
-		renderCount = 0;
-		
+		iniBytesAndSoOn(defaultEffectStage.bgTexture);
 		
 		
 	}
@@ -77,7 +52,7 @@ public class Effect_snowflake extends EffectAction {
 			return true;
 		}
 		
-		byte[] newData = Effect_snowflake_func.effect_snowflake(byteData, width, height, renderCount, LIMIT_RENDER_COUNT);
+		byte[] newData = Effect_snowflake_func.effect_snowflake(byteData, width, height);
 		pixmapByte.put(newData);
 		pixmapByte.clear();
 		
