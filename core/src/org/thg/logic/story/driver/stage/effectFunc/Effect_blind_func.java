@@ -18,7 +18,7 @@ public class Effect_blind_func {
 		float exposure = (float)Math.pow(rate, 3) * MAX_EXPOSURE;
 		
 		if(exposure < 1.3f) return sceneData;
-		if(exposure > 900f) return white(width * height);
+		if(exposure > 800f) return white(width * height);
 		
 		efe.setExposure(exposure);
 		return efe.filter(sceneData, width, height);
