@@ -15,7 +15,7 @@ public class Effect_shake_func {
 		SEED = seed;
 	}
 	
-	public static void effect_misty(final Actor actor, final float timeCount, final float limitTimeCount,
+	public static void effect_shake(final Actor actor, final float timeCount, final float limitTimeCount,
 			final float x, final float y) {
 		//振幅
 		float amp = AMPLITUDE * (float)Math.sqrt(actor.getWidth() * actor.getWidth() + actor.getHeight() * actor.getHeight());

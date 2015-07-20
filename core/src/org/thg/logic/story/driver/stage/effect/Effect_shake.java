@@ -17,7 +17,7 @@ public class Effect_shake extends EffectAction {
 		defaultEffectStage.addActor(shakeImage);
 		Effect_shake_func.setSeed(System.currentTimeMillis());
 		
-		resetCount(1f, 8f, 20f);
+		resetCount(1f, 10f, 17f);
 	}
 	@Override
 	public boolean act(float delta) {
@@ -28,7 +28,7 @@ public class Effect_shake extends EffectAction {
 		}
 		count();
 		
-		Effect_shake_func.effect_misty(shakeImage, renderCount, LIMIT_RENDER_COUNT, 0, 0);
+		Effect_shake_func.effect_shake(shakeImage, renderCount, LIMIT_RENDER_COUNT, 0, 0);
 		
 		return false;
 	}

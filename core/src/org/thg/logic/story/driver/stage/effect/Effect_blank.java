@@ -37,9 +37,10 @@ public class Effect_blank extends EffectAction {
 	@Override
 	public boolean isRunning(boolean byHand) {
 		if(byHand) {
-			if(renderCount >= LIMIT_RENDER_COUNT) return false;
-			renderCount = LIMIT_RENDER_COUNT;
-			return true;
+//			if(renderCount >= LIMIT_RENDER_COUNT) return false;
+//			renderCount = LIMIT_RENDER_COUNT;
+//			return true;
+			return false;
 		}
 		
 		return super.isRunning(byHand);

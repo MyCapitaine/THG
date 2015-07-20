@@ -86,4 +86,17 @@ public class Effect_change extends EffectAction {
 		
 		return false;
 	}
+	
+	@Override
+	public boolean isRunning(boolean byHand) {
+		if(byHand) {
+			if(renderCount >= LIMIT_RENDER_COUNT) return false;
+			renderCount = LIMIT_RENDER_COUNT;
+			return true;
+		}
+		
+		return super.isRunning(byHand);
+	}
+	
+	
 }
