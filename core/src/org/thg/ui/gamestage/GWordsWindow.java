@@ -97,7 +97,15 @@ public class GWordsWindow extends Actor implements RunningCheckable, Disposable 
 	
 	
 	@Override
-	public boolean isRunning() {
+	public boolean isRunning(boolean byHand) {
+		if(byHand) {
+			if(current_dialogs_length_count >= current_dialog_length_limit - 1) return false;
+			current_dialogs_length_count = current_dialog_length_limit - 1;
+			return true;
+		}
+		
+		
+		
 		Screen s = THG.getGame().getScreen();
 		if(!(s instanceof GGameController)) return false;
 		return current_dialogs_length_count < current_dialog_length_limit - 1 ||

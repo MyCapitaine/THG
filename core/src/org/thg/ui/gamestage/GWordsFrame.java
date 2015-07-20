@@ -126,7 +126,14 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 	}
 	
 	@Override
-	public boolean isRunning() {
+	public boolean isRunning(boolean byHand) {
+		if(byHand) {
+			if(interval_render_count >= interval_render_num_normal) return false;
+			interval_render_count = interval_render_num_normal;
+			return true;
+		}
+		
+		
 		Screen s = THG.getGame().getScreen();
 		if(!(s instanceof GGameController)) return false;
 		return show_words_count < text_length - 1 ||

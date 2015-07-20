@@ -5,5 +5,5 @@ public class Effect_unsupport extends EffectAction {
 	@Override
 	public boolean act(float delta) { return true; }
 	@Override
-	public boolean isRunning() { return false; }
+	public boolean isRunning(boolean byHand) { return false; }
 }

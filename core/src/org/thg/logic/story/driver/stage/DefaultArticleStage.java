@@ -26,8 +26,8 @@ public class DefaultArticleStage extends Stage implements GArticleStage {
 	}
 	
 	@Override
-	public boolean isRunning() {
-		return wordsWindow != null && wordsWindow.isRunning();
+	public boolean isRunning(boolean byHand) {
+		return wordsWindow != null && wordsWindow.isRunning(byHand);
 	}
 	
 	@Override

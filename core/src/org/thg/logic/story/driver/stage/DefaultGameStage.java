@@ -3,6 +3,7 @@ package org.thg.logic.story.driver.stage;
 import org.thg.logic.THG;
 import org.thg.logic.factorys.ResourceFactory;
 import org.thg.logic.story.api.GDialog;
+import org.thg.logic.story.api.GGameController;
 import org.thg.logic.story.api.GGameStage;
 import org.thg.logic.story.api.GSceneChangeModel;
 import org.thg.logic.story.api.GShowWordsModel;
@@ -12,6 +13,7 @@ import org.thg.ui.gamestage.GChoiceWindow;
 import org.thg.ui.gamestage.GGameButtons;
 import org.thg.ui.gamestage.GWordsFrame;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -148,8 +150,19 @@ public class DefaultGameStage extends Stage implements GGameStage {
 	}
 	
 	@Override
-	public boolean isRunning() {
-		return (wordsFrame != null && wordsFrame.isRunning()) || (voice != null && voice.isPlaying());
+	public boolean isRunning(boolean byHand) {
+		if(byHand) {
+			if(voice != null && voice.isPlaying()) voice.stop();
+			return wordsFrame != null && wordsFrame.isRunning(true);
+		}
+		
+		Screen s = THG.getGame().getScreen();
+		if(!(s instanceof GGameController)) return false;
+		if(((GGameController)s).getSkipFlag()) {
+			return wordsFrame != null && wordsFrame.isRunning(false);
+		}
+		
+		return (wordsFrame != null && wordsFrame.isRunning(false)) || (voice != null && voice.isPlaying());
 	}
 	
 	@Override
@@ -161,7 +174,7 @@ public class DefaultGameStage extends Stage implements GGameStage {
 		addAction(new Action() {
 			@Override
 			public boolean act(float delta) {
-				if(isRunning()) return false;
+				if(isRunning(false)) return false;
 				addActor(choice);
 				return true;
 			}

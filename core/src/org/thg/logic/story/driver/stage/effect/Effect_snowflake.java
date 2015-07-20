@@ -1,6 +1,5 @@
 package org.thg.logic.story.driver.stage.effect;
 
-import org.thg.logic.factorys.ResourceFactory;
 import org.thg.logic.story.api.GGameController;
 import org.thg.logic.story.driver.stage.DefaultEffectStage;
 import org.thg.logic.story.driver.stage.effectFunc.Effect_snowflake_func;
@@ -36,7 +35,7 @@ public class Effect_snowflake extends EffectAction {
 		
 		if(renderCount >= LIMIT_RENDER_COUNT) {
 			isRunning = false;
-			ResourceFactory.putBgBufferTexture(changableTexture);
+			changableTexture.dispose();
 			changablePixmap.dispose();
 			//雪花一闪而过，强行跳过该场景
 			g.control(false);

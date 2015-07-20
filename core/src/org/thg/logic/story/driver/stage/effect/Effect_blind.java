@@ -49,7 +49,11 @@ public class Effect_blind extends EffectAction {
 				blindImage.remove();
 				if(changableTexture != null) changableTexture.dispose();
 			}
-			else ResourceFactory.putBgBufferTexture(changableTexture);
+			else {
+				if(changableTexture != null &&
+						changableTexture != ResourceFactory.getBgBufferTexture())
+					ResourceFactory.putBgBufferTexture(changableTexture);
+			}
 			
 			changablePixmap.dispose();
 			return true;
@@ -70,4 +74,19 @@ public class Effect_blind extends EffectAction {
 		
 		return false;
 	}
+	
+	@Override
+	public boolean isRunning(boolean byHand) {
+		if(byHand) {
+			if(renderCount >= LIMIT_RENDER_COUNT) return false;
+			renderCount = LIMIT_RENDER_COUNT - 1;
+			//运行到末尾
+			act(0);
+			//进行后续清理，缓存等工作
+			if(!back) ResourceFactory.putBgBufferTexture(changableTexture);
+			return true;
+		}
+		return super.isRunning(byHand);
+	}
+	
 }

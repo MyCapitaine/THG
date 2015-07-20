@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 
 import org.thg.logic.THG;
 import org.thg.logic.story.api.GGameController;
+import org.thg.logic.story.api.RunningCheckable;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -15,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
  * @author MyCapitaine
  *	
  */
-public abstract class EffectAction extends Action {
+public abstract class EffectAction extends Action implements RunningCheckable {
 	protected Pixmap changablePixmap;
 	protected ByteBuffer pixmapByte;
 	protected byte[] byteData;
@@ -63,7 +64,7 @@ public abstract class EffectAction extends Action {
 	
 	//act return true时将此标识置于否
 	protected boolean isRunning = true;
-	public boolean isRunning() { return isRunning; }
+	public boolean isRunning(boolean byHand) { return isRunning; }
 	
 	
 	

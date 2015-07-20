@@ -137,7 +137,7 @@ public class DefaultGameController implements GGameController {
 		//处于选择状态则进行空调用
 		if(choosing) return;
 		//手动调用直接跳过对现在是否仍进行的判断，打断当前状态
-		if(!byHand && ((RunningCheckable) current_stage).isRunning()) return;
+		if(((RunningCheckable) current_stage).isRunning(byHand)) return;
 		
 		if(current_stage instanceof GGameStage) {
 			while(setNextDialog()) {
@@ -308,7 +308,7 @@ public class DefaultGameController implements GGameController {
 	/** 点击间隔计数器 */
 	private static long click_count = 0;
 	/** 点击最小间隔 */
-	private static final long CLICK_INTERVAL = 300L;
+	private static final long CLICK_INTERVAL = 160L;
 	private class KeyInputProcessor extends InputAdapter {
 
 		@Override

@@ -29,8 +29,8 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 	}
 	
 	@Override
-	public boolean isRunning() {
-		return effect.isRunning();
+	public boolean isRunning(boolean byHand) {
+		return effect.isRunning(byHand);
 	}
 
 	@Override

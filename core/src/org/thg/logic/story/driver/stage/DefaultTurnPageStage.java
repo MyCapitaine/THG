@@ -57,7 +57,14 @@ public class DefaultTurnPageStage extends Stage implements GTurnPageStage {
 	
 
 	@Override
-	public boolean isRunning() {
+	public boolean isRunning(boolean byHand) {
+		if(byHand) {
+			if(interval_render_count >= INTERVAL_RENDER_NUM_NORMAL) return false;
+			interval_render_count = INTERVAL_RENDER_NUM_NORMAL;
+			return true;
+		}
+		
+		
 		Screen s = THG.getGame().getScreen();
 		if(!(s instanceof GGameController)) return false;
 		if(((GGameController)s).getSkipFlag() &&
