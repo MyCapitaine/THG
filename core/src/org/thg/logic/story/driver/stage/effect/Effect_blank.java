@@ -7,7 +7,12 @@ import org.thg.logic.story.driver.stage.DefaultEffectStage;
  * 
  */
 public class Effect_blank extends EffectAction {
-	
+	/**
+	 * 
+	 * @param params 
+	 * 时间(double)s
+	 * 
+	 */
 	public Effect_blank(DefaultEffectStage stage, String... params) {
 		resetCount(1f, 20f, 0f);
 		try {
