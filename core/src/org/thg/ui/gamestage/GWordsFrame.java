@@ -128,7 +128,7 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 	@Override
 	public boolean isRunning(boolean byHand) {
 		if(byHand) {
-			if(interval_render_count >= interval_render_num_normal) return false;
+			if(show_words_count >= text_length - 1) return false;
 			show_words_count = text_length - 1;
 			interval_render_count = interval_render_num_normal;
 			return true;

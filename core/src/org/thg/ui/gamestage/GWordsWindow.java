@@ -99,7 +99,7 @@ public class GWordsWindow extends Actor implements RunningCheckable, Disposable 
 	@Override
 	public boolean isRunning(boolean byHand) {
 		if(byHand) {
-			if(interval_render_count >= interval_render_num_normal) return false;
+			if(current_dialogs_length_count >= current_dialog_length_limit - 1) return false;
 			current_dialogs_length_count = current_dialog_length_limit - 1;
 			interval_render_count = interval_render_num_normal;
 			return true;
