@@ -50,6 +50,7 @@ public class Effect_blind extends EffectAction {
 				if(changableTexture != null) changableTexture.dispose();
 			}
 			else ResourceFactory.putBgBufferTexture(changableTexture);
+			
 			changablePixmap.dispose();
 			return true;
 		}

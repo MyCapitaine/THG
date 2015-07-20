@@ -31,7 +31,7 @@ public abstract class EffectAction extends Action {
 		depth = texture.getDepth() == 0 ? 4 : texture.getDepth();
 		
 		TextureData td = texture.getTextureData();
-		td.prepare();
+		if(!td.isPrepared()) td.prepare();
 		changablePixmap = td.consumePixmap();
 		pixmapByte = changablePixmap.getPixels();
 		byteData = new byte[pixmapByte.capacity()];

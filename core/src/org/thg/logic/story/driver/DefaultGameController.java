@@ -305,15 +305,17 @@ public class DefaultGameController implements GGameController {
 		THG.getGame().setScreen(new GMainMenu());
 		this.dispose();
 	}
-	
+	/** 点击间隔计数器 */
+	private static long click_count = 0;
+	/** 点击最小间隔 */
+	private static final long CLICK_INTERVAL = 300L;
 	private class KeyInputProcessor extends InputAdapter {
 
 		@Override
 		public boolean touchDown(int screenX, int screenY, int pointer,
 				int button) {
 			if(button != Buttons.LEFT) return false;
-			click();
-			return true;
+			return click();
 		}
 		@Override
 		public boolean keyTyped(char character) {
@@ -322,31 +324,35 @@ public class DefaultGameController implements GGameController {
 			case 'A': //a/A     —— auto
 				setSkip(false);
 				setAuto(getAutoFlag() ? false : true);
-				break;
+				return true;
 			case ' ': //space   —— click
-				click();
-				break;
+				return click();
 			case 's' :
 			case 'S' : //s/S —— skip
 				setAuto(false);
 				setSkip(getSkipFlag() ? false : true);
-				break;
+				return true;
 			default :
+				return false;
 			}
-			return true;
 		}
 		
 		@Override
 		public boolean scrolled(int amount) {
 			if(amount != 1) return false;
-			click();
-			return true;
+			return click();
 		}
 		
-		private void click() {
+		
+		private boolean click() {
+			long l = System.currentTimeMillis();
+			if(l - click_count < CLICK_INTERVAL) return false;
+			
+			click_count = l;
 			control(true);
 			setSkip(false);
 			setAuto(false);
+			return true;
 		}
 		
 	}

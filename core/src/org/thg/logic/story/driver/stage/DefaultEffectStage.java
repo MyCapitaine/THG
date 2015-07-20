@@ -47,6 +47,7 @@ public class DefaultEffectStage extends Stage implements GEffectStage {
 		}
 		catch(Exception e) {
 			effect = new Effect_unsupport();
+			System.out.println(e);
 			System.out.println("effect error or unsupport");
 		}
 		addAction(effect);

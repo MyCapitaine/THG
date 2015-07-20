@@ -55,7 +55,7 @@ public class Effect_misty extends EffectAction {
 		height = preHeight / REDUCE;
 		
 		TextureData td = defaultEffectStage.bgTexture.getTextureData();
-		td.prepare();
+		if(!td.isPrepared()) td.prepare();
 		Pixmap prePixmap = td.consumePixmap();
 		ByteBuffer preByteBuffer = prePixmap.getPixels();
 		byte[] prebyteData = new byte[preByteBuffer.capacity()];
