@@ -61,8 +61,6 @@ public class Effect_change_func {
 	public static byte[] effect_change_2(final byte[] sceneData, final int width, final int height,
 			final int depth, final float timeCount, final float limitTimeCount) {
 		byte[] newData = new byte[sceneData.length];
-		float rate = timeCount / limitTimeCount;
-		int pointNum = width * height;
 		
 		
 		
@@ -77,8 +75,6 @@ public class Effect_change_func {
 	public static byte[] effect_change_3(final byte[] sceneData, final int width, final int height,
 			final int depth, final float timeCount, final float limitTimeCount) {
 		byte[] newData = new byte[sceneData.length];
-		float rate = timeCount / limitTimeCount;
-		int pointNum = width * height;
 		
 		
 		
@@ -93,8 +89,6 @@ public class Effect_change_func {
 	public static byte[] effect_change_4(final byte[] sceneData, final int width, final int height,
 			final int depth, final float timeCount, final float limitTimeCount) {
 		byte[] newData = new byte[sceneData.length];
-		float rate = timeCount / limitTimeCount;
-		int pointNum = width * height;
 		
 		
 		
@@ -109,8 +103,6 @@ public class Effect_change_func {
 	public static byte[] effect_change_5(final byte[] sceneData, final int width, final int height,
 			final int depth, final float timeCount, final float limitTimeCount) {
 		byte[] newData = new byte[sceneData.length];
-		float rate = timeCount / limitTimeCount;
-		int pointNum = width * height;
 		
 		
 		

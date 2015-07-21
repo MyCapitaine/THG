@@ -1,8 +1,14 @@
 package org.thg.ui.sl;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  * <p>一套用于存/读档显示当前档的组件</p>
@@ -11,13 +17,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
  * @author MyCapitaine
  *
  */
-public class GSLWeight extends Group {
+public class GSLWeight extends Group implements Disposable {
 	/**
 	 * 最大页数
 	 */
-	private static final int MAX_PAGE_NUM = 9;
-	private static final int ROW_NUM_PAGE = 4;
-	private static final int COL_NUM_PAGE = 4;
+	static final int MAX_PAGE_NUM = 9;
+	static final int ROW_NUM_PAGE = 4;
+	static final int COL_NUM_PAGE = 4;
 	/**
 	 * 最大存档数
 	 */
@@ -25,34 +31,51 @@ public class GSLWeight extends Group {
 	private int current_page_num;
 
 	private TurnPageWeight turnPage;
-	/**
-	 * 可点击的档
-	 */
-	private Image[][] pds;
-//	/**
-//	 * 档下面的背景，大概可以看到一个框
-//	 */
-//	private ImageButton[][] pd_bg;
 	
-	private SLListener listener;
+	private Image[][] dataImages;
 	
-	GSLWeight(SLListener sll) {
+	
+	private HashMap<Integer, Texture> textures;
+	
+	GSLWeight() {
 		current_page_num = 0;
-		listener = sll;
+		turnPage = new TurnPageWeight();
+		textures = new HashMap<Integer, Texture>();
+		dataImages = new Image[ROW_NUM_PAGE][COL_NUM_PAGE];
+		for(int i = 0; i < ROW_NUM_PAGE; i ++) {
+			for(int j = 0; j < COL_NUM_PAGE; j ++) {
+				dataImages[i][j] = new Image();
+//				dataImages[i][j].setPosition(x, y);
+//				dataImages[i][j].setSize(width, height);
+			}
+		}
 		
 		
-		listener.resetListeners(showCurrentPage(), current_page_num);
 	}
 	
 	/**
-	 * <p>搜索目录下特定的存档文件</p>
-	 * <p></p>
+	 * <p>显示指定页的内容，图片
+	 * <p>并添加合适的监听
+	 * @param pageNum 与之前相同时无反应
 	 * 
-	 * @return boolean数组对应当页的存档数组，为true表明此处有存档
 	 */
-	private boolean[][] showCurrentPage() {
-		return null;
+	private void showPage(int pageNum) {
+		
+		
+		
+		
 	}
+	@Override
+	public void dispose() {
+		Iterator<Entry<Integer, Texture>> iter = textures.entrySet().iterator();
+		while(iter.hasNext())
+			iter.next().getValue().dispose();
+		textures.clear();
+		
+		turnPage.dispose();
+		
+	}
+	
 	
 	
 	/**
@@ -60,29 +83,31 @@ public class GSLWeight extends Group {
 	 * @author MyCapitaine
 	 *
 	 */
-	private class TurnPageWeight extends Group {
+	private class TurnPageWeight extends Group implements Disposable {
 		ImageButton[] pages;
+		private Texture tpTexture;
 		
-		public TurnPageWeight() {
+		TurnPageWeight() {
 			pages = new ImageButton[MAX_PAGE_NUM];
 			
+			//监听pages，点击调用showPage
 			
-			
+		}
+
+		@Override
+		public void dispose() {
+			tpTexture.dispose();
 		}
 		
 		
 	}
-	private static final float TP_BUTTON_DELTA_Y = 5f;
-	private static final float TP_BOTTOM_BUTTON_X = 20f, TP_BOTTOM_BUTTON_Y = 40;
 	
-	
-	public interface SLListener {
-		
-//		void setSpeakers();
-		void resetListeners(boolean[][] bv, int pageNum);
-		
-	}
-	
-	
-//	class 
 }
+
+
+interface SLListener {
+	
+}
+
+
+
