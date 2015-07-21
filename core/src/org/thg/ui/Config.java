@@ -23,6 +23,9 @@ public class Config {
 	public static final String SL_MENU_BG_URL = "images/ui/slmenu/background.png";
 	public static final String SL_MENU_RETURN_BUTTON_URL = "images/ui/slmenu/returnButton.png";
 	
+	
+	
+	
 //====GGalleryMenu==================================================================================
 	public static final String GALLERY_MENU_BG_URL = "images/ui/gallerymenu/background.png";
 	public static final String GALLERY_MENU_RETURN_BUTTON_URL = "images/ui/gallerymenu/returnButton.png";

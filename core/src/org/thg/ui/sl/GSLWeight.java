@@ -5,9 +5,17 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
@@ -29,40 +37,56 @@ public class GSLWeight extends Group implements Disposable {
 	 */
 	static final int PROGRESS_NUM = MAX_PAGE_NUM * ROW_NUM_PAGE * COL_NUM_PAGE;
 	private int current_page_num;
-
+	
 	private TurnPageWeight turnPage;
 	
-	private Image[][] dataImages;
-	
+	private DataPic[][] datas;
+	private boolean[][] haveData;
 	
 	private HashMap<Integer, Texture> textures;
+	private Texture lightTexture;
 	
-	GSLWeight() {
+	private SLSpeaker speaker;
+	
+	GSLWeight(SLSpeaker speaker) {
+		this.speaker = speaker;
 		current_page_num = 0;
 		turnPage = new TurnPageWeight();
 		textures = new HashMap<Integer, Texture>();
-		dataImages = new Image[ROW_NUM_PAGE][COL_NUM_PAGE];
+		datas = new DataPic[ROW_NUM_PAGE][COL_NUM_PAGE];
+		
+//		lightTexture = new Texture();
+		Drawable lightDrawable = new TextureRegionDrawable(new TextureRegion(lightTexture));
+		
+		
 		for(int i = 0; i < ROW_NUM_PAGE; i ++) {
 			for(int j = 0; j < COL_NUM_PAGE; j ++) {
-				dataImages[i][j] = new Image();
-//				dataImages[i][j].setPosition(x, y);
-//				dataImages[i][j].setSize(width, height);
+				datas[i][j] = new DataPic(lightDrawable);
+//				datas[i][j].setPosition(x, y);
+//				datas[i][j].setSize(width, height);
 			}
 		}
 		
+		haveData = new boolean[ROW_NUM_PAGE][COL_NUM_PAGE];
 		
 	}
 	
 	/**
 	 * <p>显示指定页的内容，图片
 	 * <p>并添加合适的监听
-	 * @param pageNum 与之前相同时无反应
 	 * 
 	 */
 	private void showPage(int pageNum) {
 		
+		//设置图片
 		
+		//set haveData[][]
 		
+		for(int i = 0; i < ROW_NUM_PAGE; i ++) {
+			for(int j = 0; j < COL_NUM_PAGE; j ++) {
+				speaker.setListener(datas[i][j], i * COL_NUM_PAGE + j, haveData[i][j]);
+			}
+		}
 		
 	}
 	@Override
@@ -86,17 +110,51 @@ public class GSLWeight extends Group implements Disposable {
 	private class TurnPageWeight extends Group implements Disposable {
 		ImageButton[] pages;
 		private Texture tpTexture;
+		private BitmapFont bf;
+//		private BitmapFont bf_another_color;
 		
 		TurnPageWeight() {
+//			bf = THG.getFont("0123456789", size, color);
+			
+			
 			pages = new ImageButton[MAX_PAGE_NUM];
+			for(int i = 0; i < MAX_PAGE_NUM; i ++) {
+//				pages[i] = new ImageButton(null);
+//				pages[i].setPosition(x, y);
+//				pages[i].setSize(width, height);
+			}
 			
-			//监听pages，点击调用showPage
+			for(int i = 0; i < MAX_PAGE_NUM; i ++) {
+				final int j = i;
+				pages[j].addListener(new InputListener() {
+					@Override
+					public boolean touchDown(InputEvent event, float x,
+							float y, int pointer, int button) {
+						showPage(j);
+						for(int m = 0; m < MAX_PAGE_NUM && m != j; m ++) {
+							pages[m].setChecked(false);
+						}
+						//TODO 自己的checkover情况
+						
+						return true;
+					}
+				});
+			}
 			
+			
+			
+		}
+		
+		@Override
+		public void draw(Batch batch, float parentAlpha) {
+//			bf.draw(batch, str, x, y)
+			super.draw(batch, parentAlpha);
 		}
 
 		@Override
 		public void dispose() {
 			tpTexture.dispose();
+			bf.dispose();
 		}
 		
 		
@@ -104,9 +162,53 @@ public class GSLWeight extends Group implements Disposable {
 	
 }
 
-
-interface SLListener {
+/**
+ * 数据的图像
+ * @author MyCapitaine
+ *
+ */
+class DataPic extends Image {
+	/** 是否绘制光泽 */
+	boolean drawLight;
+	/** 光泽的drawable */
+	Drawable light;
+	public DataPic(Drawable light) {
+		this.light = light;
+		drawLight = false;
+		addListener(new InputListener() {
+			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+				drawLight = true;
+			}
+			@Override
+			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+				drawLight = false;
+			}
+		});
+	}
 	
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		super.draw(batch, parentAlpha);
+		if(drawLight && light != null)
+			light.draw(batch, getX() + getImageX(), getY() + getImageY(),
+					getImageWidth() * getScaleX(), getImageHeight() * getScaleY());
+	}
+}
+
+
+
+/**
+ * 监听器
+ * @author MyCapitaine
+ *
+ */
+interface SLSpeaker {
+	/**
+	 * @param dataPic 将设置监听的目标
+	 * @param OrderNum 档位序号
+	 * @param haveData 该档位是否已经存在数据
+	 */
+	void setListener(DataPic dataPic, int OrderNum, boolean haveData);
 }
 
 

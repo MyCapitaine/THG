@@ -36,7 +36,6 @@ public class THG {
 		return getFont(s, (int)FONT_SIZE, Color.WHITE);
 	}
 	
-	
 	public static BitmapFont getFont(String s, int size, Color color) {
 		
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
@@ -49,6 +48,9 @@ public class THG {
 		
 		return font;
 	}
+	
+	public static FreeTypeFontGenerator getFontGenerator() { return generator; }
+	
 	public static final float FONT_SIZE = 28;
 	
 	private static Pattern pattern = Pattern.compile("(.)(?=.*\\1)", Pattern.DOTALL);
