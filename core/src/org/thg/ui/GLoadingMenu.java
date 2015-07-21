@@ -66,7 +66,7 @@ public class GLoadingMenu implements Screen, Disposable {
 		disBuffer = new Texture(Config.LOADING_MENU_BG_URL);
 		disList.add(disBuffer);
 		Image bg = new Image((Texture)disBuffer);
-		UiUtil.resize(bg);
+		bg.setSize(Config.SCREEN_WIDTH * Config.scaleX, Config.SCREEN_HEIGHT * Config.scaleY);
 		stage.addActor(bg);
 		
 		//TODO 动画

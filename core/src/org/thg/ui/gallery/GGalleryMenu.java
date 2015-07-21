@@ -58,6 +58,8 @@ public class GGalleryMenu implements Screen, Disposable {
 		disBuffer = new Texture(Config.GALLERY_MENU_BG_URL);
 		disList.add(disBuffer);
 		Image bg = new Image((Texture)disBuffer);
+		bg.setSize(Config.SCREEN_WIDTH * Config.scaleX, Config.SCREEN_HEIGHT * Config.scaleY);
+		
 		stage.addActor(bg);
 //============返回==================================================================
 		disBuffer = new Texture(Config.GALLERY_MENU_RETURN_BUTTON_URL);
@@ -78,7 +80,6 @@ public class GGalleryMenu implements Screen, Disposable {
 		
 //============组件位置大小设置等===============================================================
 		returnButton.setPosition(600 * Config.scaleX, 30 * Config.scaleY);
-		UiUtil.resize(bg);
 		
 	}
 }

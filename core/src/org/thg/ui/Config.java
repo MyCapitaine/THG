@@ -19,9 +19,9 @@ public class Config {
 //====GLoadingMenu==================================================================================
 	public static final String LOADING_MENU_BG_URL = "images/ui/loadingmenu/background.png";
 	
-//====GLoadingMenu==================================================================================
-	public static final String LOAD_MENU_BG_URL = "images/ui/loadmenu/background.png";
-	public static final String LOAD_MENU_RETURN_BUTTON_URL = "images/ui/loadmenu/returnButton.png";
+//====GSave/LoadMenu==================================================================================
+	public static final String SL_MENU_BG_URL = "images/ui/slmenu/background.png";
+	public static final String SL_MENU_RETURN_BUTTON_URL = "images/ui/slmenu/returnButton.png";
 	
 //====GGalleryMenu==================================================================================
 	public static final String GALLERY_MENU_BG_URL = "images/ui/gallerymenu/background.png";

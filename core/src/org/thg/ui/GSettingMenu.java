@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import org.thg.logic.THG;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.PropertiesUtils;
 
-public class GSettingMenu implements Screen {
+public class GSettingMenu extends ScreenAdapter {
 	private Stage stage;
 	private GSettingMenu gSettingMenu;
 	private ArrayList<Disposable> disList;
@@ -43,14 +43,9 @@ public class GSettingMenu implements Screen {
 		stage.draw();
 		
 	}
-
-	public void resize(int width, int height) {}
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
 	}
-	public void hide() {}
-	public void pause() {}
-	public void resume() {}
 	public void dispose() {
 		for(Disposable d : disList)
 			d.dispose();
@@ -63,6 +58,7 @@ public class GSettingMenu implements Screen {
 		disBuffer1 = new Texture(Config.SETTING_MENU_BG_URL);
 		disList.add(disBuffer1);
 		Image bg = new Image((Texture)disBuffer1);
+		bg.setSize(Config.SCREEN_WIDTH * Config.scaleX, Config.SCREEN_HEIGHT * Config.scaleY);
 		stage.addActor(bg);
 		
 //============返回==================================================================
@@ -88,6 +84,8 @@ public class GSettingMenu implements Screen {
 		disBuffer1 = new Texture(Config.SETTING_MENU_VOL_LABEL_URL);
 		disList.add(disBuffer1);
 		volLabel = new Image((Texture)disBuffer1);
+		volLabel.setSize(((Texture)disBuffer1).getWidth() * Config.scaleX,
+				((Texture)disBuffer1).getHeight() * Config.scaleY);
 		disBuffer1 = new Texture(Config.SETTING_MENU_VOL_SLIDER_BG_URL);
 		disBuffer2 = new Texture(Config.SETTING_MENU_VOL_SLIDER_KNOB_URL);
 		disList.add(disBuffer1);
@@ -115,6 +113,9 @@ public class GSettingMenu implements Screen {
 		disBuffer1 = new Texture(Config.SETTING_MENU_INTERVAL_LABEL_URL);
 		disList.add(disBuffer1);
 		intervalLabel = new Image((Texture)disBuffer1);
+		intervalLabel.setSize(((Texture)disBuffer1).getWidth() * Config.scaleX,
+				((Texture)disBuffer1).getHeight() * Config.scaleY);
+		
 		disBuffer1 = new Texture(Config.SETTING_MENU_INTERVAL_SLIDER_BG_URL);
 		disBuffer2 = new Texture(Config.SETTING_MENU_INTERVAL_SLIDER_KNOB_URL);
 		disList.add(disBuffer1);
@@ -146,15 +147,12 @@ public class GSettingMenu implements Screen {
 			y1 = 20 * Config.scaleY,
 			dy2 = 15 * Config.scaleY; 
 		volLabel.setPosition(x, y1);
-		UiUtil.resize(volLabel);
 		volSlider.setPosition(volLabel.getX() + volLabel.getWidth() + dx,
 				volLabel.getY() - dy2);
 		intervalLabel.setPosition(x, y1 + 2 * dy);
-		UiUtil.resize(intervalLabel);
 		intervalSlider.setPosition(intervalLabel.getX() + intervalLabel.getWidth() + dx,
 				intervalLabel.getY() - dy2);
 
-		UiUtil.resize(bg);
 		returnButton.setPosition(600 * Config.scaleX, 30 * Config.scaleY);
 		
 	}

@@ -6,10 +6,9 @@ import org.thg.logic.THG;
 import org.thg.logic.factorys.ResourceFactory;
 import org.thg.logic.story.driver.DefaultGameController;
 import org.thg.ui.gallery.GGalleryMenu;
-import org.thg.ui.sl.GLoadMenu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.Disposable;
 
-public class GMainMenu implements Screen, Disposable {
+public class GMainMenu extends ScreenAdapter {
 	private Stage stage;
 	private GMainMenu gMainMenu;
 	private ArrayList<Disposable> disList;
@@ -36,13 +35,9 @@ public class GMainMenu implements Screen, Disposable {
 		stage.act();
 		stage.draw();
 	}
-	public void resize(int width, int height) {}
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
 	}
-	public void hide() {}
-	public void pause() {}
-	public void resume() {}
 	public void dispose() {
 		for(Disposable d : disList)
 			d.dispose();
@@ -56,7 +51,7 @@ public class GMainMenu implements Screen, Disposable {
 		disBuffer = new Texture(Config.MAIN_MENU_BG_URL);
 		disList.add(disBuffer);
 		Image bg = new Image((Texture)disBuffer);
-		UiUtil.resize(bg);
+		bg.setSize(Config.SCREEN_WIDTH * Config.scaleX, Config.SCREEN_HEIGHT * Config.scaleY);
 		stage.addActor(bg);
 //============开始游戏===============================================================
 		disBuffer = new Texture(Config.MAIN_MENU_BEGIN_BUTTON_URL);
@@ -84,7 +79,7 @@ public class GMainMenu implements Screen, Disposable {
 		loadButton.getStyle().imageOver = UiUtil.resize(tr[0][2]);
 		loadButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				THG.getGame().setScreen(new GLoadMenu());
+				THG.getGame().setScreen(null);
 				gMainMenu.dispose();
 				return true;
 			}

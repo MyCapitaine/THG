@@ -36,7 +36,7 @@ public class GSLWeight extends Group {
 	
 	private SLListener listener;
 	
-	public GSLWeight(SLListener sll) {
+	GSLWeight(SLListener sll) {
 		current_page_num = 0;
 		listener = sll;
 		
