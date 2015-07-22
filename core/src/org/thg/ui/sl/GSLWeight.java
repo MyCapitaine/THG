@@ -2,9 +2,6 @@ package org.thg.ui.sl;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
 
 import org.thg.ui.Config;
 import org.thg.ui.UiUtil;
@@ -49,7 +46,7 @@ public class GSLWeight extends Group implements Disposable {
 	private DataPic[][] datas;
 	private boolean[][] haveData;
 	
-	private HashMap<Integer, Texture> textures;
+	private Texture[] textures;
 	private Texture shadeTexture;
 	private BitmapFont timeFont;
 	
@@ -59,7 +56,7 @@ public class GSLWeight extends Group implements Disposable {
 		this.speaker = speaker;
 		current_page_num = 0;
 		turnPage = new TurnPageWeight();
-		textures = new HashMap<Integer, Texture>();
+		textures = null;
 		datas = new DataPic[ROW_NUM_PAGE][COL_NUM_PAGE];
 		
 //		timeFont = THG.getFont("0123456789/:", size, color); TODO
@@ -96,16 +93,17 @@ public class GSLWeight extends Group implements Disposable {
 		for(int i = 0; i < ROW_NUM_PAGE; i ++) {
 			for(int j = 0; j < COL_NUM_PAGE; j ++) {
 				speaker.setListener(datas[i][j], i * COL_NUM_PAGE + j, haveData[i][j]);
+//				TODO
 			}
 		}
 		
 	}
 	@Override
 	public void dispose() {
-		Iterator<Entry<Integer, Texture>> iter = textures.entrySet().iterator();
-		while(iter.hasNext())
-			iter.next().getValue().dispose();
-		textures.clear();
+		for(int i = 0; i < textures.length; i ++) {
+			if(textures[i] != null)
+				textures[i].dispose();
+		}
 		
 		shadeTexture.dispose();
 		timeFont.dispose();

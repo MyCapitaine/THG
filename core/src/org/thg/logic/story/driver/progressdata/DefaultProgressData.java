@@ -32,11 +32,11 @@ import com.badlogic.gdx.utils.PropertiesUtils;
 public class DefaultProgressData implements ProgressData {
 	private ObjectMap<String, String> datas;
 	
-	public DefaultProgressData() {
+	DefaultProgressData() {
 		datas = new ObjectMap<String, String>();
 		load();
 	}
-	public DefaultProgressData(String url) {
+	DefaultProgressData(String url) {
 		datas = new ObjectMap<String, String>();
 		load(url);
 	}

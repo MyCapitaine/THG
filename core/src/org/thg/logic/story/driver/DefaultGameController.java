@@ -6,7 +6,7 @@ import org.thg.logic.factorys.GStageFactory;
 import org.thg.logic.factorys.GStoryTreeFactory;
 import org.thg.logic.factorys.ResourceFactory;
 import org.thg.logic.story.api.*;
-import org.thg.logic.story.driver.progressdata.DefaultProgressData;
+import org.thg.logic.story.driver.progressdata.ProgressDataUtil;
 import org.thg.logic.story.driver.stage.DefaultArticleStage;
 import org.thg.logic.story.driver.stage.DefaultEffectStage;
 import org.thg.logic.story.driver.stage.DefaultGameStage;
@@ -44,7 +44,7 @@ public class DefaultGameController implements GGameController {
 	
 	public DefaultGameController(ProgressData pd) {
 		storyTree = GStoryTreeFactory.createStoryTree();
-		if(pd == null) setProgressDataAndIni(new DefaultProgressData());
+		if(pd == null) setProgressDataAndIni(ProgressDataUtil.load());
 		else setProgressDataAndIni(pd);
 		kip = new KeyInputProcessor();
 		pausing = false;
