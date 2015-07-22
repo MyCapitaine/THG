@@ -1,4 +1,4 @@
-package org.thg.logic.story.driver;
+package org.thg.logic.story.driver.progressdata;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import org.thg.logic.THG;
 import org.thg.logic.story.api.ProgressData;
+import org.thg.logic.story.driver.Config;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -36,10 +37,6 @@ public class DefaultProgressData implements ProgressData {
 		load();
 	}
 	public DefaultProgressData(String url) {
-		if(url == null) {
-			System.err.println("defaultprogressData create fail");
-			return;
-		}
 		datas = new ObjectMap<String, String>();
 		load(url);
 	}
@@ -96,21 +93,21 @@ public class DefaultProgressData implements ProgressData {
 	
 	@Override
 	public void load() {
-		Reader fr = null;
+		Reader reader = null;
 		try {
-			fr = Gdx.files.internal(Config.DEFAULT_PROGRESSDATA_URL).reader(THG.CHAR_SET);
+			reader = Gdx.files.internal(Config.DEFAULT_PROGRESSDATA_URL).reader(THG.CHAR_SET);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		try {
-			PropertiesUtils.load(datas, fr);
+			PropertiesUtils.load(datas, reader);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		
 		try {
-			fr.close();
+			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -118,22 +115,22 @@ public class DefaultProgressData implements ProgressData {
 
 	@Override
 	public void load(String url) {
-		Reader fr = null;
+		Reader reader = null;
 		try {
-			fr = Gdx.files.external(THG.EXTRNAL_HEAD + url).reader(THG.CHAR_SET);
+			reader = Gdx.files.external(THG.EXTRNAL_HEAD + url).reader(THG.CHAR_SET);
 		} catch (Exception e) {
 			load();
 			return;
 		}
 		
 		try {
-			PropertiesUtils.load(datas, fr);
+			PropertiesUtils.load(datas, reader);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		try {
-			fr.close();
+			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -142,9 +139,9 @@ public class DefaultProgressData implements ProgressData {
 	
 	@Override
 	public void save(String url) {
-		Writer fw = null;
+		Writer writer = null;
 		try {
-			fw = Gdx.files.external(THG.EXTRNAL_HEAD + url).writer(false, THG.CHAR_SET);
+			writer = Gdx.files.external(THG.EXTRNAL_HEAD + url).writer(false, THG.CHAR_SET);
 		}
 		catch(Exception e) {
 			System.err.println("DefaultProgressData.save() writer create fail");
@@ -152,13 +149,13 @@ public class DefaultProgressData implements ProgressData {
 		}
 		
 		try {
-			PropertiesUtils.store(datas, fw, null);
+			PropertiesUtils.store(datas, writer, null);
 		} catch (IOException e) {
 			System.err.println("DefaultProgressData.save() store fail");
 		}
-		if(fw != null)
+		if(writer != null)
 			try {
-				fw.close();
+				writer.close();
 			} catch (IOException e) {
 			}
 		

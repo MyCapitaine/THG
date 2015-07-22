@@ -41,7 +41,7 @@ public class GSLWeight extends Group implements Disposable {
 	/**
 	 * 最大存档数
 	 */
-	static final int PROGRESS_NUM = MAX_PAGE_NUM * ROW_NUM_PAGE * COL_NUM_PAGE;
+	public static final int PROGRESS_NUM = MAX_PAGE_NUM * ROW_NUM_PAGE * COL_NUM_PAGE;
 	private int current_page_num;
 	
 	private TurnPageWeight turnPage;

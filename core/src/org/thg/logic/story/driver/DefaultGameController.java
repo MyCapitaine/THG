@@ -6,6 +6,7 @@ import org.thg.logic.factorys.GStageFactory;
 import org.thg.logic.factorys.GStoryTreeFactory;
 import org.thg.logic.factorys.ResourceFactory;
 import org.thg.logic.story.api.*;
+import org.thg.logic.story.driver.progressdata.DefaultProgressData;
 import org.thg.logic.story.driver.stage.DefaultArticleStage;
 import org.thg.logic.story.driver.stage.DefaultEffectStage;
 import org.thg.logic.story.driver.stage.DefaultGameStage;
