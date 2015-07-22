@@ -22,7 +22,12 @@ public class Config {
 //====GSave/LoadMenu==================================================================================
 	public static final String SL_MENU_BG_URL = "images/ui/slmenu/background.png";
 	public static final String SL_MENU_RETURN_BUTTON_URL = "images/ui/slmenu/returnButton.png";
+	public static final String SL_MENU_SHADE_URL = "image/ui/slmenu/shade.png";
+	public static final String SL_MENU_TP_BUTTON_URL = "image/ui/slmenu/tpButton.png";
 	
+	public static final float SL_PADDING = 10f;
+	public static final float SL_PIC_WIDTH = 156f, SL_PIC_HEIGHT = 117f;
+	public static final float SL_TP_WIDTH = 75f, SL_TP_HEIGHT = 37f;
 	
 	
 	
@@ -61,7 +66,9 @@ public class Config {
 	public static final String SETTING_MENU_INTERVAL_SLIDER_BG_URL = "images/ui/settingmenu/intervalSliderBg.png";	
 	public static final String SETTING_MENU_INTERVAL_SLIDER_KNOB_URL = "images/ui/settingmenu/intervalSliderKnob.png";	
 	public static final int
-		SLIDER_WIDTH = 300, SLIDER_HEIGHT = 100;
+		SLIDER_WIDTH = 300, SLIDER_HEIGHT = 100,
+		KNOB_WIDTH = 30, KNOB_HEIGHT = 100,
+		SLIDER_LABEL_WIDTH = 100, SLIDER_LABEL_HEIGHT = 50;
 //====GWordsFrame==================================================================================
 	public static final String WORDS_FRAME_URL = "images/defaults/gamestage/wordsFrameBg.png";
 	public static final int
@@ -81,7 +88,7 @@ public class Config {
 	public static final String SKIP_BUTTON_URL = "images/defaults/gamestage/skipButton.png";
 
 	public static final int
-		BUTTON_WIDHT = 110, BUTTON_HEIGHT = 30;
+		GAME_BUTTON_WIDHT = 110, GAME_BUTTON_HEIGHT = 30;
 //====GChoiceWindow==================================================================================
 	public static final String CHOICE_WINDOW_BG_URL = "images/defaults/gamestage/choiceWindowBg.png";
 	public static final String CHOICE_BUTTON_URL = "images/defaults/gamestage/choiceButton.png";

@@ -1,8 +1,13 @@
 package org.thg.ui.sl;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
+import org.thg.ui.Config;
+import org.thg.ui.UiUtil;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -14,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
@@ -44,7 +50,8 @@ public class GSLWeight extends Group implements Disposable {
 	private boolean[][] haveData;
 	
 	private HashMap<Integer, Texture> textures;
-	private Texture lightTexture;
+	private Texture shadeTexture;
+	private BitmapFont timeFont;
 	
 	private SLSpeaker speaker;
 	
@@ -55,15 +62,18 @@ public class GSLWeight extends Group implements Disposable {
 		textures = new HashMap<Integer, Texture>();
 		datas = new DataPic[ROW_NUM_PAGE][COL_NUM_PAGE];
 		
-//		lightTexture = new Texture();
-		Drawable lightDrawable = new TextureRegionDrawable(new TextureRegion(lightTexture));
+//		timeFont = THG.getFont("0123456789/:", size, color); TODO
 		
+		shadeTexture = new Texture(Config.SL_MENU_SHADE_URL);
+		Drawable shadeDrawable = new TextureRegionDrawable(new TextureRegion(shadeTexture));
 		
 		for(int i = 0; i < ROW_NUM_PAGE; i ++) {
 			for(int j = 0; j < COL_NUM_PAGE; j ++) {
-				datas[i][j] = new DataPic(lightDrawable);
-//				datas[i][j].setPosition(x, y);
-//				datas[i][j].setSize(width, height);
+				datas[i][j] = new DataPic(shadeDrawable, timeFont);
+				datas[i][j].setPosition(
+						(Config.SL_PADDING + Config.SL_PIC_WIDTH * (j + 1) - (i % 2 == 0 ? 0 : 4 * Config.SL_PADDING)) * Config.scaleX,
+						(Config.SCREEN_HEIGHT - (i + 1) * (Config.SL_PIC_HEIGHT + Config.SL_PADDING)) * Config.scaleY);
+				datas[i][j].setSize(Config.SL_PIC_WIDTH * Config.scaleX, Config.SL_PIC_HEIGHT * Config.scaleY);
 			}
 		}
 		
@@ -77,6 +87,7 @@ public class GSLWeight extends Group implements Disposable {
 	 * 
 	 */
 	private void showPage(int pageNum) {
+		current_page_num = pageNum;
 		
 		//设置图片
 		
@@ -96,6 +107,8 @@ public class GSLWeight extends Group implements Disposable {
 			iter.next().getValue().dispose();
 		textures.clear();
 		
+		shadeTexture.dispose();
+		timeFont.dispose();
 		turnPage.dispose();
 		
 	}
@@ -116,12 +129,19 @@ public class GSLWeight extends Group implements Disposable {
 		TurnPageWeight() {
 //			bf = THG.getFont("0123456789", size, color);
 			
+			tpTexture = new Texture(Config.SL_MENU_TP_BUTTON_URL);
+			TextureRegion[][] tr = TextureRegion.split(tpTexture, tpTexture.getWidth() / 2, tpTexture.getHeight());
+			ImageButtonStyle style = new ImageButtonStyle();
+			style.imageUp = UiUtil.resize(tr[0][0], Config.SL_TP_WIDTH, Config.SL_TP_HEIGHT);
+			style.imageDown = style.imageOver = style.imageChecked
+					= UiUtil.resize(tr[0][1], Config.SL_TP_WIDTH, Config.SL_TP_HEIGHT);
 			
 			pages = new ImageButton[MAX_PAGE_NUM];
 			for(int i = 0; i < MAX_PAGE_NUM; i ++) {
-//				pages[i] = new ImageButton(null);
-//				pages[i].setPosition(x, y);
-//				pages[i].setSize(width, height);
+				pages[i] = new ImageButton(style);
+				pages[i].setPosition(2 * Config.SL_PADDING * Config.scaleX,
+						(Config.SL_PADDING + (10 - i) * (Config.SL_PADDING + Config.SL_TP_HEIGHT)) * Config.scaleY);
+				pages[i].setSize(Config.SL_TP_WIDTH * Config.scaleX, Config.SL_TP_HEIGHT * Config.scaleY);
 			}
 			
 			for(int i = 0; i < MAX_PAGE_NUM; i ++) {
@@ -168,30 +188,46 @@ public class GSLWeight extends Group implements Disposable {
  *
  */
 class DataPic extends Image {
-	/** 是否绘制光泽 */
-	boolean drawLight;
-	/** 光泽的drawable */
-	Drawable light;
-	public DataPic(Drawable light) {
-		this.light = light;
-		drawLight = false;
+	/** 是否绘制阴影 */
+	boolean drawshade;
+	/** 阴影的drawable */
+	Drawable shade;
+	String timeStr;
+	private BitmapFont timeFont;
+	
+	public DataPic(Drawable shade, BitmapFont timeFont) {
+		this.shade = shade;
+		this.timeFont = timeFont;
+		drawshade = true;
 		addListener(new InputListener() {
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-				drawLight = true;
+				drawshade = false;
 			}
 			@Override
 			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-				drawLight = false;
+				drawshade = true;
 			}
 		});
+	}
+	
+	public void setTime(long time) {
+		GregorianCalendar g = new GregorianCalendar();
+		g.setTimeInMillis(time);
+		timeStr = g.get(Calendar.YEAR) + "/" + (g.get(Calendar.MONTH) < 10 ? ("0" + g.get(Calendar.MONTH)) : g.get(Calendar.MONTH))
+				+ "/" + (g.get(Calendar.DAY_OF_MONTH) < 10 ? ("0" + g.get(Calendar.DAY_OF_MONTH)) : g.get(Calendar.DAY_OF_MONTH))
+				+ "\n" + "  " + g.get(Calendar.HOUR_OF_DAY) + ":" + g.get(Calendar.MINUTE)
+				+ ":" + g.get(Calendar.SECOND);
+		
 	}
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-		if(drawLight && light != null)
-			light.draw(batch, getX() + getImageX(), getY() + getImageY(),
+		if(drawshade && shade != null)
+			shade.draw(batch, getX() + getImageX(), getY() + getImageY(),
 					getImageWidth() * getScaleX(), getImageHeight() * getScaleY());
+//		if(time != null) 		TODO
+//			timeFont.draw(batch, str, x, y)
 	}
 }
 

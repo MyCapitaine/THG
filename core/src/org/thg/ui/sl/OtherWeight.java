@@ -29,7 +29,6 @@ public class OtherWeight extends Group implements Disposable {
 //	Image logo;
 	
 	private ArrayList<Disposable> disList;
-	private Disposable disBuffer;
 	
 	private Screen toBeDisposed, toBeSet;
 	
@@ -49,20 +48,20 @@ public class OtherWeight extends Group implements Disposable {
 		disList = new ArrayList<Disposable>();
 		
 //背景
-		disBuffer = new Texture(Config.SL_MENU_BG_URL);
+		Texture disBuffer = new Texture(Config.SL_MENU_BG_URL);
 		disList.add(disBuffer);
-		bg = new Image((Texture)disBuffer);
+		bg = new Image(disBuffer);
 		bg.setSize(Config.SCREEN_WIDTH * Config.scaleX, Config.SCREEN_HEIGHT * Config.scaleY);
 		
 		
 //返回键
 		disBuffer = new Texture(Config.SL_MENU_RETURN_BUTTON_URL);
 		disList.add(disBuffer);
-		 TextureRegion[][] tr = TextureRegion.split((Texture)disBuffer, Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
+		TextureRegion[][] tr = TextureRegion.split(disBuffer, disBuffer.getWidth() / 3, disBuffer.getHeight());
 		returnButton = new ImageButton(
-				UiUtil.resize(tr[0][0]),
-				UiUtil.resize(tr[0][1]));
-		returnButton.getStyle().imageOver = UiUtil.resize(tr[0][2]);
+				UiUtil.resize(tr[0][0], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT),
+				UiUtil.resize(tr[0][1], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT));
+		returnButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		returnButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				THG.getGame().setScreen(toBeSet == null ? new GMainMenu() : toBeSet);

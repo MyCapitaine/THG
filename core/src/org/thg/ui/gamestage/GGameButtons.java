@@ -26,7 +26,6 @@ public class GGameButtons implements Disposable {
 	private ImageButton save, load, skip, auto, retu/*, backView*/;
 
 	private TextureRegion[][] tr;
-	private Disposable disBuffer;
 	private ArrayList<Disposable> disList;
 	
 	public GGameButtons(Stage s) {
@@ -41,25 +40,25 @@ public class GGameButtons implements Disposable {
 	}
 
 	private void iniSave() {
-		disBuffer = new Texture(Config.SAVE_BUTTON_URL);
+		Texture disBuffer = new Texture(Config.SAVE_BUTTON_URL);
 		disList.add(disBuffer);
-		tr = TextureRegion.split((Texture)disBuffer, Config.BUTTON_WIDHT, Config.BUTTON_HEIGHT);
+		tr = TextureRegion.split((Texture)disBuffer, disBuffer.getWidth() / 2, disBuffer.getHeight());
 		save = new ImageButton(getButtonStyle(tr));
 		stage.addActor(save);
 	}
 
 	private void iniLoad() {
-		disBuffer = new Texture(Config.LOAD_BUTTON_URL);
+		Texture disBuffer = new Texture(Config.LOAD_BUTTON_URL);
 		disList.add(disBuffer);
-		tr = TextureRegion.split((Texture)disBuffer, Config.BUTTON_WIDHT, Config.BUTTON_HEIGHT);
+		tr = TextureRegion.split((Texture)disBuffer, disBuffer.getWidth() / 2, disBuffer.getHeight());
 		load = new ImageButton(getButtonStyle(tr));
 		stage.addActor(load);
 	}
 
 	private void iniSkip() {
-		disBuffer = new Texture(Config.SKIP_BUTTON_URL);
+		Texture disBuffer = new Texture(Config.SKIP_BUTTON_URL);
 		disList.add(disBuffer);
-		tr = TextureRegion.split((Texture)disBuffer, Config.BUTTON_WIDHT, Config.BUTTON_HEIGHT);
+		tr = TextureRegion.split((Texture)disBuffer, disBuffer.getWidth() / 2, disBuffer.getHeight());
 		skip = new ImageButton(getButtonStyle(tr));
 		skip.addListener(new InputListener() {
 			@Override
@@ -93,9 +92,9 @@ public class GGameButtons implements Disposable {
 	}
 
 	private void iniAuto() {
-		disBuffer = new Texture(Config.AUTO_BUTTON_URL);
+		Texture disBuffer = new Texture(Config.AUTO_BUTTON_URL);
 		disList.add(disBuffer);
-		tr = TextureRegion.split((Texture)disBuffer, Config.BUTTON_WIDHT, Config.BUTTON_HEIGHT);
+		tr = TextureRegion.split((Texture)disBuffer, disBuffer.getWidth() / 2, disBuffer.getHeight());
 		auto = new ImageButton(getButtonStyle(tr));
 		auto.addListener(new InputListener() {
 			@Override
@@ -130,9 +129,9 @@ public class GGameButtons implements Disposable {
 	}
 
 	private void iniRetu() {
-		disBuffer = new Texture(Config.RETURN_BUTTON_URL);
+		Texture disBuffer = new Texture(Config.RETURN_BUTTON_URL);
 		disList.add(disBuffer);
-		tr = TextureRegion.split((Texture)disBuffer, Config.BUTTON_WIDHT, Config.BUTTON_HEIGHT);
+		tr = TextureRegion.split((Texture)disBuffer, disBuffer.getWidth() / 2, disBuffer.getHeight());
 		retu = new ImageButton(getButtonStyle(tr));
 		retu.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -146,7 +145,7 @@ public class GGameButtons implements Disposable {
 	private void iniPosition() {
 		if (stage instanceof DefaultGameStage) {
 			float 
-				dx = Config.BUTTON_WIDHT * Config.scaleX,
+				dx = Config.GAME_BUTTON_WIDHT * Config.scaleX,
 				y = (Config.SCREEN_WIDTH - Config.WORDS_FRAME_WIDTH) / 2 * Config.scaleY,
 				x = (Config.SCREEN_WIDTH - Config.WORDS_FRAME_WIDTH) / 2 * Config.scaleX +
 						Config.WORDS_FRAME_WIDTH * Config.scaleX - 5 * dx;
@@ -161,7 +160,8 @@ public class GGameButtons implements Disposable {
 	}
 
 	private ImageButtonStyle getButtonStyle(TextureRegion[][] tr) {
-		Drawable up = UiUtil.resize(tr[0][0]), down = UiUtil.resize(tr[0][1]);
+		Drawable up = UiUtil.resize(tr[0][0], Config.GAME_BUTTON_WIDHT, Config.GAME_BUTTON_HEIGHT),
+				down = UiUtil.resize(tr[0][1], Config.GAME_BUTTON_WIDHT, Config.GAME_BUTTON_HEIGHT);
 		ImageButtonStyle ibs = new ImageButtonStyle();
 		ibs.imageUp = up;
 		ibs.imageDown = down;

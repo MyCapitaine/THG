@@ -32,7 +32,6 @@ public class GChoiceWindow extends Group implements Disposable {
 	private BitmapFont font;
 	private Image bg;
 	
-	private Disposable disBuffer;
 	private ArrayList<Disposable> disList;
 	
 	private int rowWordsNum;
@@ -53,8 +52,8 @@ public class GChoiceWindow extends Group implements Disposable {
 		rowWordsNum = new BigDecimal((Config.CHOICE_BUTTON_WIDTH - 2 * Config.CHOICE_BUTTON_PADDING) / Config.CHOICE_FONT_SIZE).
 				setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
 		
-
-		disBuffer = new Texture(Config.CHOICE_WINDOW_BG_URL);
+		
+		Texture disBuffer = new Texture(Config.CHOICE_WINDOW_BG_URL);
 		bg = new Image((Texture) disBuffer);
 		addActor(bg);
 		
@@ -79,10 +78,10 @@ public class GChoiceWindow extends Group implements Disposable {
 		buttons = new LabelButton[buttonsNum];
 		
 		ImageButtonStyle ibs = new ImageButtonStyle();
-		disBuffer = new Texture(Config.CHOICE_BUTTON_URL);
-		TextureRegion[][] tr = TextureRegion.split((Texture)disBuffer, (int)Config.CHOICE_BUTTON_WIDTH, (int)Config.CHOICE_BUTTON_HEIGHT_ONELINE);
-		ibs.imageUp = UiUtil.resize(tr[0][0]);
-		ibs.imageOver = UiUtil.resize(tr[0][1]);
+		Texture disBuffer = new Texture(Config.CHOICE_BUTTON_URL);
+		TextureRegion[][] tr = TextureRegion.split(disBuffer, disBuffer.getWidth() / 2, disBuffer.getHeight());
+		ibs.imageUp = UiUtil.resize(tr[0][0], Config.CHOICE_BUTTON_WIDTH, Config.CHOICE_BUTTON_HEIGHT_ONELINE);
+		ibs.imageOver = UiUtil.resize(tr[0][1], Config.CHOICE_BUTTON_WIDTH, Config.CHOICE_BUTTON_HEIGHT_ONELINE);
 		
 		for(int i = 0; i < buttonsNum; i ++) {
 			String[] extra = sl[i + 1].split(CHOICE_EXTRA_CONDITIONS_SIGN);
@@ -115,10 +114,10 @@ public class GChoiceWindow extends Group implements Disposable {
 			if(col > 1) {
 				ImageButtonStyle specialstyle = new ImageButtonStyle();
 				disBuffer = new Texture(Config.CHOICE_BUTTON_URL);
-				tr = TextureRegion.split((Texture)disBuffer, (int)Config.CHOICE_BUTTON_WIDTH, (int)Config.CHOICE_BUTTON_HEIGHT_ONELINE);
-				specialstyle.imageUp = UiUtil.resize(tr[0][0]);
+				tr = TextureRegion.split(disBuffer, disBuffer.getWidth() / 2, disBuffer.getHeight());
+				specialstyle.imageUp = UiUtil.resize(tr[0][0], Config.CHOICE_BUTTON_WIDTH, Config.CHOICE_BUTTON_HEIGHT_ONELINE);
 				specialstyle.imageUp.setMinHeight(specialstyle.imageUp.getMinHeight() * col);
-				specialstyle.imageOver = UiUtil.resize(tr[0][1]);
+				specialstyle.imageOver = UiUtil.resize(tr[0][1], Config.CHOICE_BUTTON_WIDTH, Config.CHOICE_BUTTON_HEIGHT_ONELINE);
 				specialstyle.imageOver.setMinHeight(specialstyle.imageOver.getMinHeight() * col);
 				buttons[i].setStyle(specialstyle);
 				buttons[i].setLineNum(col);

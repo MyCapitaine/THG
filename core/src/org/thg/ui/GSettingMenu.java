@@ -27,7 +27,6 @@ public class GSettingMenu extends ScreenAdapter {
 	private Stage stage;
 	private GSettingMenu gSettingMenu;
 	private ArrayList<Disposable> disList;
-	private Disposable disBuffer1, disBuffer2;
 	
 	public GSettingMenu() {
 		gSettingMenu = this;
@@ -55,20 +54,20 @@ public class GSettingMenu extends ScreenAdapter {
 		stage = new Stage();
 		TextureRegion[][] tr;
 //============背景==================================================================
-		disBuffer1 = new Texture(Config.SETTING_MENU_BG_URL);
+		Texture disBuffer1 = new Texture(Config.SETTING_MENU_BG_URL);
 		disList.add(disBuffer1);
-		Image bg = new Image((Texture)disBuffer1);
+		Image bg = new Image(disBuffer1);
 		bg.setSize(Config.SCREEN_WIDTH * Config.scaleX, Config.SCREEN_HEIGHT * Config.scaleY);
 		stage.addActor(bg);
 		
 //============返回==================================================================
 		disBuffer1 = new Texture(Config.SETTING_MENU_RETURN_BUTTON_URL);
 		disList.add(disBuffer1);
-		tr = TextureRegion.split((Texture)disBuffer1, Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
+		tr = TextureRegion.split(disBuffer1, disBuffer1.getWidth() / 3, disBuffer1.getHeight());
 		ImageButton returnButton = new ImageButton(
-				UiUtil.resize(tr[0][0]),
-				UiUtil.resize(tr[0][1]));
-		returnButton.getStyle().imageOver = UiUtil.resize(tr[0][2]);
+				UiUtil.resize(tr[0][0], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT),
+				UiUtil.resize(tr[0][1], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT));
+		returnButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		returnButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				THG.getGame().setScreen(new GMainMenu());
@@ -83,16 +82,16 @@ public class GSettingMenu extends ScreenAdapter {
 		final Slider volSlider;
 		disBuffer1 = new Texture(Config.SETTING_MENU_VOL_LABEL_URL);
 		disList.add(disBuffer1);
-		volLabel = new Image((Texture)disBuffer1);
-		volLabel.setSize(((Texture)disBuffer1).getWidth() * Config.scaleX,
-				((Texture)disBuffer1).getHeight() * Config.scaleY);
+		volLabel = new Image(disBuffer1);
+		volLabel.setSize(Config.SLIDER_LABEL_WIDTH * Config.scaleX,
+				Config.SLIDER_LABEL_HEIGHT * Config.scaleY);
 		disBuffer1 = new Texture(Config.SETTING_MENU_VOL_SLIDER_BG_URL);
-		disBuffer2 = new Texture(Config.SETTING_MENU_VOL_SLIDER_KNOB_URL);
+		Texture disBuffer2 = new Texture(Config.SETTING_MENU_VOL_SLIDER_KNOB_URL);
 		disList.add(disBuffer1);
 		disList.add(disBuffer2);
 		SliderStyle volSliderStyle = new SliderStyle(
-				UiUtil.resize(new TextureRegion((Texture)disBuffer1)),
-				UiUtil.resize(new TextureRegion((Texture)disBuffer2)));
+				UiUtil.resize(new TextureRegion(disBuffer1), Config.SLIDER_WIDTH, Config.SLIDER_HEIGHT),
+				UiUtil.resize(new TextureRegion(disBuffer2), Config.KNOB_WIDTH, Config.KNOB_HEIGHT));
 		volSlider = new Slider(Config.VOL_VOICE_MIN, Config.VOL_VOICE_MAX,
 				Config.VOL_VOICE_STEP_SIZE, false, volSliderStyle);
 		volSlider.setValue(Config.vol_voice);
@@ -112,17 +111,17 @@ public class GSettingMenu extends ScreenAdapter {
 		final Slider intervalSlider;
 		disBuffer1 = new Texture(Config.SETTING_MENU_INTERVAL_LABEL_URL);
 		disList.add(disBuffer1);
-		intervalLabel = new Image((Texture)disBuffer1);
-		intervalLabel.setSize(((Texture)disBuffer1).getWidth() * Config.scaleX,
-				((Texture)disBuffer1).getHeight() * Config.scaleY);
+		intervalLabel = new Image(disBuffer1);
+		intervalLabel.setSize(Config.SLIDER_LABEL_WIDTH * Config.scaleX,
+				Config.SLIDER_LABEL_HEIGHT * Config.scaleY);
 		
 		disBuffer1 = new Texture(Config.SETTING_MENU_INTERVAL_SLIDER_BG_URL);
 		disBuffer2 = new Texture(Config.SETTING_MENU_INTERVAL_SLIDER_KNOB_URL);
 		disList.add(disBuffer1);
 		disList.add(disBuffer2);
 		SliderStyle intervalSliderStyle = new SliderStyle(
-				UiUtil.resize(new TextureRegion((Texture)disBuffer1)),
-				UiUtil.resize(new TextureRegion((Texture)disBuffer2)));
+				UiUtil.resize(new TextureRegion(disBuffer1), Config.SLIDER_WIDTH, Config.SLIDER_HEIGHT),
+				UiUtil.resize(new TextureRegion(disBuffer2), Config.KNOB_WIDTH, Config.KNOB_HEIGHT));
 		intervalSlider = new Slider(Config.DIALOG_INTERVAL_MIN, Config.DIALOG_INTERVAL_MAX,
 				Config.DIALOG_INTERVAL_STEP_SIZE, false, intervalSliderStyle);
 		intervalSlider.setValue(Config.dialogInterval);

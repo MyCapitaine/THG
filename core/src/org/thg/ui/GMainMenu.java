@@ -23,7 +23,6 @@ public class GMainMenu extends ScreenAdapter {
 	private Stage stage;
 	private GMainMenu gMainMenu;
 	private ArrayList<Disposable> disList;
-	private Disposable disBuffer;
 	public GMainMenu() {
 		gMainMenu = this;
 		disList = new ArrayList<Disposable>();
@@ -48,19 +47,19 @@ public class GMainMenu extends ScreenAdapter {
 		stage = new Stage();
 		TextureRegion[][] tr;
 //============背景==================================================================
-		disBuffer = new Texture(Config.MAIN_MENU_BG_URL);
+		Texture disBuffer = new Texture(Config.MAIN_MENU_BG_URL);
 		disList.add(disBuffer);
-		Image bg = new Image((Texture)disBuffer);
+		Image bg = new Image(disBuffer);
 		bg.setSize(Config.SCREEN_WIDTH * Config.scaleX, Config.SCREEN_HEIGHT * Config.scaleY);
 		stage.addActor(bg);
 //============开始游戏===============================================================
 		disBuffer = new Texture(Config.MAIN_MENU_BEGIN_BUTTON_URL);
 		disList.add(disBuffer);
-		tr = TextureRegion.split((Texture)disBuffer, Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
+		tr = TextureRegion.split(disBuffer, disBuffer.getWidth() / 3, disBuffer.getHeight());
 		ImageButton beginButton = new ImageButton(
-				UiUtil.resize(tr[0][0]),
-				UiUtil.resize(tr[0][1]));
-		beginButton.getStyle().imageOver = UiUtil.resize(tr[0][2]);
+				UiUtil.resize(tr[0][0], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT),
+				UiUtil.resize(tr[0][1], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT));
+		beginButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		beginButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				THG.getGame().setScreen(new DefaultGameController());
@@ -72,11 +71,11 @@ public class GMainMenu extends ScreenAdapter {
 //============读档==================================================================
 		disBuffer = new Texture(Config.MAIN_MENU_LOAD_BUTTON_URL);
 		disList.add(disBuffer);
-		tr = TextureRegion.split((Texture)disBuffer, Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
+		tr = TextureRegion.split(disBuffer, disBuffer.getWidth() / 3, disBuffer.getHeight());
 		ImageButton loadButton = new ImageButton(
-				UiUtil.resize(tr[0][0]),
-				UiUtil.resize(tr[0][1]));
-		loadButton.getStyle().imageOver = UiUtil.resize(tr[0][2]);
+				UiUtil.resize(tr[0][0], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT),
+				UiUtil.resize(tr[0][1], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT));
+		loadButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		loadButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				THG.getGame().setScreen(null);
@@ -88,11 +87,11 @@ public class GMainMenu extends ScreenAdapter {
 //============Gallery==============================================================
 		disBuffer = new Texture(Config.MAIN_MENU_GALLERY_BUTTON_URL);
 		disList.add(disBuffer);
-		tr = TextureRegion.split((Texture)disBuffer, Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
+		tr = TextureRegion.split(disBuffer, disBuffer.getWidth() / 3, disBuffer.getHeight());
 		ImageButton galleryButton = new ImageButton(
-				UiUtil.resize(tr[0][0]),
-				UiUtil.resize(tr[0][1]));
-		galleryButton.getStyle().imageOver = UiUtil.resize(tr[0][2]);
+				UiUtil.resize(tr[0][0], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT),
+				UiUtil.resize(tr[0][1], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT));
+		galleryButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		galleryButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				THG.getGame().setScreen(new GGalleryMenu());
@@ -104,11 +103,11 @@ public class GMainMenu extends ScreenAdapter {
 //============设置==================================================================
 		disBuffer = new Texture(Config.MAIN_MENU_SETTING_BUTTON_URL);
 		disList.add(disBuffer);
-		tr = TextureRegion.split((Texture)disBuffer, Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
+		tr = TextureRegion.split(disBuffer, disBuffer.getWidth() / 3, disBuffer.getHeight());
 		ImageButton settingButton = new ImageButton(
-				UiUtil.resize(tr[0][0]),
-				UiUtil.resize(tr[0][1]));
-		settingButton.getStyle().imageOver = UiUtil.resize(tr[0][2]);
+				UiUtil.resize(tr[0][0], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT),
+				UiUtil.resize(tr[0][1], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT));
+		settingButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		settingButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				THG.getGame().setScreen(new GSettingMenu());
@@ -120,11 +119,11 @@ public class GMainMenu extends ScreenAdapter {
 //============退出==================================================================
 		disBuffer = new Texture(Config.MAIN_MENU_EXIT_BUTTON_URL);
 		disList.add(disBuffer);
-		tr = TextureRegion.split((Texture)disBuffer, Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
+		tr = TextureRegion.split(disBuffer, disBuffer.getWidth() / 3, disBuffer.getHeight());
 		ImageButton exitButton = new ImageButton(
-				UiUtil.resize(tr[0][0]),
-				UiUtil.resize(tr[0][1]));
-		exitButton.getStyle().imageOver = UiUtil.resize(tr[0][2]);
+				UiUtil.resize(tr[0][0], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT),
+				UiUtil.resize(tr[0][1], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT));
+		exitButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		exitButton.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				ResourceFactory.clearPool();
