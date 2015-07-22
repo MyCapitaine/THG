@@ -208,31 +208,37 @@ public class DefaultProgressData implements ProgressData {
 	}
 	@Override
 	public boolean putTime(String dayStr, int sceneNum, int dialogNum) {
-		boolean retu = true;
-		if(dayStr != null) retu &= (datas.put(DAY_STRING, dayStr) == null);
-		else return false;
-		if(sceneNum >= 0) retu &= (datas.put(SCENE_STRING, Integer.toString(sceneNum)) == null);
-		else return false;
-		if(dialogNum >= 0) retu &= (datas.put(DIALOG_STRING, Integer.toString(dialogNum)) == null);
-		else return false;
-		return retu;
+//		boolean retu = true;
+//		if(dayStr != null) retu &= (datas.put(DAY_STRING, dayStr) != null);
+//		else return false;
+//		if(sceneNum >= 0) retu &= (datas.put(SCENE_STRING, Integer.toString(sceneNum)) != null);
+//		else return false;
+//		if(dialogNum >= 0) retu &= (datas.put(DIALOG_STRING, Integer.toString(dialogNum)) != null);
+//		else return false;
+//		return retu;
+		datas.put(DAY_STRING, dayStr);
+		datas.put(SCENE_STRING, Integer.toString(sceneNum));
+		datas.put(DIALOG_STRING, Integer.toString(dialogNum));
+		return true;
+	}
+	@Override
+	public void putExtraInfo(String info) {
+		if(info == null) return;
+		datas.put(EXTRA_STRING, info);
+		
+	}
+	@Override
+	public String getExtraInfo() {
+		String s = datas.get(EXTRA_STRING);
+		return s == null ? "" : s;
 	}
 	
 	private static final String 
 		DAY_STRING = "day",
 		SCENE_STRING = "scene",
-		DIALOG_STRING = "dialog";
+		DIALOG_STRING = "dialog",
+		EXTRA_STRING = "extra";
 
-	@Override
-	public void putExtraInfo(String info) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public String getExtraInfo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 
 }
