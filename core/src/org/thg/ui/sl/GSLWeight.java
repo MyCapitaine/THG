@@ -3,6 +3,8 @@ package org.thg.ui.sl;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.thg.logic.story.api.ProgressData;
+import org.thg.logic.story.driver.progressdata.ProgressDataUtil;
 import org.thg.ui.Config;
 import org.thg.ui.UiUtil;
 
@@ -44,26 +46,31 @@ public class GSLWeight extends Group implements Disposable {
 	private TurnPageWeight turnPage;
 	
 	private DataPic[][] datas;
-	private boolean[][] haveData;
 	
-	private Texture[] textures;
 	private Texture shadeTexture;
 	private BitmapFont timeFont;
+	private Texture nodataTexture;
+	private Drawable nodataDrawable;
+	private Drawable imageMissDrawable;
 	
 	private SLSpeaker speaker;
 	
 	GSLWeight(SLSpeaker speaker) {
 		this.speaker = speaker;
 		current_page_num = 0;
-		turnPage = new TurnPageWeight();
-		textures = null;
-		datas = new DataPic[ROW_NUM_PAGE][COL_NUM_PAGE];
+		addActor(turnPage = new TurnPageWeight());
 		
 //		timeFont = THG.getFont("0123456789/:", size, color); TODO
 		
+		nodataTexture = new Texture(Config.SL_MENU_NODATA_URL);
+		nodataDrawable = new TextureRegionDrawable(new TextureRegion(nodataTexture));
+		
+		imageMissDrawable = nodataDrawable;
+		
 		shadeTexture = new Texture(Config.SL_MENU_SHADE_URL);
 		Drawable shadeDrawable = new TextureRegionDrawable(new TextureRegion(shadeTexture));
-		
+
+		datas = new DataPic[ROW_NUM_PAGE][COL_NUM_PAGE];
 		for(int i = 0; i < ROW_NUM_PAGE; i ++) {
 			for(int j = 0; j < COL_NUM_PAGE; j ++) {
 				datas[i][j] = new DataPic(shadeDrawable, timeFont);
@@ -71,11 +78,11 @@ public class GSLWeight extends Group implements Disposable {
 						(Config.SL_PADDING + Config.SL_PIC_WIDTH * (j + 1) - (i % 2 == 0 ? 0 : 4 * Config.SL_PADDING)) * Config.scaleX,
 						(Config.SCREEN_HEIGHT - (i + 1) * (Config.SL_PIC_HEIGHT + Config.SL_PADDING)) * Config.scaleY);
 				datas[i][j].setSize(Config.SL_PIC_WIDTH * Config.scaleX, Config.SL_PIC_HEIGHT * Config.scaleY);
+				addActor(datas[i][j]);
 			}
 		}
 		
-		haveData = new boolean[ROW_NUM_PAGE][COL_NUM_PAGE];
-		
+		showPage(0);
 	}
 	
 	/**
@@ -86,28 +93,36 @@ public class GSLWeight extends Group implements Disposable {
 	private void showPage(int pageNum) {
 		current_page_num = pageNum;
 		
-		//设置图片
-		
-		//set haveData[][]
-		
+		boolean[] haveData = ProgressDataUtil.checkDatas();
+		Texture texture;
+		ProgressData pd;
 		for(int i = 0; i < ROW_NUM_PAGE; i ++) {
 			for(int j = 0; j < COL_NUM_PAGE; j ++) {
-				speaker.setListener(datas[i][j], i * COL_NUM_PAGE + j, haveData[i][j]);
-//				TODO
+				int num = current_page_num * ROW_NUM_PAGE * COL_NUM_PAGE + j * ROW_NUM_PAGE + i;
+				if(haveData[num]) {
+					if((texture = ProgressDataUtil.getImageTexture(num)) != null)
+						datas[i][j].setDrawable(new TextureRegionDrawable(new TextureRegion(texture)));
+					else datas[i][j].setDrawable(imageMissDrawable);
+					try {
+						if((pd = ProgressDataUtil.load(num)) != null)
+							datas[i][j].setTime(Long.parseLong(pd.getExtraInfo()));
+					}catch(Exception e) { System.err.println(e); }
+				}
+				else {
+					datas[i][j].setDrawable(nodataDrawable);
+				}
+				
+				speaker.setListener(datas[i][j], num, haveData[num]);
 			}
 		}
 		
 	}
 	@Override
 	public void dispose() {
-		for(int i = 0; i < textures.length; i ++) {
-			if(textures[i] != null)
-				textures[i].dispose();
-		}
-		
 		shadeTexture.dispose();
-		timeFont.dispose();
+		if(timeFont != null) timeFont.dispose();
 		turnPage.dispose();
+		nodataTexture.dispose();
 		
 	}
 	
@@ -140,6 +155,7 @@ public class GSLWeight extends Group implements Disposable {
 				pages[i].setPosition(2 * Config.SL_PADDING * Config.scaleX,
 						(Config.SL_PADDING + (10 - i) * (Config.SL_PADDING + Config.SL_TP_HEIGHT)) * Config.scaleY);
 				pages[i].setSize(Config.SL_TP_WIDTH * Config.scaleX, Config.SL_TP_HEIGHT * Config.scaleY);
+				addActor(pages[i]);
 			}
 			
 			for(int i = 0; i < MAX_PAGE_NUM; i ++) {
@@ -172,7 +188,7 @@ public class GSLWeight extends Group implements Disposable {
 		@Override
 		public void dispose() {
 			tpTexture.dispose();
-			bf.dispose();
+			if(bf != null) bf.dispose();
 		}
 		
 		
@@ -211,7 +227,7 @@ class DataPic extends Image {
 	public void setTime(long time) {
 		GregorianCalendar g = new GregorianCalendar();
 		g.setTimeInMillis(time);
-		timeStr = g.get(Calendar.YEAR) + "/" + (g.get(Calendar.MONTH) < 10 ? ("0" + g.get(Calendar.MONTH)) : g.get(Calendar.MONTH))
+		timeStr = (1900 + g.get(Calendar.YEAR)) + "/" + ((g.get(Calendar.MONTH) + 1) < 10 ? ("0" + (g.get(Calendar.MONTH) + 1)) : (g.get(Calendar.MONTH) + 1))
 				+ "/" + (g.get(Calendar.DAY_OF_MONTH) < 10 ? ("0" + g.get(Calendar.DAY_OF_MONTH)) : g.get(Calendar.DAY_OF_MONTH))
 				+ "\n" + "  " + g.get(Calendar.HOUR_OF_DAY) + ":" + g.get(Calendar.MINUTE)
 				+ ":" + g.get(Calendar.SECOND);

@@ -44,7 +44,7 @@ public interface GGameController extends Screen {
 	 */
 	public boolean setNextDialog();
 	/**
-	 * 确认存档调用的方法
+	 * 确认存档操作以后调用的方法
 	 * @param screenshot 该档的截屏
 	 * @param progressNum 该档所存或覆盖的编号
 	 */

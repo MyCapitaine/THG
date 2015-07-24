@@ -171,7 +171,7 @@ public class DefaultProgressData implements ProgressData {
 		}
 		return true;
 	}
-
+	
 	
 	@Override
 	public final boolean containsKey(String key) {
@@ -230,6 +230,11 @@ public class DefaultProgressData implements ProgressData {
 		return s == null ? "" : s;
 	}
 	
+	public ProgressData copy() {
+		DefaultProgressData pd = new DefaultProgressData();
+		pd.datas = new ObjectMap<String, String>(datas);
+		return pd;
+	}
 	private static final String 
 		DAY_STRING = "day",
 		SCENE_STRING = "scene",

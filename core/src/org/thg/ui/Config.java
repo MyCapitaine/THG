@@ -22,8 +22,10 @@ public class Config {
 //====GSave/LoadMenu==================================================================================
 	public static final String SL_MENU_BG_URL = "images/ui/slmenu/background.png";
 	public static final String SL_MENU_RETURN_BUTTON_URL = "images/ui/slmenu/returnButton.png";
-	public static final String SL_MENU_SHADE_URL = "image/ui/slmenu/shade.png";
-	public static final String SL_MENU_TP_BUTTON_URL = "image/ui/slmenu/tpButton.png";
+	public static final String SL_MENU_SHADE_URL = "images/ui/slmenu/shade.png";
+	public static final String SL_MENU_NODATA_URL = "images/ui/slmenu/nodata.png";
+	public static final String SL_MENU_TP_BUTTON_URL = "images/ui/slmenu/tpButton.png";
+	
 	
 	public static final float SL_PADDING = 10f;
 	public static final float SL_PIC_WIDTH = 156f, SL_PIC_HEIGHT = 117f;

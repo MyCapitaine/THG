@@ -95,4 +95,10 @@ public interface ProgressData {
 	 * @return 额外的信息
 	 */
 	public String getExtraInfo();
+	
+	/**
+	 * 获取该存档的一份拷贝
+	 * @return 拷贝
+	 */
+	public ProgressData copy();
 }

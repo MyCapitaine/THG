@@ -1,6 +1,8 @@
 package org.thg.ui.sl;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * 
@@ -8,8 +10,12 @@ import com.badlogic.gdx.ScreenAdapter;
  *
  */
 public class GSaveMenu extends ScreenAdapter {
+	private Stage stage;
+	private OtherWeight otherWeight;
 	
-	public GSaveMenu() {
+	
+	
+	public GSaveMenu(Screen returnScreen) {
 	}
 	
 	@Override

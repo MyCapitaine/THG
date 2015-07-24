@@ -3,16 +3,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class GLoadMenu extends ScreenAdapter {
 	private Stage stage;
 	private OtherWeight otherWeight;
+	private GSLWeight gslWeight;
 	
 	public GLoadMenu(Screen returnScreen) {
 		stage = new Stage();
-		otherWeight = new OtherWeight(this, null);
+		otherWeight = new OtherWeight(this, returnScreen);
 		stage.addActor(otherWeight);
+		
+		gslWeight = new GSLWeight(new LoadSpeaker());
+		stage.addActor(gslWeight);
 	}
 	
 	@Override
@@ -27,7 +32,27 @@ public class GLoadMenu extends ScreenAdapter {
 	}
 	public void dispose() {
 		otherWeight.dispose();
+		gslWeight.dispose();
 	}
 	
+	
+	
+	
+	
+	class LoadSpeaker implements SLSpeaker {
+		@Override
+		public void setListener(DataPic dataPic, int OrderNum, boolean haveData) {
+			dataPic.getListeners().clear();
+			
+			if(!haveData)
+			
+			dataPic.addListener(new InputListener() {
+				
+			});
+			
+			
+			
+		}
+	}
 
 }

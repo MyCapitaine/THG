@@ -2,7 +2,9 @@ package org.thg.logic.factorys;
 
 import java.nio.ByteBuffer;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class ScreenshotFactory {
@@ -39,4 +41,37 @@ public class ScreenshotFactory {
 
         return pixmap;
     }
+	
+	/** 
+	 * 将截屏缩小并返回
+	 * @param width 缩小后宽
+	 * @param height 缩小后高
+	 */
+	public static Pixmap getScreenshot(int width, int height) {
+		int oWidth = Gdx.graphics.getWidth(),
+			oHeight = Gdx.graphics.getHeight();
+		float rateHeight = (float)oHeight / (float)height;
+		byte[] oBytes = ScreenUtils.getFrameBufferPixels(false);
+		byte[] nBytes = new byte[width * height * 4];
+		
+		for(int i = 0; i < width; i ++) {
+			for(int j = 0; j < height; j ++) {
+				int m = (width * (height - j) - i) * 4;
+				int n = ((int)(j * rateHeight + i)) * oWidth * 4;
+				nBytes[m] = oBytes[n];
+				nBytes[++m] = oBytes[++n];
+				nBytes[++m] = oBytes[++n];
+				nBytes[++m] = oBytes[++n];
+			}
+		}
+		
+		Pixmap pixmap = new Pixmap(width, height, Format.RGBA8888);
+		ByteBuffer b = pixmap.getPixels();
+		b.put(nBytes);
+		b.clear();
+		
+		return pixmap;
+	}
+	
+	
 }

@@ -1,5 +1,7 @@
 package org.thg.logic.story.driver;
 
+import java.util.GregorianCalendar;
+
 import org.thg.logic.THG;
 import org.thg.logic.factorys.GDayFactory;
 import org.thg.logic.factorys.GStageFactory;
@@ -256,7 +258,18 @@ public class DefaultGameController implements GGameController {
 	
 	@Override
 	public void save(Pixmap screenshot, int progressNum) {
-		saveAsFile(screenshot, progressNum);
+		int scenePosition, dialogPosition;
+		if(current_day == null || current_day.getDayStr() == null) return;
+		if((scenePosition = current_day.getPosition()) < 0) scenePosition = 0;
+		if(current_scene == null || (dialogPosition = current_scene.getPosition()) < 0) dialogPosition = 0;
+		
+		progressData.putTime(
+				current_day.getDayStr(),
+				scenePosition,
+				dialogPosition);
+		progressData.putExtraInfo(Long.toString(new GregorianCalendar().getTimeInMillis()));
+		
+		ProgressDataUtil.saveData(screenshot, progressData, progressNum);
 	}
 	
 	@Override
@@ -357,23 +370,7 @@ public class DefaultGameController implements GGameController {
 		}
 		
 	}
-	
-	private void saveAsFile(Pixmap screenshot, int progressNum) {
-		int scenePosition, dialogPosition;
-		if(current_day == null || current_day.getDayStr() == null) return;
-		if((scenePosition = current_day.getPosition()) < 0) scenePosition = 0;
-		if(current_scene == null || (dialogPosition = current_scene.getPosition()) < 0) dialogPosition = 0;
-		
-		progressData.putTime(
-				current_day.getDayStr(),
-				scenePosition,
-				dialogPosition);
 
-		//存储日期编号等
-//		progressData.save(url); "progress_" + (10000 + progressNum) + ".pd"
-		
-//		存图片
-		//TODO
-	}
+	
 
 }

@@ -6,6 +6,7 @@ import org.thg.logic.THG;
 import org.thg.logic.factorys.ResourceFactory;
 import org.thg.logic.story.driver.DefaultGameController;
 import org.thg.ui.gallery.GGalleryMenu;
+import org.thg.ui.sl.GLoadMenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -78,7 +79,7 @@ public class GMainMenu extends ScreenAdapter {
 		loadButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		loadButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				THG.getGame().setScreen(null);
+				THG.getGame().setScreen(new GLoadMenu(null));
 				gMainMenu.dispose();
 				return true;
 			}
