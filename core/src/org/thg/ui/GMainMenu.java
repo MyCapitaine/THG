@@ -22,10 +22,8 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class GMainMenu extends ScreenAdapter {
 	private Stage stage;
-	private GMainMenu gMainMenu;
 	private ArrayList<Disposable> disList;
 	public GMainMenu() {
-		gMainMenu = this;
 		disList = new ArrayList<Disposable>();
 		createStage();
 	}
@@ -63,8 +61,8 @@ public class GMainMenu extends ScreenAdapter {
 		beginButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		beginButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				THG.getGame().getScreen().dispose();
 				THG.getGame().setScreen(new DefaultGameController());
-				gMainMenu.dispose();
 				return true;
 			}
 		});
@@ -79,8 +77,8 @@ public class GMainMenu extends ScreenAdapter {
 		loadButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		loadButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				THG.getGame().getScreen().dispose();
 				THG.getGame().setScreen(new GLoadMenu(null));
-				gMainMenu.dispose();
 				return true;
 			}
 		});
@@ -95,8 +93,8 @@ public class GMainMenu extends ScreenAdapter {
 		galleryButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		galleryButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				THG.getGame().getScreen().dispose();
 				THG.getGame().setScreen(new GGalleryMenu());
-				gMainMenu.dispose();
 				return true;
 			}
 		});
@@ -111,8 +109,8 @@ public class GMainMenu extends ScreenAdapter {
 		settingButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		settingButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				THG.getGame().getScreen().dispose();
 				THG.getGame().setScreen(new GSettingMenu());
-				gMainMenu.dispose();
 				return true;
 			}
 		});

@@ -25,11 +25,9 @@ import com.badlogic.gdx.utils.PropertiesUtils;
 
 public class GSettingMenu extends ScreenAdapter {
 	private Stage stage;
-	private GSettingMenu gSettingMenu;
 	private ArrayList<Disposable> disList;
 	
 	public GSettingMenu() {
-		gSettingMenu = this;
 		disList = new ArrayList<Disposable>();
 		createStage();
 	}
@@ -70,8 +68,8 @@ public class GSettingMenu extends ScreenAdapter {
 		returnButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		returnButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				THG.getGame().getScreen().dispose();
 				THG.getGame().setScreen(new GMainMenu());
-				gSettingMenu.dispose();
 				saveProperties();
 				return true;
 			}

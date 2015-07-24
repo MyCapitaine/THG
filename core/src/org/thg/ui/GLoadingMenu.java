@@ -46,8 +46,8 @@ public class GLoadingMenu implements Screen, Disposable {
 		b.end();
 		
 		if(manager.update()) {
-			THG.getGame().setScreen(new GMainMenu());
 			dispose();
+			THG.getGame().setScreen(new GMainMenu());
 		}
 	}
 	

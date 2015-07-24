@@ -21,11 +21,9 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class GGalleryMenu implements Screen, Disposable {
 	private Stage stage;
-	private GGalleryMenu gGalleryMenu;
 	private ArrayList<Disposable> disList;
 
 	public GGalleryMenu() {
-		gGalleryMenu = this;
 		disList = new ArrayList<Disposable>();
 		createStage();
 	}
@@ -70,8 +68,8 @@ public class GGalleryMenu implements Screen, Disposable {
 		returnButton.getStyle().imageOver = UiUtil.resize(tr[0][2], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT);
 		returnButton.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				THG.getGame().getScreen().dispose();
 				THG.getGame().setScreen(new GMainMenu());
-				gGalleryMenu.dispose();
 				return true;
 			}
 		});
