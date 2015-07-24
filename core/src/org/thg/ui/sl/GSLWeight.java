@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
@@ -223,7 +225,7 @@ class DataPic extends Image {
 			}
 		});
 	}
-	
+	/** 设置存档上面显示的时间 */
 	public void setTime(long time) {
 		GregorianCalendar g = new GregorianCalendar();
 		g.setTimeInMillis(time);
@@ -233,6 +235,18 @@ class DataPic extends Image {
 				+ ":" + g.get(Calendar.SECOND);
 		
 	}
+	
+	/**
+	 * 清除除构造时产生的以外全部listener
+	 */
+	public void clearInputListeners() {
+		Array<EventListener> lis = getListeners();
+		if(lis.size <= 1) return;
+		EventListener l = lis.get(0);
+		lis.clear();
+		lis.add(l);
+	}
+	
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
@@ -255,10 +269,10 @@ class DataPic extends Image {
 interface SLSpeaker {
 	/**
 	 * @param dataPic 将设置监听的目标
-	 * @param OrderNum 档位序号
+	 * @param orderNum 档位序号
 	 * @param haveData 该档位是否已经存在数据
 	 */
-	void setListener(DataPic dataPic, int OrderNum, boolean haveData);
+	void setListener(DataPic dataPic, int orderNum, boolean haveData);
 }
 
 
