@@ -3,11 +3,10 @@ package org.thg.logic.story.driver.stage;
 import java.util.ArrayList;
 
 import org.thg.logic.THG;
-import org.thg.logic.story.api.GGameController;
 import org.thg.logic.story.api.GTurnPageStage;
 import org.thg.logic.story.driver.Config;
+import org.thg.logic.story.driver.DefaultGameController;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -65,9 +64,7 @@ public class DefaultTurnPageStage extends Stage implements GTurnPageStage {
 		}
 		
 		
-		Screen s = THG.getGame().getScreen();
-		if(!(s instanceof GGameController)) return false;
-		if(((GGameController)s).getSkipFlag() &&
+		if(DefaultGameController.skipping &&
 				interval_render_count >= INTERVAL_RENDER_NUM_SKIP)
 			return false;
 		else if(interval_render_count >= INTERVAL_RENDER_NUM_NORMAL)

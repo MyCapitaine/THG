@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.thg.logic.THG;
-import org.thg.logic.story.api.GGameController;
 import org.thg.logic.story.api.ProgressData;
 import org.thg.logic.story.driver.DefaultGameController;
 import org.thg.ui.Config;
@@ -43,7 +42,8 @@ public class GChoiceWindow extends Group implements Disposable {
 			return;
 		}
 		
-		
+
+		DefaultGameController.choosing = true;
 		
 		disList = new ArrayList<Disposable>();
 		gameStage = s;
@@ -60,9 +60,6 @@ public class GChoiceWindow extends Group implements Disposable {
 		setPositions(iniButtons(sl));
 		
 		
-		Screen screen = THG.getGame().getScreen();
-		if(!(screen instanceof GGameController)) return;
-		((GGameController)screen).setIsChoosing(true);
 		
 		
 		
@@ -193,7 +190,7 @@ public class GChoiceWindow extends Group implements Disposable {
 				pd.putValue(extra[i], true);
 			}
 
-			((DefaultGameController)screen).setIsChoosing(false);
+			DefaultGameController.choosing = false;
 			((DefaultGameController)screen).control(true);
 			return true;
 		}

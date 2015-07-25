@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.thg.logic.THG;
 import org.thg.logic.factorys.ScreenshotFactory;
-import org.thg.logic.story.api.GGameController;
+import org.thg.logic.story.driver.DefaultGameController;
 import org.thg.logic.story.driver.stage.DefaultGameStage;
 import org.thg.ui.Config;
 import org.thg.ui.GMainMenu;
@@ -89,14 +89,11 @@ public class GGameButtons implements Disposable {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				Screen s = THG.getGame().getScreen();
-				if(!(s instanceof GGameController)) return false;
-				GGameController g = (GGameController)s;
-				if(g.getSkipFlag())
-					g.setSkip(false);
+				if(DefaultGameController.skipping)
+					DefaultGameController.skipping = false;
 				else {
-					g.setSkip(true);
-					g.setAuto(false);
+					DefaultGameController.skipping = true;
+					DefaultGameController.autoing = false;
 				}
 				return true;
 			}
@@ -104,9 +101,7 @@ public class GGameButtons implements Disposable {
 		skip.addAction(new Action() {
 			@Override
 			public boolean act(float delta) {
-				Screen s = THG.getGame().getScreen();
-				if(!(s instanceof GGameController)) return false;
-				if(((GGameController)s).getSkipFlag())
+				if(DefaultGameController.skipping)
 					skip.setChecked(true);
 				else 
 					skip.setChecked(false);
@@ -125,14 +120,11 @@ public class GGameButtons implements Disposable {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				Screen s = THG.getGame().getScreen();
-				if(!(s instanceof GGameController)) return false;
-				GGameController g = (GGameController)s;
-				if(g.getAutoFlag())
-					g.setAuto(false);
+				if(DefaultGameController.autoing)
+					DefaultGameController.autoing = false;
 				else {
-					g.setAuto(true);
-					g.setSkip(false);
+					DefaultGameController.autoing = true;
+					DefaultGameController.skipping = false;
 					skip.setChecked(false);
 				}
 				return true;
@@ -141,9 +133,7 @@ public class GGameButtons implements Disposable {
 		auto.addAction(new Action() {
 			@Override
 			public boolean act(float delta) {
-				Screen s = THG.getGame().getScreen();
-				if(!(s instanceof GGameController)) return false;
-				if(((GGameController)s).getAutoFlag())
+				if(DefaultGameController.autoing)
 					auto.setChecked(true);
 				else 
 					auto.setChecked(false);

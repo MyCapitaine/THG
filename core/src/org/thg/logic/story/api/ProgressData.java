@@ -64,8 +64,8 @@ public interface ProgressData {
 	 */
 	public boolean match(ProgressData pd);
 	/**
-	 * 返回进度数据中是否含有某项flag或某项感情度
-	 * @param key flag或感情度名称
+	 * 返回进度数据中是否含有某项flag或某项印象值
+	 * @param key flag或印象值名称
 	 * @return true 存在
 	 */
 	public boolean containsKey(String key);

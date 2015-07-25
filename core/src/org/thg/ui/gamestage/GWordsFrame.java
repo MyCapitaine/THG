@@ -3,11 +3,10 @@ package org.thg.ui.gamestage;
 import java.math.BigDecimal;
 
 import org.thg.logic.THG;
-import org.thg.logic.story.api.GGameController;
 import org.thg.logic.story.api.RunningCheckable;
+import org.thg.logic.story.driver.DefaultGameController;
 import org.thg.ui.Config;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -70,9 +69,7 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 		super.act(delta);
 		
 //		计数器行为
-		Screen s = THG.getGame().getScreen();
-		if(!(s instanceof GGameController)) return;
-		if(((GGameController)s).getSkipFlag()) {
+		if(DefaultGameController.skipping) {
 			show_words_count = text_length - 1;
 			show_words_count = show_words_count < 0 ? 0 : show_words_count;
 			if(interval_render_count < interval_render_num_skipping) interval_render_count ++;
@@ -134,12 +131,9 @@ public class GWordsFrame extends Actor implements RunningCheckable, Disposable {
 			return true;
 		}
 		
-		
-		Screen s = THG.getGame().getScreen();
-		if(!(s instanceof GGameController)) return false;
 		return show_words_count < text_length - 1 ||
 				interval_render_count < 
-				(((GGameController)s).getSkipFlag() ? 
+				(DefaultGameController.skipping ? 
 						interval_render_num_skipping : interval_render_num_normal);
 	}
 	

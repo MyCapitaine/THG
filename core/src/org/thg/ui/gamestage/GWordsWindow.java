@@ -4,11 +4,10 @@ import java.math.BigDecimal;
 
 import org.thg.logic.THG;
 import org.thg.logic.story.api.GDialog;
-import org.thg.logic.story.api.GGameController;
 import org.thg.logic.story.api.RunningCheckable;
+import org.thg.logic.story.driver.DefaultGameController;
 import org.thg.ui.Config;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -79,9 +78,7 @@ public class GWordsWindow extends Actor implements RunningCheckable, Disposable 
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		Screen s = THG.getGame().getScreen();
-		if(!(s instanceof GGameController)) return;
-		if(((GGameController)s).getSkipFlag()) {
+		if(DefaultGameController.skipping) {
 			current_dialogs_length_count = current_dialog_length_limit - 1;
 			if(interval_render_count < interval_render_num_skipping) interval_render_count ++;
 		}
@@ -107,11 +104,9 @@ public class GWordsWindow extends Actor implements RunningCheckable, Disposable 
 		
 		
 		
-		Screen s = THG.getGame().getScreen();
-		if(!(s instanceof GGameController)) return false;
 		return current_dialogs_length_count < current_dialog_length_limit - 1 ||
 				interval_render_count < 
-				(((GGameController)s).getSkipFlag() ? 
+				(DefaultGameController.skipping ? 
 						interval_render_num_skipping : interval_render_num_normal);
 	}
 	

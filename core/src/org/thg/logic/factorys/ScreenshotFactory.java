@@ -58,7 +58,7 @@ public class ScreenshotFactory {
 		for(int i = 0; i < width; i ++) {
 			for(int j = 0; j < height; j ++) {
 				int m = (width * (height - j) - i - 1) * 4;
-				int n = ((int)(j * rateHeight  * oWidth) + (int)(i * rateWidth)) * 4;
+				int n = ((int)(j * rateHeight)  * oWidth + (int)(i * rateWidth)) * 4;
 				nBytes[m] = oBytes[n];
 				nBytes[++m] = oBytes[++n];
 				nBytes[++m] = oBytes[++n];

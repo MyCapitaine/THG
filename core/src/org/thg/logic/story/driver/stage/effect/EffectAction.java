@@ -2,11 +2,9 @@ package org.thg.logic.story.driver.stage.effect;
 
 import java.nio.ByteBuffer;
 
-import org.thg.logic.THG;
-import org.thg.logic.story.api.GGameController;
 import org.thg.logic.story.api.RunningCheckable;
+import org.thg.logic.story.driver.DefaultGameController;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
@@ -51,14 +49,11 @@ public abstract class EffectAction extends Action implements RunningCheckable {
 	}
 	
 	
-	protected GGameController count() {
-		Screen s = THG.getGame().getScreen();
-		if(s instanceof GGameController && ((GGameController)s).getSkipFlag())
+	protected void count() {
+		if(DefaultGameController.skipping)
 			renderCount += EFFECT_SPEED_SKIP;
 		else renderCount += EFFECT_SPEED_NORMAL;
 		if(renderCount > LIMIT_RENDER_COUNT) renderCount = LIMIT_RENDER_COUNT;
-		
-		return (GGameController)s;
 	}
 	
 	

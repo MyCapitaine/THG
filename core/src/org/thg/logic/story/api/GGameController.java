@@ -50,40 +50,6 @@ public interface GGameController extends Screen {
 	 */
 	public void save(Pixmap screenshot, int progressNum);
 //	public void backView();
-	/**
-	 * 获取当前是否被暂停
-	 * @return true 表明处于暂停状态
-	 */
-	public boolean getPausingFlag();
-	/**
-	 * 设置是否快进
-	 * @param flag true 表明设置为快进
-	 */
-	public void setSkip(boolean flag);
-	/**
-	 * 获取当前是否为快进魔兽
-	 * @return true 表明处于快进
-	 */
-	public boolean getSkipFlag();
-	/**
-	 * 设置是否自动模式
-	 * @param flag true 表明设置为自动模式
-	 */
-	public void setAuto(boolean flag);
-	/**
-	 * 获取当前是否为自动模式
-	 * @return true 表明处于自动模式
-	 */
-	public boolean getAutoFlag();
-	/**
-	 * 设置是否处于选择状态
-	 * @param flag true 设置为选择状态
-	 */
-	public void setIsChoosing(boolean flag);
-	/**
-	 * 获取当前是否为选择状态
-	 * @return true 处于选择状态
-	 */
-	public boolean getChoosingFlag();
+	
 
 }

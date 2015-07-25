@@ -32,10 +32,11 @@ public class DefaultGameController implements GGameController {
 	private GScene current_scene;
 	private GDialog current_dialog;
 	private KeyInputProcessor kip;
-	private boolean choosing;
-	private boolean pausing; //预留的暂停
-	private boolean skipping;
-	private boolean autoing;
+
+	public static boolean pausing; //预留的暂停
+	public static boolean choosing;
+	public static boolean skipping;
+	public static boolean autoing;
 	
 	private static Music bgm = null;
 	private static int bgmNum = -1;
@@ -45,14 +46,14 @@ public class DefaultGameController implements GGameController {
 	}
 	
 	public DefaultGameController(ProgressData pd) {
-		storyTree = GStoryTreeFactory.createStoryTree();
-		if(pd == null) setProgressDataAndIni(ProgressDataUtil.load());
-		else setProgressDataAndIni(pd);
-		kip = new KeyInputProcessor();
 		pausing = false;
 		skipping = false;
 		autoing = false;
 		choosing = false;
+		storyTree = GStoryTreeFactory.createStoryTree();
+		if(pd == null) setProgressDataAndIni(ProgressDataUtil.load());
+		else setProgressDataAndIni(pd);
+		kip = new KeyInputProcessor();
 		
 	}
 	
@@ -83,18 +84,10 @@ public class DefaultGameController implements GGameController {
 		show(); 
 	}
 	
-	public boolean getPausingFlag(){ return pausing; }
-	public void setSkip(boolean flag) { skipping = flag; }
-	public boolean getSkipFlag() { return skipping; }
-	public void setAuto(boolean flag) { autoing = flag; }
-	public boolean getAutoFlag() { return autoing; }
-	public void setIsChoosing(boolean flag) { choosing = flag; }
-	public boolean getChoosingFlag() { return choosing; }
-	
 	@Override
 	public void setProgressDataAndIni(ProgressData pd) {
 		progressData = pd;
-		current_day = GDayFactory.createDay(pd.getDayStr());
+		current_day = GDayFactory.createDay(progressData.getDayStr());
 		current_scene = current_day.setScenePosition(progressData.getSceneNum());
 		current_dialog = current_scene.setDialogPosition(progressData.getDialogNum());
 		
@@ -336,15 +329,15 @@ public class DefaultGameController implements GGameController {
 			switch(character) {
 			case 'a':
 			case 'A': //a/A     —— auto
-				setSkip(false);
-				setAuto(getAutoFlag() ? false : true);
+				skipping = false;
+				autoing = !autoing;
 				return true;
 			case ' ': //space   —— click
 				return click();
 			case 's' :
 			case 'S' : //s/S —— skip
-				setAuto(false);
-				setSkip(getSkipFlag() ? false : true);
+				autoing = false;
+				skipping = !skipping;
 				return true;
 			default :
 				return false;
@@ -364,8 +357,8 @@ public class DefaultGameController implements GGameController {
 			
 			click_count = l;
 			control(true);
-			setSkip(false);
-			setAuto(false);
+			skipping = false;
+			autoing = false;
 			return true;
 		}
 		

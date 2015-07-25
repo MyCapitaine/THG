@@ -74,7 +74,10 @@ public class ProgressDataUtil {
 	public static ProgressData load(int num) {
 		if(progressDatas[num] == null) 
 			progressDatas[num] = load(DATA_URL_HEADER + num + DATA_URL_TAIL);
-		if(!progressDatas[num].match(defaultProgressData)) return null;
+		if(!defaultProgressData.match(progressDatas[num])){
+			System.out.println("progressdata not match");
+			return null;
+		}
 		
 		return progressDatas[num].copy();
 	}

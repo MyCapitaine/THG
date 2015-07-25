@@ -119,6 +119,7 @@ public class DefaultProgressData implements ProgressData {
 		try {
 			reader = Gdx.files.external(THG.EXTRNAL_HEAD + url).reader(THG.CHAR_SET);
 		} catch (Exception e) {
+			System.out.println(e);
 			load();
 			return;
 		}
@@ -126,14 +127,12 @@ public class DefaultProgressData implements ProgressData {
 		try {
 			PropertiesUtils.load(datas, reader);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("load error");
 		}
 		
 		try {
 			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) { }
 	}
 	
 	
