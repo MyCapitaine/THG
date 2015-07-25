@@ -25,7 +25,7 @@ public class DataPic extends Image {
 	String timeStr;
 	private BitmapFont timeFont;
 	
-	public DataPic(Drawable shade, BitmapFont timeFont) {
+	DataPic(Drawable shade, BitmapFont timeFont) {
 		this.shade = shade;
 		this.timeFont = timeFont;
 		drawshade = true;

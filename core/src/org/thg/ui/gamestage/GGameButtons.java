@@ -3,11 +3,14 @@ package org.thg.ui.gamestage;
 import java.util.ArrayList;
 
 import org.thg.logic.THG;
+import org.thg.logic.factorys.ScreenshotFactory;
 import org.thg.logic.story.api.GGameController;
 import org.thg.logic.story.driver.stage.DefaultGameStage;
 import org.thg.ui.Config;
 import org.thg.ui.GMainMenu;
 import org.thg.ui.UiUtil;
+import org.thg.ui.sl.GLoadMenu;
+import org.thg.ui.sl.GSaveMenu;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -44,6 +47,18 @@ public class GGameButtons implements Disposable {
 		disList.add(disBuffer);
 		tr = TextureRegion.split((Texture)disBuffer, disBuffer.getWidth() / 2, disBuffer.getHeight());
 		save = new ImageButton(getButtonStyle(tr));
+		save.addListener(new InputListener() { 
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				ScreenshotFactory.saveBufferScreenshot((int)Config.SL_PIC_WIDTH,
+						(int)Config.SL_PIC_HEIGHT);
+				Screen game = THG.getGame().getScreen();
+				THG.getGame().setScreen(new GSaveMenu(game));
+				
+				return true;
+			}
+		});
 		stage.addActor(save);
 	}
 
@@ -52,6 +67,16 @@ public class GGameButtons implements Disposable {
 		disList.add(disBuffer);
 		tr = TextureRegion.split((Texture)disBuffer, disBuffer.getWidth() / 2, disBuffer.getHeight());
 		load = new ImageButton(getButtonStyle(tr));
+		load.addListener(new InputListener() { 
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				Screen game = THG.getGame().getScreen();
+				THG.getGame().setScreen(new GLoadMenu(game));
+				
+				return true;
+			}
+		});
 		stage.addActor(load);
 	}
 

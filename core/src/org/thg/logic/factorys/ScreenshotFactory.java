@@ -22,25 +22,25 @@ public class ScreenshotFactory {
 //	     }
 //	 }
 	
-	public static Pixmap getScreenshot(int x, int y, int w, int h, boolean yDown){
-        final Pixmap pixmap = ScreenUtils.getFrameBufferPixmap(x, y, w, h);
-        
-        if (yDown) {
-            // Flip the pixmap upside down
-            ByteBuffer pixels = pixmap.getPixels();
-            int numBytes = w * h * 4;
-            byte[] lines = new byte[numBytes];
-            int numBytesPerLine = w * 4;
-            for (int i = 0; i < h; i++) {
-                pixels.position((h - i - 1) * numBytesPerLine);
-                pixels.get(lines, i * numBytesPerLine, numBytesPerLine);
-            }
-            pixels.clear();
-            pixels.put(lines);
-        }
-
-        return pixmap;
-    }
+//	public static Pixmap getScreenshot(int x, int y, int w, int h, boolean yDown){
+//        final Pixmap pixmap = ScreenUtils.getFrameBufferPixmap(x, y, w, h);
+//        
+//        if (yDown) {
+//            // Flip the pixmap upside down
+//            ByteBuffer pixels = pixmap.getPixels();
+//            int numBytes = w * h * 4;
+//            byte[] lines = new byte[numBytes];
+//            int numBytesPerLine = w * 4;
+//            for (int i = 0; i < h; i++) {
+//                pixels.position((h - i - 1) * numBytesPerLine);
+//                pixels.get(lines, i * numBytesPerLine, numBytesPerLine);
+//            }
+//            pixels.clear();
+//            pixels.put(lines);
+//        }
+//
+//        return pixmap;
+//    }
 	
 	/** 
 	 * 将截屏缩小并返回
@@ -50,14 +50,15 @@ public class ScreenshotFactory {
 	public static Pixmap getScreenshot(int width, int height) {
 		int oWidth = Gdx.graphics.getWidth(),
 			oHeight = Gdx.graphics.getHeight();
-		float rateHeight = (float)oHeight / (float)height;
+		float rateHeight = (float)oHeight / (float)height,
+			  rateWidth = (float)oWidth / (float)width;
 		byte[] oBytes = ScreenUtils.getFrameBufferPixels(false);
 		byte[] nBytes = new byte[width * height * 4];
 		
 		for(int i = 0; i < width; i ++) {
 			for(int j = 0; j < height; j ++) {
-				int m = (width * (height - j) - i) * 4;
-				int n = ((int)(j * rateHeight + i)) * oWidth * 4;
+				int m = (width * (height - j) - i - 1) * 4;
+				int n = ((int)(j * rateHeight  * oWidth) + (int)(i * rateWidth)) * 4;
 				nBytes[m] = oBytes[n];
 				nBytes[++m] = oBytes[++n];
 				nBytes[++m] = oBytes[++n];
@@ -73,5 +74,17 @@ public class ScreenshotFactory {
 		return pixmap;
 	}
 	
-	
+	/** 公立缓存区 
+	 * {@link ScreenshotFactory#getBufferScreenshot()}*/
+	public static void saveBufferScreenshot(int width, int height) {
+		try {
+			bufferScreenshot.dispose();
+		}catch(Exception e) {}
+		bufferScreenshot = getScreenshot(width, height);
+	}
+	/** {@link ScreenshotFactory#saveBufferScreenshot(int, int)}*/
+	public static Pixmap getBufferScreenshot() {
+		return bufferScreenshot;
+	}
+	private static Pixmap bufferScreenshot = null;
 }

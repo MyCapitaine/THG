@@ -25,7 +25,7 @@ public class ProgressDataUtil {
 	
 	private static FileHandle[] imageHandles = null;
 	/** 不销毁 */
-	private static Texture[] imagesTexture = null;
+	private static Texture[] imagesTexture = new Texture[GSLWeight.PROGRESS_NUM];
 	
 	/** 返回所有存档数据是否存在的信息 */
 	public static boolean[] checkDatas() {
