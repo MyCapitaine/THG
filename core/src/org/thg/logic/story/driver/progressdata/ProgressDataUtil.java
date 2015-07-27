@@ -46,6 +46,8 @@ public class ProgressDataUtil {
 	public static boolean saveData(Pixmap screenshot, ProgressData data, int num) {
 		data.save(DATA_URL_HEADER + num + DATA_URL_TAIL);
 		
+		if(imageHandles == null) iniImageHandles();
+		
 		PixmapIO.writePNG(imageHandles[num], screenshot);
 		//覆盖图片
 		if(imagesTexture[num] != null) imagesTexture[num].dispose();
@@ -55,19 +57,21 @@ public class ProgressDataUtil {
 	
 	public static Texture getImageTexture(int num) {
 		if(num < 0 || num >= GSLWeight.PROGRESS_NUM) return null;
-		if(imageHandles == null) {
-			imageHandles = new FileHandle[GSLWeight.PROGRESS_NUM];
-			for(int i = 0; i < GSLWeight.PROGRESS_NUM; i ++) {
-				imageHandles[i] = Gdx.files.external(THG.EXTRNAL_HEAD + 
-						IMAGE_URL_HEADER + i + IMAGE_URL_TAIL);
-			}
-		}
+		if(imageHandles == null) iniImageHandles();
 		if(imageHandles[num].exists()) {
 			if(imagesTexture[num] != null) return imagesTexture[num];
 			return imagesTexture[num] = new Texture(imageHandles[num]);
 		}
 		else return null;
 		
+	}
+	
+	private static void iniImageHandles() {
+		imageHandles = new FileHandle[GSLWeight.PROGRESS_NUM];
+		for(int i = 0; i < GSLWeight.PROGRESS_NUM; i ++) {
+			imageHandles[i] = Gdx.files.external(THG.EXTRNAL_HEAD + 
+					IMAGE_URL_HEADER + i + IMAGE_URL_TAIL);
+		}
 	}
 	
 	/** 获取对应序号的存档 */
