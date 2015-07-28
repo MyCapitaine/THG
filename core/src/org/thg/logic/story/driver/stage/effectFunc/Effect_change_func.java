@@ -1,5 +1,19 @@
 package org.thg.logic.story.driver.stage.effectFunc;
-
+/**
+ * <p>切换场景的函数支持
+ * <p>提供多种切换方式
+ * <p>1.像拉窗帘一样(竖)
+ * <p>2.～(横)
+ * <p>3.渐变
+ * <p>4.
+ * <p>
+ * <p>(翻页式)
+ * <p>(侵蚀感)
+ * 
+ * 
+ * @author MyCapitaine
+ * 
+ */
 public class Effect_change_func {
 	/**
 	 * <p>模式1的切换场景的函数支持
@@ -53,14 +67,25 @@ public class Effect_change_func {
 		return newData;
 	}
 	
+	
+	
+	private static final int COL_PART_NUM = 20;
 	/**
 	 * <p>模式2的切换场景的函数支持
-	 * <p>
-	 * <p>参数和返回值同1
+	 * <p>横向的百叶窗效果
+	 * <p><b><i>参数和返回值同1
 	 */
 	public static byte[] effect_change_2(final byte[] sceneData, final int width, final int height,
 			final int depth, final float timeCount, final float limitTimeCount) {
 		byte[] newData = new byte[sceneData.length];
+		
+		double rate = (double)timeCount / (double)limitTimeCount;
+		if(rate > 0.5f) 
+			rate = Math.cos(Math.PI * (1 - rate));
+		else
+			rate = Math.cos(Math.PI * rate);
+		
+		int part_width = width / COL_PART_NUM;
 		
 		
 		
