@@ -27,6 +27,7 @@ public class Effect_misty extends EffectAction {
 
 	private final Image mistyImage;
 	
+	/** 缩小系数 */
 	private static final int REDUCE = 3;
 	/** true表明由模糊变清晰 */
 	private final boolean back;
