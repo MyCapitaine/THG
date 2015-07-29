@@ -8,7 +8,8 @@ import org.thg.ui.GMainMenu;
 import org.thg.ui.UiUtil;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,13 +20,27 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.Disposable;
 
-public class GGalleryMenu implements Screen, Disposable {
+public class GGalleryMenu extends ScreenAdapter {
+	
+	Music currentMusic;
+	MusicInfo[] musicInfos;
+
+	Music_part music_part;
+	CG_part_1 cg_part_1;
+	CG_part_2 cg_part_2;
+	
 	private Stage stage;
 	private ArrayList<Disposable> disList;
-
+	private Image CGLabel, MusicLabel;
+	
 	public GGalleryMenu() {
 		disList = new ArrayList<Disposable>();
-		createStage();
+		stage = new Stage();
+		musicInfos = MusicInfo.loadMusicInfo();
+		
+		iniBackground();
+		iniReturnButton();
+		iniLabels();
 	}
 	
 	@Override
@@ -35,33 +50,26 @@ public class GGalleryMenu implements Screen, Disposable {
 		stage.act();
 		stage.draw();
 	}
-
-	public void resize(int width, int height) {}
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
 	}
-	public void hide() {}
-	public void pause() {}
-	public void resume() {}
 	public void dispose() {
 		for(Disposable d : disList)
 			d.dispose();
 	}
-	
-	private void createStage() {
-		stage = new Stage();
-		TextureRegion[][] tr;
-//============背景==================================================================
+	/** 背景 */
+	private void iniBackground() {
 		Texture disBuffer = new Texture(Config.GALLERY_MENU_BG_URL);
 		disList.add(disBuffer);
 		Image bg = new Image(disBuffer);
 		bg.setSize(Config.SCREEN_WIDTH * Config.scaleX, Config.SCREEN_HEIGHT * Config.scaleY);
-		
 		stage.addActor(bg);
-//============返回==================================================================
-		disBuffer = new Texture(Config.GALLERY_MENU_RETURN_BUTTON_URL);
+	}
+	/** 返回键 */
+	private void iniReturnButton() {
+		Texture disBuffer = new Texture(Config.GALLERY_MENU_RETURN_BUTTON_URL);
 		disList.add(disBuffer);
-		tr = TextureRegion.split(disBuffer, disBuffer.getWidth() / 3, disBuffer.getHeight());
+		TextureRegion[][] tr = TextureRegion.split(disBuffer, disBuffer.getWidth() / 3, disBuffer.getHeight());
 		ImageButton returnButton = new ImageButton(
 				UiUtil.resize(tr[0][0], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT),
 				UiUtil.resize(tr[0][1], Config.UI_BUTTON_WIDHT, Config.UI_BUTTON_HEIGHT));
@@ -74,9 +82,12 @@ public class GGalleryMenu implements Screen, Disposable {
 			}
 		});
 		stage.addActor(returnButton);
-		
-//============组件位置大小设置等===============================================================
 		returnButton.setPosition(600 * Config.scaleX, 30 * Config.scaleY);
-		
 	}
+	
+	/** cg和music的label */
+	private void iniLabels() {
+//		TODO
+	}
+	
 }
