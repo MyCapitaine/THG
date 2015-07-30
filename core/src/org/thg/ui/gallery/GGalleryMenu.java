@@ -93,8 +93,60 @@ public class GGalleryMenu extends ScreenAdapter {
 		returnButton.setPosition(600 * Config.scaleX, 30 * Config.scaleY);
 	}
 	
-	/** cg和music的label */
+	/** 
+	 * <p>cg和music的label
+	 * <p>切换时，标签动态交换位置和大小，组件渐隐/现
+	 * 
+	 */
 	private void iniLabels() {
+		showingCG = true;
+		
+		Texture texture = new Texture(Config.GALLERY_MENU_CG_LABEL_URL);
+		disList.add(texture);
+		CGLabel = new Image(texture);
+		CGLabel.setBounds(Config.GALLERY_MENU_PADDING * Config.scaleX, 
+				(Config.SCREEN_HEIGHT - Config.GALLERY_MENU_PADDING - Config.GALLERY_MENU_LABEL_LARGER_HEIGHT) * Config.scaleY,
+				Config.GALLERY_MENU_LABEL_LARGER_WIDTH * Config.scaleX,
+				Config.GALLERY_MENU_LABEL_LARGER_HEIGHT * Config.scaleY);
+		
+		texture = new Texture(Config.GALLERY_MENU_MUSIC_LABEL_URL);
+		disList.add(texture);
+		MusicLabel = new Image(texture);
+		MusicLabel.setBounds(Config.GALLERY_MENU_PADDING * Config.scaleX,
+				(Config.SCREEN_HEIGHT - Config.GALLERY_MENU_PADDING - Config.GALLERY_MENU_LABEL_LARGER_HEIGHT - Config.GALLERY_MENU_LABEL_SMALLER_HEIGHT) * Config.scaleY,
+				Config.GALLERY_MENU_LABEL_SMALLER_WIDTH * Config.scaleX,
+				Config.GALLERY_MENU_LABEL_SMALLER_HEIGHT * Config.scaleY);
+		
+		isDoingAction = NOT_DOING_ACTION;
+		InputListener listener = new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				if(isDoingAction != NOT_DOING_ACTION) return false;
+				labelDoAction();
+				changePart();
+				showingCG = !showingCG;
+				return true;
+			}
+		};
+		
+		CGLabel.addListener(listener);
+		MusicLabel.addListener(listener);
+	}
+	private static int isDoingAction;
+	private static final int NOT_DOING_ACTION = 0;
+	/** 标签做交换的运动 */
+	private void labelDoAction() {
+		
+//		isDoingAction ++;
+//		isDoingAction --;
+//		TODO
+		
+		
+	}
+	private static boolean showingCG;
+	/** CG和music的部分交换 */
+	private void changePart() {
 //		TODO
 	}
 	
