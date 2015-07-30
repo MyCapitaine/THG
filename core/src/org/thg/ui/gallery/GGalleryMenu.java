@@ -25,9 +25,9 @@ public class GGalleryMenu extends ScreenAdapter {
 	Music currentMusic;
 	MusicInfo[] musicInfos;
 
-	Music_part music_part;
-	CG_part_1 cg_part_1;
-	CG_part_2 cg_part_2;
+	MusicPart musicPart;
+	CGPart1 cgPart1;
+	CGPart2 cgPart2;
 	
 	private Stage stage;
 	private ArrayList<Disposable> disList;
@@ -41,6 +41,12 @@ public class GGalleryMenu extends ScreenAdapter {
 		iniBackground();
 		iniReturnButton();
 		iniLabels();
+		
+		
+		cgPart1 = new CGPart1();
+		cgPart2 = null;
+		musicPart = null;
+		
 	}
 	
 	@Override

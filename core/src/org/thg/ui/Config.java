@@ -37,6 +37,11 @@ public class Config {
 	public static final String GALLERY_MENU_BG_URL = "images/ui/gallerymenu/background.png";
 	public static final String GALLERY_MENU_RETURN_BUTTON_URL = "images/ui/gallerymenu/returnButton.png";
 
+	
+	
+	
+	
+	
 //====GSettingMenu==================================================================================	
 	public static final String PROPERTIES_URL = "properties/settings.p";
 	
