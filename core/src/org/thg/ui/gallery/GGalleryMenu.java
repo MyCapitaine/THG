@@ -19,15 +19,18 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.Disposable;
-
+/**
+ * cg/音乐鉴赏部分
+ * @author MyCapitaine
+ *
+ */
 public class GGalleryMenu extends ScreenAdapter {
 	
 	Music currentMusic;
 	MusicInfo[] musicInfos;
 
 	MusicPart musicPart;
-	CGPart1 cgPart1;
-	CGPart2 cgPart2;
+	CGPart cgPart;
 	
 	private Stage stage;
 	private ArrayList<Disposable> disList;
@@ -43,8 +46,7 @@ public class GGalleryMenu extends ScreenAdapter {
 		iniLabels();
 		
 		
-		cgPart1 = new CGPart1();
-		cgPart2 = null;
+		cgPart = new CGPart();
 		musicPart = null;
 		
 	}
