@@ -13,9 +13,13 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SizeToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.Disposable;
@@ -34,7 +38,7 @@ public class GGalleryMenu extends ScreenAdapter {
 	
 	private Stage stage;
 	private ArrayList<Disposable> disList;
-	private Image CGLabel, MusicLabel;
+	private Image cgLabel, musicLabel;
 	
 	public GGalleryMenu() {
 		disList = new ArrayList<Disposable>();
@@ -44,7 +48,6 @@ public class GGalleryMenu extends ScreenAdapter {
 		iniBackground();
 		iniReturnButton();
 		iniLabels();
-		
 		
 		cgPart = new CGPart();
 		musicPart = null;
@@ -103,26 +106,26 @@ public class GGalleryMenu extends ScreenAdapter {
 		
 		Texture texture = new Texture(Config.GALLERY_MENU_CG_LABEL_URL);
 		disList.add(texture);
-		CGLabel = new Image(texture);
-		CGLabel.setBounds(Config.GALLERY_MENU_PADDING * Config.scaleX, 
+		cgLabel = new Image(texture);
+		cgLabel.setBounds(Config.GALLERY_MENU_PADDING * Config.scaleX, 
 				(Config.SCREEN_HEIGHT - Config.GALLERY_MENU_PADDING - Config.GALLERY_MENU_LABEL_LARGER_HEIGHT) * Config.scaleY,
 				Config.GALLERY_MENU_LABEL_LARGER_WIDTH * Config.scaleX,
 				Config.GALLERY_MENU_LABEL_LARGER_HEIGHT * Config.scaleY);
 		
 		texture = new Texture(Config.GALLERY_MENU_MUSIC_LABEL_URL);
 		disList.add(texture);
-		MusicLabel = new Image(texture);
-		MusicLabel.setBounds(Config.GALLERY_MENU_PADDING * Config.scaleX,
+		musicLabel = new Image(texture);
+		musicLabel.setBounds(Config.GALLERY_MENU_PADDING * Config.scaleX,
 				(Config.SCREEN_HEIGHT - Config.GALLERY_MENU_PADDING - Config.GALLERY_MENU_LABEL_LARGER_HEIGHT - Config.GALLERY_MENU_LABEL_SMALLER_HEIGHT) * Config.scaleY,
 				Config.GALLERY_MENU_LABEL_SMALLER_WIDTH * Config.scaleX,
 				Config.GALLERY_MENU_LABEL_SMALLER_HEIGHT * Config.scaleY);
 		
-		isDoingAction = NOT_DOING_ACTION;
 		InputListener listener = new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				if(isDoingAction != NOT_DOING_ACTION) return false;
+				if(cgLabel.getActions().size != 0 ||
+					musicLabel.getActions().size != 0) return false;
 				labelDoAction();
 				changePart();
 				showingCG = !showingCG;
@@ -130,18 +133,64 @@ public class GGalleryMenu extends ScreenAdapter {
 			}
 		};
 		
-		CGLabel.addListener(listener);
-		MusicLabel.addListener(listener);
+		cgLabel.addListener(listener);
+		musicLabel.addListener(listener);
+		
+		stage.addActor(cgLabel);
+		stage.addActor(musicLabel);
 	}
-	private static int isDoingAction;
-	private static final int NOT_DOING_ACTION = 0;
+	
+	private static final float DO_ACTION_TIEM = 0.4f;
 	/** 标签做交换的运动 */
 	private void labelDoAction() {
+		MoveToAction cgMove = new MoveToAction();
+		cgMove.setPosition(musicLabel.getX(), musicLabel.getY());
+		cgMove.setDuration(DO_ACTION_TIEM);
 		
-//		isDoingAction ++;
-//		isDoingAction --;
-//		TODO
+		SizeToAction cgChange = new SizeToAction();
+		cgChange.setSize(musicLabel.getWidth(), musicLabel.getHeight());
+		cgChange.setDuration(DO_ACTION_TIEM);
 		
+		MoveToAction musicMove = new MoveToAction();
+		musicMove.setPosition(cgLabel.getX(), cgLabel.getY());
+		musicMove.setDuration(DO_ACTION_TIEM);
+		
+		SizeToAction musicChange = new SizeToAction();
+		musicChange.setSize(cgLabel.getWidth(), cgLabel.getHeight());
+		musicChange.setDuration(DO_ACTION_TIEM);
+		
+		final Interpolation interpolation = new Interpolation() {
+			@Override
+			public float apply(float a) {
+				double d = (float) a;
+				d = d * Math.PI;
+				d = Math.sin(d);
+				return (float)(0.5 * d);
+			}
+		};
+		class AlphaActionExtend extends AlphaAction {
+			@Override
+			protected void begin() {
+				super.begin();
+				setAlpha(0);
+				setDuration(DO_ACTION_TIEM);
+				setInterpolation(interpolation);
+			}
+			@Override
+			protected void end() {
+				super.end();
+				target.getColor().a = 1f;
+			}
+		}
+		AlphaActionExtend cgFade = new AlphaActionExtend(),
+				musicFade = new AlphaActionExtend();
+		
+		cgLabel.addAction(cgMove);
+		cgLabel.addAction(cgChange);
+		cgLabel.addAction(cgFade);
+		musicLabel.addAction(musicMove);
+		musicLabel.addAction(musicChange);
+		musicLabel.addAction(musicFade);
 		
 	}
 	private static boolean showingCG;

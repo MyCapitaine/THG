@@ -37,11 +37,11 @@ public class Config {
 	public static final float GALLERY_MENU_PADDING = 10f;
 	public static final String GALLERY_MENU_BG_URL = "images/ui/gallerymenu/background.png";
 	public static final String GALLERY_MENU_RETURN_BUTTON_URL = "images/ui/gallerymenu/returnButton.png";
-	public static final String GALLERY_MENU_CG_LABEL_URL = "";
-	public static final String GALLERY_MENU_MUSIC_LABEL_URL = "";
+	public static final String GALLERY_MENU_CG_LABEL_URL = "images/ui/gallerymenu/cgLabel.png";
+	public static final String GALLERY_MENU_MUSIC_LABEL_URL = "images/ui/gallerymenu/musicLabel.png";
 	public static final float
-		GALLERY_MENU_LABEL_LARGER_WIDTH = 0f, GALLERY_MENU_LABEL_LARGER_HEIGHT = 0f,
-		GALLERY_MENU_LABEL_SMALLER_WIDTH = 0f, GALLERY_MENU_LABEL_SMALLER_HEIGHT = 0f;
+		GALLERY_MENU_LABEL_LARGER_WIDTH = 150f, GALLERY_MENU_LABEL_LARGER_HEIGHT = 50f,
+		GALLERY_MENU_LABEL_SMALLER_WIDTH = 100f, GALLERY_MENU_LABEL_SMALLER_HEIGHT = GALLERY_MENU_LABEL_LARGER_HEIGHT * GALLERY_MENU_LABEL_SMALLER_WIDTH / GALLERY_MENU_LABEL_LARGER_WIDTH;
 	
 	
 	
