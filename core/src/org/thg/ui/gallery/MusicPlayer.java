@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+
 /**
  * <p>播放器组件
  * <p>显示当前曲信息
@@ -12,12 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
  *
  */
 public class MusicPlayer extends Group {
+	MusicPart musicPart;
+	
 	Label num, musicName, singerName, musicianName;
 	Slider progress;
 	ImageButton pause, previous, latter;
 	
-	public MusicPlayer() {
-		
+	MusicPlayer(MusicPart musicPart) {
+		this.musicPart = musicPart;
 		
 	}
 }
