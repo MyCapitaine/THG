@@ -48,6 +48,9 @@ public class Config {
 	
 	
 	
+	
+	
+	
 //====GSettingMenu==================================================================================	
 	public static final String PROPERTIES_URL = "properties/settings.p";
 	

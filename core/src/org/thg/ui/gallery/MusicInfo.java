@@ -14,10 +14,10 @@ public class MusicInfo {
 	/** 作曲家名 */
 	final String musicianName;
 	/** 时长 */
-	final float time;
+	final int time;
 	
 	public MusicInfo(int num, String musicName, String singerName,
-			String musicianName, float time) {
+			String musicianName, int time) {
 		this.num = num;
 		this.musicName = musicName;
 		this.singerName = singerName;
@@ -30,7 +30,16 @@ public class MusicInfo {
 		this.musicName = musicName;
 		this.singerName = singerName;
 		this.musicianName = musicianName;
-		this.time = Float.parseFloat(time);
+		
+		if(time.contains(":")) {
+			String[] sl = time.split(":");
+			int i = 0;
+			if(sl.length > 0) i += 60 * Integer.parseInt(sl[0]);
+			if(sl.length > 1) i += 60 * Integer.parseInt(sl[1]);
+			this.time = i;
+		}
+		else
+			this.time = Integer.parseInt(time);
 	}
 	
 	/**

@@ -7,7 +7,22 @@ import com.badlogic.gdx.scenes.scene2d.Group;
  *
  */
 public class MusicPart extends Group {
+	GGalleryMenu gallery;
+	
+	MusicList musicList;
+	MusicPlayer musicPlayer;
+	
 	MusicPart(GGalleryMenu gallery) {
+		this.gallery = gallery;
+		musicList = new MusicList(this);
+		musicPlayer = new MusicPlayer(this);
+		addActor(musicList);
+		addActor(musicPlayer);
 		
 	}
+	
+	
+	
+	
+	
 }

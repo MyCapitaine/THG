@@ -10,8 +10,10 @@ import org.thg.ui.UiUtil;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -32,6 +34,7 @@ public class GGalleryMenu extends ScreenAdapter {
 	
 	Music currentMusic;
 	MusicInfo[] musicInfos;
+	BitmapFont font;
 
 	MusicPart musicPart;
 	CGPart cgPart;
@@ -44,6 +47,11 @@ public class GGalleryMenu extends ScreenAdapter {
 		disList = new ArrayList<Disposable>();
 		stage = new Stage();
 		musicInfos = MusicInfo.loadMusicInfo();
+		StringBuffer sb = new StringBuffer("0123456789:/曲名作歌时长播放");
+		for(MusicInfo mi : musicInfos)
+			sb.append(mi.musicName).append(mi.singerName).append(mi.musicianName);
+		font = THG.getFont(sb.toString(), 15, Color.BLACK);
+//		TODO size/color
 		
 		iniBackground();
 		iniReturnButton();
