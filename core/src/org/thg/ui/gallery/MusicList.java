@@ -1,12 +1,15 @@
 package org.thg.ui.gallery;
 
-import com.badlogic.gdx.graphics.Color;
+import org.thg.ui.Config;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * 音乐列表
@@ -19,38 +22,51 @@ public class MusicList extends Group {
 	ScrollPane scrollPane;
 	List<MusicInfoUnit> musicList;
 	
-	private LabelStyle labelStyle;
 	
 	MusicList(MusicPart musicPart) {
 		this.musicPart = musicPart;
-		labelStyle = new LabelStyle(musicPart.gallery.font, Color.BLACK);
 		
-		musicList = new List<MusicInfoUnit>(new List.ListStyle());
+		ListStyle ls = new List.ListStyle();
+		ls.font = musicPart.gallery.font;
+		ls.selection = new TextureRegionDrawable(new TextureRegion(new Texture(Config.GALLERY_MENU_RETURN_BUTTON_URL)));
+		musicList = new List<MusicInfoUnit>(ls);
+		Array<MusicInfoUnit> items = new Array<MusicInfoUnit>();
+		//表头
+		items.add(new MusicInfoUnit(null));
+		for(MusicInfo mi : this.musicPart.gallery.musicInfos)
+			items.add(new MusicInfoUnit(mi));
+		musicList.setItems(items);
+		musicList.setBounds(0, 0,
+				(Config.SCREEN_WIDTH - 2 * Config.GALLERY_MENU_PADDING) * Config.scaleX,
+				(musicList.getItems().size + 1) * Config.GALLERY_NENU_MUSIC_SINGLE_LIST_HEIGHT);
 		scrollPane = new ScrollPane(musicList);
-		//TODO size & position
+		scrollPane.setBounds(Config.GALLERY_MENU_PADDING * Config.scaleX,
+				Config.GALLERY_MENU_PADDING * Config.scaleY,
+				musicList.getWidth(), Config.GALLERY_NENU_MUSIC_LIST_HEIGHT);
 		addActor(scrollPane);
 		
+//		musicList.
 	}
 	
-	class MusicInfoUnit extends Group {
-		Label num, musicName, singerName, musicianName, time;
-		ImageButton play;
+	/** 选中即播放 */
+	class MusicInfoUnit{
+		private String infoStr;
 		MusicInfoUnit(MusicInfo info) {
-			num = new Label(info.num + "", labelStyle);
-			musicName = new Label(info.musicName, labelStyle);
-			singerName = new Label(info.singerName, labelStyle);
-			musicianName = new Label(info.musicianName, labelStyle);
-			time = new Label(info.time / 60 + "" + info.time % 60, labelStyle);
-//			play = new ImageButton(style);
-			
-//			TODO size & position
-			
-			addActor(num);
-			addActor(musicName);
-			addActor(singerName);
-			addActor(musicianName);
-			addActor(time);
-			addActor(play);
+//			this.info = info;
+//			setPosition(0, 0);
+//			setSize((Config.SCREEN_WIDTH - 2 * Config.GALLERY_MENU_PADDING) * Config.scaleX,
+//					Config.GALLERY_NENU_MUSIC_SINGLE_LIST_HEIGHT * Config.scaleY);
+//			num = new Label(info == null ? "序号" : info.num + "", labelStyle);
+//			musicName = new Label(info == null ? "曲名" : info.musicName, labelStyle);
+//			singerName = new Label(info == null ? "歌" : info.singerName, labelStyle);
+//			musicianName = new Label(info == null ? "作曲" : info.musicianName, labelStyle);
+//			time = new Label(info == null ? "时长" : (info.time / 60 + "" + info.time % 60), labelStyle);
+//			
+		}
+		
+		@Override
+		public String toString() {
+			return infoStr;
 		}
 	}
 }

@@ -33,6 +33,7 @@ import com.badlogic.gdx.utils.Disposable;
 public class GGalleryMenu extends ScreenAdapter {
 	
 	Music currentMusic;
+	int currentMusicNum;
 	MusicInfo[] musicInfos;
 	BitmapFont font;
 
@@ -50,15 +51,15 @@ public class GGalleryMenu extends ScreenAdapter {
 		StringBuffer sb = new StringBuffer("0123456789:/曲名作歌时长播放");
 		for(MusicInfo mi : musicInfos)
 			sb.append(mi.musicName).append(mi.singerName).append(mi.musicianName);
-		font = THG.getFont(sb.toString(), 15, Color.BLACK);
+		font = THG.getFont(sb.toString(), 40, Color.BLACK);
 //		TODO size/color
 		
 		iniBackground();
 		iniReturnButton();
 		iniLabels();
 		
-		cgPart = new CGPart();
-		musicPart = null;
+		cgPart = null;
+		stage.addActor(musicPart = new MusicPart(this));
 		
 	}
 	

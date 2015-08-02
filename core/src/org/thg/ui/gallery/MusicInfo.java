@@ -49,6 +49,20 @@ public class MusicInfo {
 	 */
 	public static MusicInfo[] loadMusicInfo() {
 		//TODO
-		return null;
+		return new MusicInfo[] {
+				new MusicInfo(000, "aa", "aa", "aa", 100),
+				new MusicInfo(000, "aa", "aa", "aa", 100),
+				new MusicInfo(000, "aa", "aa", "aa", 100),
+				new MusicInfo(000, "aa", "aa", "aa", 100),
+				new MusicInfo(000, "aa", "aa", "aa", 100),
+				new MusicInfo(000, "aa", "aa", "aa", 100),
+				new MusicInfo(000, "aa", "aa", "aa", 100),
+				new MusicInfo(000, "aa", "aa", "aa", 100),
+				new MusicInfo(000, "aa", "aa", "aa", 100),
+				new MusicInfo(000, "aa", "aa", "aa", 100),
+				new MusicInfo(000, "aa", "aa", "aa", 100),
+				new MusicInfo(000, "aa", "aa", "aa", 100),
+				new MusicInfo(000, "aa", "aa", "aa", 100)
+		};
 	}
 }
