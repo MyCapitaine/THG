@@ -44,6 +44,8 @@ public class GGalleryMenu extends ScreenAdapter {
 	private ArrayList<Disposable> disList;
 	private Image cgLabel, musicLabel;
 	
+	static final float GALLERY_FONT_SIZE = 24;
+	
 	public GGalleryMenu() {
 		disList = new ArrayList<Disposable>();
 		stage = new Stage();
@@ -51,8 +53,7 @@ public class GGalleryMenu extends ScreenAdapter {
 		StringBuffer sb = new StringBuffer("0123456789:/曲名作歌时长播放");
 		for(MusicInfo mi : musicInfos)
 			sb.append(mi.musicName).append(mi.singerName).append(mi.musicianName);
-		font = THG.getFont(sb.toString(), 40, Color.BLACK);
-//		TODO size/color
+		font = THG.getFont(sb.toString(), (int)(GALLERY_FONT_SIZE * Config.scaleX), Color.BLACK);
 		
 		iniBackground();
 		iniReturnButton();
@@ -76,6 +77,8 @@ public class GGalleryMenu extends ScreenAdapter {
 	public void dispose() {
 		for(Disposable d : disList)
 			d.dispose();
+		if(musicPart != null) musicPart.dispose();
+		if(cgPart != null) cgPart.dispose();
 	}
 	/** 背景 */
 	private void iniBackground() {

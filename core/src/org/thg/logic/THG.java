@@ -39,7 +39,7 @@ public class THG {
 	public static BitmapFont getFont(String s, int size, Color color) {
 		
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = (int) size;
+		parameter.size = size;
 		if(s != null) parameter.characters = pattern.matcher(s).replaceAll("");
 		parameter.color = color;
 		BitmapFont font = generator.generateFont(parameter);

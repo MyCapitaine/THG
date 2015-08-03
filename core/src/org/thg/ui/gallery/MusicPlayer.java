@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  * <p>播放器组件
@@ -12,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
  * @author MyCapitaine
  *
  */
-public class MusicPlayer extends Group {
+public class MusicPlayer extends Group implements Disposable {
 	MusicPart musicPart;
 	
 	Label num, musicName, singerName, musicianName;
@@ -21,6 +22,12 @@ public class MusicPlayer extends Group {
 	
 	MusicPlayer(MusicPart musicPart) {
 		this.musicPart = musicPart;
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
 		
 	}
 }

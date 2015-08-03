@@ -50,19 +50,19 @@ public class MusicInfo {
 	public static MusicInfo[] loadMusicInfo() {
 		//TODO
 		return new MusicInfo[] {
-				new MusicInfo(000, "aa", "aa", "aa", 100),
-				new MusicInfo(000, "aa", "aa", "aa", 100),
-				new MusicInfo(000, "aa", "aa", "aa", 100),
-				new MusicInfo(000, "aa", "aa", "aa", 100),
-				new MusicInfo(000, "aa", "aa", "aa", 100),
-				new MusicInfo(000, "aa", "aa", "aa", 100),
-				new MusicInfo(000, "aa", "aa", "aa", 100),
-				new MusicInfo(000, "aa", "aa", "aa", 100),
-				new MusicInfo(000, "aa", "aa", "aa", 100),
-				new MusicInfo(000, "aa", "aa", "aa", 100),
-				new MusicInfo(000, "aa", "aa", "aa", 100),
-				new MusicInfo(000, "aa", "aa", "aa", 100),
-				new MusicInfo(000, "aa", "aa", "aa", 100)
+				new MusicInfo(0, "aa", "aa", "aa", 100),
+				new MusicInfo(1, "aa", "aa", "aa", 100),
+				new MusicInfo(2, "aa", "aa", "aa", 100),
+				new MusicInfo(3, "aa", "aa", "aa", 100),
+				new MusicInfo(4, "aa", "aa", "aa", 100),
+				new MusicInfo(5, "aa", "aa", "aa", 100),
+				new MusicInfo(6, "aa", "aa", "aa", 100),
+				new MusicInfo(7, "aa", "aa", "aa", 100),
+				new MusicInfo(8, "aa", "aa", "aa", 100),
+				new MusicInfo(9, "aa", "aa", "aa", 100),
+				new MusicInfo(10, "aa", "aa", "aa", 100),
+				new MusicInfo(11, "aa", "aa", "aa", 100),
+				new MusicInfo(12, "aa", "aa", "aa", 100)
 		};
 	}
 }
