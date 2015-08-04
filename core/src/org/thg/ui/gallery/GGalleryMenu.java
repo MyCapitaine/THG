@@ -3,6 +3,7 @@ package org.thg.ui.gallery;
 import java.util.ArrayList;
 
 import org.thg.logic.THG;
+import org.thg.logic.factorys.ResourceFactory;
 import org.thg.ui.Config;
 import org.thg.ui.GMainMenu;
 import org.thg.ui.UiUtil;
@@ -34,6 +35,7 @@ public class GGalleryMenu extends ScreenAdapter {
 	
 	Music currentMusic;
 	int currentMusicNum;
+	
 	MusicInfo[] musicInfos;
 	BitmapFont font;
 
@@ -79,6 +81,7 @@ public class GGalleryMenu extends ScreenAdapter {
 			d.dispose();
 		if(musicPart != null) musicPart.dispose();
 		if(cgPart != null) cgPart.dispose();
+		ResourceFactory.clearPool();
 	}
 	/** 背景 */
 	private void iniBackground() {

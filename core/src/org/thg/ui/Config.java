@@ -8,12 +8,13 @@ public class Config {
 		UI_BUTTON_WIDHT = 150,
 		UI_BUTTON_HEIGHT = 80;
 //====GMainMenu==================================================================================	
-	public static final String MAIN_MENU_BG_URL = "images/ui/mainmenu/background.png";
-	public static final String MAIN_MENU_BEGIN_BUTTON_URL = "images/ui/mainmenu/beginButton.png";
-	public static final String MAIN_MENU_LOAD_BUTTON_URL = "images/ui/mainmenu/loadButton.png";
-	public static final String MAIN_MENU_GALLERY_BUTTON_URL = "images/ui/mainmenu/galleryButton.png";
-	public static final String MAIN_MENU_SETTING_BUTTON_URL = "images/ui/mainmenu/settingButton.png";
-	public static final String MAIN_MENU_EXIT_BUTTON_URL = "images/ui/mainmenu/exitButton.png";
+	public static final String MAIN_MENU_RESOURCE_URL = "images/ui/mainmenu/";
+	public static final String MAIN_MENU_BG_URL = MAIN_MENU_RESOURCE_URL + "background.png";
+	public static final String MAIN_MENU_BEGIN_BUTTON_URL = MAIN_MENU_RESOURCE_URL + "beginButton.png";
+	public static final String MAIN_MENU_LOAD_BUTTON_URL = MAIN_MENU_RESOURCE_URL + "loadButton.png";
+	public static final String MAIN_MENU_GALLERY_BUTTON_URL = MAIN_MENU_RESOURCE_URL + "galleryButton.png";
+	public static final String MAIN_MENU_SETTING_BUTTON_URL = MAIN_MENU_RESOURCE_URL + "settingButton.png";
+	public static final String MAIN_MENU_EXIT_BUTTON_URL = MAIN_MENU_RESOURCE_URL + "exitButton.png";
 	
 	
 //====GLoadingMenu==================================================================================
@@ -35,11 +36,12 @@ public class Config {
 	
 //====GGalleryMenu==================================================================================
 	public static final float GALLERY_MENU_PADDING = 10f;
-	public static final String GALLERY_MENU_BG_URL = "images/ui/gallerymenu/background.png";
-	public static final String GALLERY_MENU_RETURN_BUTTON_URL = "images/ui/gallerymenu/returnButton.png";
-	public static final String GALLERY_MENU_CG_LABEL_URL = "images/ui/gallerymenu/cgLabel.png";
-	public static final String GALLERY_MENU_MUSIC_LABEL_URL = "images/ui/gallerymenu/musicLabel.png";
-	public static final String GALLERY_MENU_MUSIC_LIST_SELECTION_URL = "";
+	public static final String GALLERY_MENU_RESOURCE_URL = "images/ui/gallerymenu/";
+	public static final String GALLERY_MENU_BG_URL = GALLERY_MENU_RESOURCE_URL + "background.png";
+	public static final String GALLERY_MENU_RETURN_BUTTON_URL = GALLERY_MENU_RESOURCE_URL + "returnButton.png";
+	public static final String GALLERY_MENU_CG_LABEL_URL = GALLERY_MENU_RESOURCE_URL + "cgLabel.png";
+	public static final String GALLERY_MENU_MUSIC_LABEL_URL = GALLERY_MENU_RESOURCE_URL + "musicLabel.png";
+	public static final String GALLERY_MENU_MUSIC_LIST_SELECTION_URL = GALLERY_MENU_RESOURCE_URL + "selection.png";
 	
 	public static final float
 		GALLERY_MENU_LABEL_LARGER_WIDTH = 150f, GALLERY_MENU_LABEL_LARGER_HEIGHT = 50f,
@@ -47,14 +49,14 @@ public class Config {
 	public static final float
 		GALLERY_MENU_MUSIC_PLAYER_1_WIDTH = 0,
 		GALLERY_MENU_MUSIC_PLAYER_1_HEIGHT = GALLERY_MENU_LABEL_SMALLER_HEIGHT + GALLERY_MENU_LABEL_LARGER_HEIGHT + GALLERY_MENU_PADDING / 2,
-		GALLERY_NENU_MUSIC_LIST_HEIGHT = SCREEN_HEIGHT - 3 * GALLERY_MENU_PADDING - GALLERY_MENU_MUSIC_PLAYER_1_HEIGHT,
-		GALLERY_NENU_MUSIC_SINGLE_LIST_HEIGHT = 50,
-		GALLERY_NENU_MUSIC_LIST_NUM_WIDTH = 70,
-		GALLERY_NENU_MUSIC_LIST_MUSIC_WIDTH = 200,
-		GALLERY_NENU_MUSIC_LIST_SINGER_WIDTH = 200,
-		GALLERY_NENU_MUSIC_LIST_MUSICIAN_WIDTH = 200,
-		GALLERY_NENU_MUSIC_LIST_TIME_WIDTH = SCREEN_WIDTH - 2 * GALLERY_MENU_PADDING - GALLERY_NENU_MUSIC_LIST_NUM_WIDTH -
-			GALLERY_NENU_MUSIC_LIST_MUSIC_WIDTH - GALLERY_NENU_MUSIC_LIST_SINGER_WIDTH - GALLERY_NENU_MUSIC_LIST_MUSICIAN_WIDTH;
+		GALLERY_NENU_MUSIC_LIST_HEIGHT = SCREEN_HEIGHT - 3 * GALLERY_MENU_PADDING - GALLERY_MENU_MUSIC_PLAYER_1_HEIGHT;
+//		GALLERY_NENU_MUSIC_SINGLE_LIST_HEIGHT = 50,
+//		GALLERY_NENU_MUSIC_LIST_NUM_WIDTH = 70,
+//		GALLERY_NENU_MUSIC_LIST_MUSIC_WIDTH = 200,
+//		GALLERY_NENU_MUSIC_LIST_SINGER_WIDTH = 200,
+//		GALLERY_NENU_MUSIC_LIST_MUSICIAN_WIDTH = 200,
+//		GALLERY_NENU_MUSIC_LIST_TIME_WIDTH = SCREEN_WIDTH - 2 * GALLERY_MENU_PADDING - GALLERY_NENU_MUSIC_LIST_NUM_WIDTH -
+//			GALLERY_NENU_MUSIC_LIST_MUSIC_WIDTH - GALLERY_NENU_MUSIC_LIST_SINGER_WIDTH - GALLERY_NENU_MUSIC_LIST_MUSICIAN_WIDTH;
 		
 	
 	
