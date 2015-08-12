@@ -16,16 +16,16 @@ public class MusicPart extends Group implements Disposable {
 	MusicPart(GGalleryMenu gallery) {
 		this.gallery = gallery;
 		musicList = new MusicList(this);
-		musicPlayer = new MusicPlayer(this);
+//		musicPlayer = new MusicPlayer(this);
 		addActor(musicList);
-		addActor(musicPlayer);
+//		addActor(musicPlayer);
 		
 	}
 
 	@Override
 	public void dispose() {
 		musicList.dispose();
-		musicPlayer.dispose();
+//		musicPlayer.dispose();
 	}
 	
 	

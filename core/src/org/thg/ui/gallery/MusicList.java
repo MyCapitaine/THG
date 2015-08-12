@@ -44,7 +44,12 @@ public class MusicList extends Group implements Disposable {
 		ls.font = musicPart.gallery.font;
 		Texture selectionTexture = new Texture(Config.GALLERY_MENU_MUSIC_LIST_SELECTION_URL);
 		disList.add(selectionTexture);
-		ls.selection = new TextureRegionDrawable(new TextureRegion(selectionTexture));
+		TextureRegionDrawable trd = new TextureRegionDrawable(new TextureRegion(selectionTexture));
+		trd.setTopHeight(10f);
+		trd.setBottomHeight(10f);
+//		trd.setLeftWidth(10f);
+//		TODO margin
+		ls.selection = trd;
 		musicList = new List<MusicInfoUnit>(ls);
 		Array<MusicInfoUnit> items = new Array<MusicInfoUnit>();
 		for(MusicInfo mi : this.musicPart.gallery.musicInfos)
